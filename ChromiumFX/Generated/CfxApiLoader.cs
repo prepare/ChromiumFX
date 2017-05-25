@@ -781,8 +781,6 @@ namespace Chromium {
             cfx_popup_features_get_fullscreen,
             cfx_popup_features_set_dialog,
             cfx_popup_features_get_dialog,
-            cfx_popup_features_set_additionalFeatures,
-            cfx_popup_features_get_additionalFeatures,
             cfx_post_data_create,
             cfx_post_data_is_read_only,
             cfx_post_data_has_excluded_elements,
@@ -2462,8 +2460,6 @@ namespace Chromium {
             CfxApi.PopupFeatures.cfx_popup_features_get_fullscreen = (CfxApi.PopupFeatures.cfx_popup_features_get_fullscreen_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_popup_features_get_fullscreen, typeof(CfxApi.PopupFeatures.cfx_popup_features_get_fullscreen_delegate));
             CfxApi.PopupFeatures.cfx_popup_features_set_dialog = (CfxApi.PopupFeatures.cfx_popup_features_set_dialog_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_popup_features_set_dialog, typeof(CfxApi.PopupFeatures.cfx_popup_features_set_dialog_delegate));
             CfxApi.PopupFeatures.cfx_popup_features_get_dialog = (CfxApi.PopupFeatures.cfx_popup_features_get_dialog_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_popup_features_get_dialog, typeof(CfxApi.PopupFeatures.cfx_popup_features_get_dialog_delegate));
-            CfxApi.PopupFeatures.cfx_popup_features_set_additionalFeatures = (CfxApi.PopupFeatures.cfx_popup_features_set_additionalFeatures_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_popup_features_set_additionalFeatures, typeof(CfxApi.PopupFeatures.cfx_popup_features_set_additionalFeatures_delegate));
-            CfxApi.PopupFeatures.cfx_popup_features_get_additionalFeatures = (CfxApi.PopupFeatures.cfx_popup_features_get_additionalFeatures_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_popup_features_get_additionalFeatures, typeof(CfxApi.PopupFeatures.cfx_popup_features_get_additionalFeatures_delegate));
         }
 
         internal static void LoadCfxPostDataApi() {

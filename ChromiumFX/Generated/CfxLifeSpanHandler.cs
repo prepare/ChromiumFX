@@ -153,7 +153,9 @@ namespace Chromium {
         /// is set to false (0) the new browser will not be scriptable and may not be
         /// hosted in the same renderer process as the source browser. Any
         /// modifications to |WindowInfo| will be ignored if the parent browser is
-        /// wrapped in a CfxBrowserView.
+        /// wrapped in a CfxBrowserView. Popup browser creation will be canceled if
+        /// the parent browser is destroyed before the popup browser creation completes
+        /// (indicated by a call to OnAfterCreated for the popup browser).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -397,7 +399,9 @@ namespace Chromium {
         /// is set to false (0) the new browser will not be scriptable and may not be
         /// hosted in the same renderer process as the source browser. Any
         /// modifications to |WindowInfo| will be ignored if the parent browser is
-        /// wrapped in a CfxBrowserView.
+        /// wrapped in a CfxBrowserView. Popup browser creation will be canceled if
+        /// the parent browser is destroyed before the popup browser creation completes
+        /// (indicated by a call to OnAfterCreated for the popup browser).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -423,7 +427,9 @@ namespace Chromium {
         /// is set to false (0) the new browser will not be scriptable and may not be
         /// hosted in the same renderer process as the source browser. Any
         /// modifications to |WindowInfo| will be ignored if the parent browser is
-        /// wrapped in a CfxBrowserView.
+        /// wrapped in a CfxBrowserView. Popup browser creation will be canceled if
+        /// the parent browser is destroyed before the popup browser creation completes
+        /// (indicated by a call to OnAfterCreated for the popup browser).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

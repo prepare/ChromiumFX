@@ -7,7 +7,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1371] =  {
+static void* cfx_function_pointers[1369] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_base64decode,
@@ -777,8 +777,6 @@ static void* cfx_function_pointers[1371] =  {
     (void*)cfx_popup_features_get_fullscreen,
     (void*)cfx_popup_features_set_dialog,
     (void*)cfx_popup_features_get_dialog,
-    (void*)cfx_popup_features_set_additionalFeatures,
-    (void*)cfx_popup_features_get_additionalFeatures,
     (void*)cfx_post_data_create,
     (void*)cfx_post_data_is_read_only,
     (void*)cfx_post_data_has_excluded_elements,

@@ -14,10 +14,6 @@ static cef_popup_features_t* cfx_popup_features_ctor() {
 }
 
 static void cfx_popup_features_dtor(cef_popup_features_t* self) {
-    if(self->additionalFeatures) {
-        cef_string_list_clear(self->additionalFeatures);
-        cef_string_list_free(self->additionalFeatures);
-    }
     free(self);
 }
 
@@ -147,14 +143,6 @@ static void cfx_popup_features_set_dialog(cef_popup_features_t *self, int dialog
 }
 static void cfx_popup_features_get_dialog(cef_popup_features_t *self, int* dialog) {
     *dialog = self->dialog;
-}
-
-// cef_popup_features_t->additionalFeatures
-static void cfx_popup_features_set_additionalFeatures(cef_popup_features_t *self, cef_string_list_t additionalFeatures) {
-    self->additionalFeatures = additionalFeatures;
-}
-static void cfx_popup_features_get_additionalFeatures(cef_popup_features_t *self, cef_string_list_t* additionalFeatures) {
-    *additionalFeatures = self->additionalFeatures;
 }
 
 

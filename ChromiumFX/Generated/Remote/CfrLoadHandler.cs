@@ -69,15 +69,16 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called when the browser begins loading a frame. The |Frame| value will
-        /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. |TransitionType| provides information about the source of the
-        /// navigation and an accurate value is only available in the browser process.
-        /// Multiple frames may be loading at the same time. Sub-frames may start or
-        /// continue loading after the main frame load has ended. This function will
-        /// always be called for all frames irrespective of whether the request
-        /// completes successfully. For notification of overall browser load status use
-        /// OnLoadingStateChange instead.
+        /// Called after a navigation has been committed and before the browser begins
+        /// loading contents in the frame. The |Frame| value will never be NULL -- call
+        /// the is_main() function to check if this frame is the main frame.
+        /// |TransitionType| provides information about the source of the navigation
+        /// and an accurate value is only available in the browser process. Multiple
+        /// frames may be loading at the same time. Sub-frames may start or continue
+        /// loading after the main frame load has ended. This function will not be
+        /// called for same page navigations (fragments, history state, etc.) or for
+        /// navigations that fail or are canceled before commit. For notification of
+        /// overall browser load status use OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -114,9 +115,10 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function will not be called for same page navigations (fragments, history
+        /// state, etc.) or for navigations that fail or are canceled before commit.
+        /// For notification of overall browser load status use OnLoadingStateChange
+        /// instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -149,10 +151,11 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called when the resource load for a navigation fails or is canceled.
-        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
-        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
-        /// for complete descriptions of the error codes.
+        /// Called when a navigation fails or is canceled. This function may be called
+        /// by itself if before commit or in combination with OnLoadStart/OnLoadEnd if
+        /// after commit. |ErrorCode| is the error code number, |ErrorText| is the
+        /// error text and |FailedUrl| is the URL that failed to load. See
+        /// net\base\net_error_list.h for complete descriptions of the error codes.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -264,15 +267,16 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Called when the browser begins loading a frame. The |Frame| value will
-        /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. |TransitionType| provides information about the source of the
-        /// navigation and an accurate value is only available in the browser process.
-        /// Multiple frames may be loading at the same time. Sub-frames may start or
-        /// continue loading after the main frame load has ended. This function will
-        /// always be called for all frames irrespective of whether the request
-        /// completes successfully. For notification of overall browser load status use
-        /// OnLoadingStateChange instead.
+        /// Called after a navigation has been committed and before the browser begins
+        /// loading contents in the frame. The |Frame| value will never be NULL -- call
+        /// the is_main() function to check if this frame is the main frame.
+        /// |TransitionType| provides information about the source of the navigation
+        /// and an accurate value is only available in the browser process. Multiple
+        /// frames may be loading at the same time. Sub-frames may start or continue
+        /// loading after the main frame load has ended. This function will not be
+        /// called for same page navigations (fragments, history state, etc.) or for
+        /// navigations that fail or are canceled before commit. For notification of
+        /// overall browser load status use OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -281,15 +285,16 @@ namespace Chromium.Remote {
         public delegate void CfrOnLoadStartEventHandler(object sender, CfrOnLoadStartEventArgs e);
 
         /// <summary>
-        /// Called when the browser begins loading a frame. The |Frame| value will
-        /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. |TransitionType| provides information about the source of the
-        /// navigation and an accurate value is only available in the browser process.
-        /// Multiple frames may be loading at the same time. Sub-frames may start or
-        /// continue loading after the main frame load has ended. This function will
-        /// always be called for all frames irrespective of whether the request
-        /// completes successfully. For notification of overall browser load status use
-        /// OnLoadingStateChange instead.
+        /// Called after a navigation has been committed and before the browser begins
+        /// loading contents in the frame. The |Frame| value will never be NULL -- call
+        /// the is_main() function to check if this frame is the main frame.
+        /// |TransitionType| provides information about the source of the navigation
+        /// and an accurate value is only available in the browser process. Multiple
+        /// frames may be loading at the same time. Sub-frames may start or continue
+        /// loading after the main frame load has ended. This function will not be
+        /// called for same page navigations (fragments, history state, etc.) or for
+        /// navigations that fail or are canceled before commit. For notification of
+        /// overall browser load status use OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -344,9 +349,10 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function will not be called for same page navigations (fragments, history
+        /// state, etc.) or for navigations that fail or are canceled before commit.
+        /// For notification of overall browser load status use OnLoadingStateChange
+        /// instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -359,9 +365,10 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function will not be called for same page navigations (fragments, history
+        /// state, etc.) or for navigations that fail or are canceled before commit.
+        /// For notification of overall browser load status use OnLoadingStateChange
+        /// instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -412,10 +419,11 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Called when the resource load for a navigation fails or is canceled.
-        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
-        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
-        /// for complete descriptions of the error codes.
+        /// Called when a navigation fails or is canceled. This function may be called
+        /// by itself if before commit or in combination with OnLoadStart/OnLoadEnd if
+        /// after commit. |ErrorCode| is the error code number, |ErrorText| is the
+        /// error text and |FailedUrl| is the URL that failed to load. See
+        /// net\base\net_error_list.h for complete descriptions of the error codes.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -424,10 +432,11 @@ namespace Chromium.Remote {
         public delegate void CfrOnLoadErrorEventHandler(object sender, CfrOnLoadErrorEventArgs e);
 
         /// <summary>
-        /// Called when the resource load for a navigation fails or is canceled.
-        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
-        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
-        /// for complete descriptions of the error codes.
+        /// Called when a navigation fails or is canceled. This function may be called
+        /// by itself if before commit or in combination with OnLoadStart/OnLoadEnd if
+        /// after commit. |ErrorCode| is the error code number, |ErrorText| is the
+        /// error text and |FailedUrl| is the URL that failed to load. See
+        /// net\base\net_error_list.h for complete descriptions of the error codes.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
