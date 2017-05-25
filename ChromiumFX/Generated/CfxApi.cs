@@ -4027,15 +4027,6 @@ namespace Chromium {
             public delegate void cfx_popup_features_get_dialog_delegate(IntPtr self, out int dialog);
             public static cfx_popup_features_get_dialog_delegate cfx_popup_features_get_dialog;
 
-            // static void cfx_popup_features_set_additionalFeatures(cef_popup_features_t *self, cef_string_list_t additionalFeatures)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_set_additionalFeatures_delegate(IntPtr self, IntPtr additionalFeatures);
-            public static cfx_popup_features_set_additionalFeatures_delegate cfx_popup_features_set_additionalFeatures;
-            // static void cfx_popup_features_get_additionalFeatures(cef_popup_features_t *self, cef_string_list_t* additionalFeatures)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_get_additionalFeatures_delegate(IntPtr self, out IntPtr additionalFeatures);
-            public static cfx_popup_features_get_additionalFeatures_delegate cfx_popup_features_get_additionalFeatures;
-
         }
 
         internal static class PostData {
@@ -4990,9 +4981,9 @@ namespace Chromium {
                 CfxApiLoader.LoadCfxSchemeRegistrarApi();
             }
 
-            // static int cfx_scheme_registrar_add_custom_scheme(cef_scheme_registrar_t* self, char16 *scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled)
+            // static int cfx_scheme_registrar_add_custom_scheme(cef_scheme_registrar_t* self, char16 *scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled, int is_csp_bypassing)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_scheme_registrar_add_custom_scheme_delegate(IntPtr self, IntPtr scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled);
+            public delegate int cfx_scheme_registrar_add_custom_scheme_delegate(IntPtr self, IntPtr scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled, int is_csp_bypassing);
             public static cfx_scheme_registrar_add_custom_scheme_delegate cfx_scheme_registrar_add_custom_scheme;
 
         }

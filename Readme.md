@@ -54,6 +54,12 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.3029.0 ###
+- Update to CEF 3.3029.1619 with API changes.
+- Implemented  plausibility checks in the remote layer
+- Implemented faster pipe stream handling for remote layer.
+- Miscellaneous fixes and improvements.
+
 ### Version 3.2987.3 ###
 - Update to CEF 3.2987.1601 without API changes.
 - Fixed exception handling in remote connection.
