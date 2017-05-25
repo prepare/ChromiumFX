@@ -49,6 +49,10 @@ ChromiumFX is BSD licensed. The CEF project is BSD licensed. Please visit
 "about:credits" in a CEF-based application for complete Chromium and third-party
 licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/LICENSE.txt) and [cef/README.txt](https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/README.txt).
 
+### Donations ###
+
+If you earn money with ChromiumFX and want to sponsor development and maintenance of the project, you can tip me [here](https://www.paypal.me/wborgsm/50eur).
+
 
 ## Changes ##
 
