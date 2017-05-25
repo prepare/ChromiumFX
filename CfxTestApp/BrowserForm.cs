@@ -171,11 +171,6 @@ namespace CfxTestApplication {
 
             WebBrowser.LifeSpanHandler.OnBeforePopup += (s, e) => {
                 LogCallback(s, e);
-                var ff = e.PopupFeatures.AdditionalFeatures;
-                if(ff != null)
-                    foreach(var f in ff) {
-                        LogWriteLine("Additional popup feature: {0}", f);
-                    }
             };
 
             WebBrowser.LoadHandler.OnLoadingStateChange += (s, e) => {
