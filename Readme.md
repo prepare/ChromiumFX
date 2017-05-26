@@ -51,7 +51,7 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 ### Donations ###
 
-If you earn money with ChromiumFX and want to sponsor development and maintenance of the project, you can tip me [here](https://www.paypal.me/wborgsm/50eur).
+If you earn money with ChromiumFX and want to sponsor development and maintenance of the project, then you can tip me [here](https://www.paypal.me/wborgsm/50eur). If you are a company, want to sponsor ChromiumFX but need an invoice for your expenses, then my company can sell you a commercial license with additional support. Drop me an email to my gmail account (wborgsm) for further details.
 
 
 ## Changes ##
