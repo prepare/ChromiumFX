@@ -31,7 +31,7 @@ namespace Chromium {
             var wrapper = (CfxTaskRunner)weakCache.GetOrAdd(nativePtr, () =>  {
                 isNew = true;
                 return new CfxTaskRunner(nativePtr);
-            } );
+            });
             if(!isNew) {
                 CfxApi.cfx_release(nativePtr);
             }

@@ -27,7 +27,7 @@ namespace Chromium.Remote {
             var wrapper = (CfrBinaryValue)weakCache.GetOrAdd(remotePtr.ptr, () =>  {
                 isNew = true;
                 return new CfrBinaryValue(remotePtr);
-            } );
+            });
             if(!isNew) {
                 var call = new CfxApiReleaseRemoteCall();
                 call.nativePtr = remotePtr.ptr;

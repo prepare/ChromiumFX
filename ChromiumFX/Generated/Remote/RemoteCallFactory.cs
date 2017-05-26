@@ -556,7 +556,7 @@ namespace Chromium.Remote {
             () => { return new FreeGcHandleRemoteCall(); },
             () => { return new RenderProcessMainRemoteCall(); },
             () => { return new SwitchGcHandleRemoteCall(); },
-        } ;
+        };
 
         internal static RemoteCall ForCallId(RemoteCallId id) {
             return callConstructors[(int)id]();

@@ -83,7 +83,7 @@ public class CodeBuilder {
 
     public void EndBlock(string suffix) {
         DecreaseIndent();
-        Append("} ");
+        Append("}");
         AppendLine(suffix);
     }
 
@@ -192,22 +192,22 @@ public class CodeBuilder {
     }
 
     public void BeginElse() {
-        EndBlock("else {");
+        EndBlock(" else {");
         IncreaseIndent();
     }
 
     public void BeginElseIf(string condition, params object[] pm) {
-        EndBlock("else if({0}) {{", string.Format(condition, pm));
+        EndBlock(" else if({0}) {{", string.Format(condition, pm));
         IncreaseIndent();
     }
 
     public void BeginCatch() {
-        EndBlock("catch {");
+        EndBlock(" catch {");
         IncreaseIndent();
     }
 
     public void BeginCatch(string catchArgument) {
-        EndBlock(string.Format("catch({0}) {{", catchArgument));
+        EndBlock(string.Format(" catch({0}) {{", catchArgument));
         IncreaseIndent();
     }
 

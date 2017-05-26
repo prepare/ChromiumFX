@@ -1377,4 +1377,4 @@ static void* cfx_function_pointers[1369] =  {
     (void*)cfx_string_multimap_append,
     (void*)cfx_string_multimap_clear,
     (void*)cfx_string_multimap_free,
-} ;
+};

@@ -31,7 +31,7 @@ namespace Chromium.Remote {
             var wrapper = (CfrV8StackFrame)weakCache.GetOrAdd(remotePtr.ptr, () =>  {
                 isNew = true;
                 return new CfrV8StackFrame(remotePtr);
-            } );
+            });
             if(!isNew) {
                 var call = new CfxApiReleaseRemoteCall();
                 call.nativePtr = remotePtr.ptr;

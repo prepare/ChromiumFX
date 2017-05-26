@@ -26,7 +26,7 @@ namespace Chromium {
             var wrapper = (CfxGeolocationCallback)weakCache.GetOrAdd(nativePtr, () =>  {
                 isNew = true;
                 return new CfxGeolocationCallback(nativePtr);
-            } );
+            });
             if(!isNew) {
                 CfxApi.cfx_release(nativePtr);
             }

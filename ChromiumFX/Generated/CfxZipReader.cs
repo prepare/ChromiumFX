@@ -27,7 +27,7 @@ namespace Chromium {
             var wrapper = (CfxZipReader)weakCache.GetOrAdd(nativePtr, () =>  {
                 isNew = true;
                 return new CfxZipReader(nativePtr);
-            } );
+            });
             if(!isNew) {
                 CfxApi.cfx_release(nativePtr);
             }

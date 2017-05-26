@@ -25,7 +25,7 @@ namespace Chromium {
             var wrapper = (CfxSslStatus)weakCache.GetOrAdd(nativePtr, () =>  {
                 isNew = true;
                 return new CfxSslStatus(nativePtr);
-            } );
+            });
             if(!isNew) {
                 CfxApi.cfx_release(nativePtr);
             }

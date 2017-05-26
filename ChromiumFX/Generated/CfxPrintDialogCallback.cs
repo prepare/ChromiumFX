@@ -25,7 +25,7 @@ namespace Chromium {
             var wrapper = (CfxPrintDialogCallback)weakCache.GetOrAdd(nativePtr, () =>  {
                 isNew = true;
                 return new CfxPrintDialogCallback(nativePtr);
-            } );
+            });
             if(!isNew) {
                 CfxApi.cfx_release(nativePtr);
             }
