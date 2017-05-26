@@ -303,6 +303,7 @@
     <Compile Include="Source\Remote\CfrMayBlockEventArgs.cs" />
     <Compile Include="Source\Remote\CfrTellEventArgs.cs" />
     <Compile Include="Source\Remote\CfrSeekEventArgs.cs" />
+    <Compile Include="Source\Remote\CfrBaseScoped.cs" />
     <Compile Include="Source\Remote\WorkerPool.cs" />
     <Compile Include="Source\StringFunctions.cs" />
     <Compile Include="Source\CfxZipReader.cs" />

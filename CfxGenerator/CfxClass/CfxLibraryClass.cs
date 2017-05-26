@@ -219,7 +219,14 @@ public class CfxLibraryClass : CfxClass {
         b.AppendLine();
 
         b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
-        b.BeginClass(RemoteClassName + " : CfrBaseLibrary", GeneratorConfig.ClassModifiers(RemoteClassName));
+
+        if(CefStruct.IsRefCounted)
+            b.BeginClass(RemoteClassName + " : CfrBaseLibrary", GeneratorConfig.ClassModifiers(RemoteClassName));
+        else if(CefStruct.IsScoped)
+            b.BeginClass(RemoteClassName + " : CfrBaseScoped", GeneratorConfig.ClassModifiers(RemoteClassName));
+        else
+            throw new Exception();
+
         b.AppendLine();
 
         b.BeginFunction("Wrap", RemoteClassName, "RemotePtr remotePtr", "internal static");
