@@ -28,7 +28,7 @@ public class CfxLibraryClass : CfxClass {
         ExportFunctions = flist.ToArray();
 
         GetCallbackFunctions(sd, api);
-        
+
         foreach(var cb in CallbackFunctions) {
             var isBoolean = false;
             if(cb.IsPropertyGetter(ref isBoolean)) {
@@ -104,17 +104,16 @@ public class CfxLibraryClass : CfxClass {
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
         if(CefStruct.IsRefCounted) {
-            b.BeginBlock("lock(weakCache)");
-            b.AppendLine("var wrapper = ({0})weakCache.Get(nativePtr);", ClassName);
-            b.BeginBlock("if(wrapper == null)");
-            b.AppendLine("wrapper = new {0}(nativePtr);", ClassName);
-            b.AppendLine("weakCache.Add(wrapper);");
-            b.BeginElse();
+            b.AppendLine("bool isNew = false;");
+            b.BeginBlock("var wrapper = ({0})weakCache.GetOrAdd(nativePtr, () => ", ClassName);
+            b.AppendLine("isNew = true;");
+            b.AppendLine("return new {0}(nativePtr);", ClassName);
+            b.EndBlock(");");
+            b.BeginBlock("if(!isNew)");
             //release the new ref and reuse the existing ref
             b.AppendLine("CfxApi.cfx_release(nativePtr);");
             b.EndBlock();
             b.AppendLine("return wrapper;");
-            b.EndBlock();
         } else {
             b.AppendLine("return new {0}(nativePtr);", ClassName);
         }
@@ -225,15 +224,23 @@ public class CfxLibraryClass : CfxClass {
 
         b.BeginFunction("Wrap", RemoteClassName, "RemotePtr remotePtr", "internal static");
         b.AppendLine("if(remotePtr == RemotePtr.Zero) return null;");
-        b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
-        b.BeginBlock("lock(weakCache)");
-        b.AppendLine("var cfrObj = ({0})weakCache.Get(remotePtr.ptr);", RemoteClassName);
-        b.BeginBlock("if(cfrObj == null)");
-        b.AppendLine("cfrObj = new {0}(remotePtr);", RemoteClassName);
-        b.AppendLine("weakCache.Add(remotePtr.ptr, cfrObj);");
-        b.EndBlock();
-        b.AppendLine("return cfrObj;");
-        b.EndBlock();
+        if(CefStruct.IsRefCounted) {
+            b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
+            b.AppendLine("bool isNew = false;");
+            b.BeginBlock("var wrapper = ({0})weakCache.GetOrAdd(remotePtr.ptr, () => ", RemoteClassName);
+            b.AppendLine("isNew = true;");
+            b.AppendLine("return new {0}(remotePtr);", RemoteClassName);
+            b.EndBlock(");");
+            b.BeginBlock("if(!isNew)");
+            //release the new ref and reuse the existing ref
+            b.AppendLine("var call = new CfxApiReleaseRemoteCall();");
+            b.AppendLine("call.nativePtr = remotePtr.ptr;");
+            b.AppendLine("call.RequestExecution(remotePtr.connection);");
+            b.EndBlock();
+            b.AppendLine("return wrapper;");
+        } else {
+            b.AppendLine("return new {0}(remotePtr);", RemoteClassName);
+        }
         b.EndBlock();
         b.AppendLine();
         b.AppendLine();
@@ -280,7 +287,7 @@ public class CfxLibraryClass : CfxClass {
                     b.EndBlock();
                 }
                 b.EndBlock();
-                
+
             }
         }
 

@@ -58,7 +58,7 @@ namespace Chromium.Remote {
         private readonly BlockingCollection<RemoteCall> newCalls = new BlockingCollection<RemoteCall>();
         private readonly Dictionary<int, Stack<RemoteCall>> threadCallStack = new Dictionary<int, Stack<RemoteCall>>();
 
-        internal readonly RemoteWeakCache weakCache = new RemoteWeakCache();
+        internal readonly WeakCache weakCache = new WeakCache();
 
         internal RemoteConnection(string pipeName, bool isClient) {
 

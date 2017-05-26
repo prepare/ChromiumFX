@@ -34,16 +34,15 @@ namespace Chromium {
 
         internal static CfxRequestContext Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            lock(weakCache) {
-                var wrapper = (CfxRequestContext)weakCache.Get(nativePtr);
-                if(wrapper == null) {
-                    wrapper = new CfxRequestContext(nativePtr);
-                    weakCache.Add(wrapper);
-                } else {
-                    CfxApi.cfx_release(nativePtr);
-                }
-                return wrapper;
+            bool isNew = false;
+            var wrapper = (CfxRequestContext)weakCache.GetOrAdd(nativePtr, () =>  {
+                isNew = true;
+                return new CfxRequestContext(nativePtr);
+            } );
+            if(!isNew) {
+                CfxApi.cfx_release(nativePtr);
             }
+            return wrapper;
         }
 
 

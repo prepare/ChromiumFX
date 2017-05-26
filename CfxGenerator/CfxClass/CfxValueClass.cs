@@ -235,14 +235,7 @@ public class CfxValueClass : CfxClass {
             b.BeginFunction("Wrap", RemoteClassName, "RemotePtr remotePtr", "internal static");
             b.AppendLine("if(remotePtr == RemotePtr.Zero) return null;");
             b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
-            b.BeginBlock("lock(weakCache)");
-            b.AppendLine("var cfrObj = ({0})weakCache.Get(remotePtr.ptr);", RemoteClassName);
-            b.BeginBlock("if(cfrObj == null)");
-            b.AppendLine("cfrObj = new {0}(remotePtr);", RemoteClassName);
-            b.AppendLine("weakCache.Add(remotePtr.ptr, cfrObj);");
-            b.EndBlock();
-            b.AppendLine("return cfrObj;");
-            b.EndBlock();
+            b.AppendLine("return ({0})weakCache.GetOrAdd(remotePtr.ptr, () => new {0}(remotePtr));", RemoteClassName);
             b.EndBlock();
             b.AppendLine();
             b.AppendLine();
