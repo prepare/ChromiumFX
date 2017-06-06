@@ -136,6 +136,15 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        /// <summary>
+        /// Returns the ChromiumWebBrowser object associated with  the given CfxBrowser, or null
+        /// if the CfxBrowser is not associated with any ChromiumWebBrowser object.
+        /// </summary>
+        public static ChromiumWebBrowser FromCfxBrowser(CfxBrowser cfxBrowser) {
+            if(cfxBrowser == null) throw new ArgumentNullException("cfxBrowser");
+            return GetBrowser(cfxBrowser.Identifier);
+        }
+
         private static readonly Dictionary<int, WeakReference> browsers = new Dictionary<int, WeakReference>();
 
         internal static ChromiumWebBrowser GetBrowser(int id) {
@@ -262,6 +271,9 @@ namespace Chromium.WebBrowser {
                     | ControlStyles.Selectable
                     , true);
 
+
+                RightToLeft = RightToLeft.Yes;
+
                 if(initialUrl == null)
                     this.initialUrl = "about:blank";
                 else
@@ -338,7 +350,7 @@ namespace Chromium.WebBrowser {
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
                 throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
-        
+
         /// <summary>
         /// Returns the context menu handler for this browser. If this is never accessed the default
         /// implementation will be used.
@@ -1126,7 +1138,7 @@ namespace Chromium.WebBrowser {
             ResizeBrowserWindow();
         }
 
-        
+
 
         internal void ResizeBrowserWindow() {
             if(browserWindowHandle == IntPtr.Zero) return;

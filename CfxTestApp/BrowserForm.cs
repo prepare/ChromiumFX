@@ -169,6 +169,13 @@ namespace CfxTestApplication {
             WebBrowser.DisplayHandler.OnTitleChange += (s, e) => LogCallback(s, e);
             WebBrowser.DisplayHandler.OnStatusMessage += (s, e) => LogCallback(s, e);
 
+            WebBrowser.DisplayHandler.OnTitleChange += (s, e) => {
+                var wb = ChromiumWebBrowser.FromCfxBrowser(e.Browser);
+                LogWriteLine("ChromiumWebBrowser.FromCfxBrowser(e.Browser) == WebBrowser: {0}", wb == WebBrowser);
+                var title = e.Title;
+                BeginInvoke((MethodInvoker)(() => Text = "ChromiumWebBrowser - " + title));
+            };
+
             WebBrowser.LifeSpanHandler.OnBeforePopup += (s, e) => {
                 LogCallback(s, e);
             };
