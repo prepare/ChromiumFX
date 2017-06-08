@@ -132,4 +132,21 @@ static void cfx_drag_data_add_file(cef_drag_data_t* self, char16 *path_str, int 
     self->add_file(self, &path, &display_name);
 }
 
+// get_image
+static cef_image_t* cfx_drag_data_get_image(cef_drag_data_t* self) {
+    return self->get_image(self);
+}
+
+// get_image_hotspot
+static cef_point_t* cfx_drag_data_get_image_hotspot(cef_drag_data_t* self) {
+    cef_point_t *__retval = malloc(sizeof(cef_point_t));
+    if(__retval) *__retval = self->get_image_hotspot(self);
+    return __retval;
+}
+
+// has_image
+static int cfx_drag_data_has_image(cef_drag_data_t* self) {
+    return self->has_image(self);
+}
+
 

@@ -305,4 +305,9 @@ static cef_navigation_entry_t* cfx_browser_host_get_visible_navigation_entry(cef
     return self->get_visible_navigation_entry(self);
 }
 
+// set_accessibility_state
+static void cfx_browser_host_set_accessibility_state(cef_browser_host_t* self, cef_state_t accessibility_state) {
+    self->set_accessibility_state(self, accessibility_state);
+}
+
 

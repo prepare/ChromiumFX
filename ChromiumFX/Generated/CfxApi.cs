@@ -338,6 +338,17 @@ namespace Chromium {
             public static cfx_string_multimap_free_delegate cfx_string_multimap_free;
         }
 
+        internal static class AccessibilityHandler {
+
+            static AccessibilityHandler () {
+                CfxApiLoader.LoadCfxAccessibilityHandlerApi();
+            }
+
+            public static cfx_ctor_with_gc_handle_delegate cfx_accessibility_handler_ctor;
+            public static cfx_set_callback_delegate cfx_accessibility_handler_set_callback;
+
+        }
+
         internal static class App {
 
             static App () {
@@ -904,6 +915,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_browser_host_get_visible_navigation_entry_delegate(IntPtr self);
             public static cfx_browser_host_get_visible_navigation_entry_delegate cfx_browser_host_get_visible_navigation_entry;
+
+            // static void cfx_browser_host_set_accessibility_state(cef_browser_host_t* self, cef_state_t accessibility_state)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_browser_host_set_accessibility_state_delegate(IntPtr self, int accessibility_state);
+            public static cfx_browser_host_set_accessibility_state_delegate cfx_browser_host_set_accessibility_state;
 
         }
 
@@ -2441,6 +2457,21 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_drag_data_add_file_delegate(IntPtr self, IntPtr path_str, int path_length, IntPtr display_name_str, int display_name_length);
             public static cfx_drag_data_add_file_delegate cfx_drag_data_add_file;
+
+            // static cef_image_t* cfx_drag_data_get_image(cef_drag_data_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_drag_data_get_image_delegate(IntPtr self);
+            public static cfx_drag_data_get_image_delegate cfx_drag_data_get_image;
+
+            // static cef_point_t* cfx_drag_data_get_image_hotspot(cef_drag_data_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_drag_data_get_image_hotspot_delegate(IntPtr self);
+            public static cfx_drag_data_get_image_hotspot_delegate cfx_drag_data_get_image_hotspot;
+
+            // static int cfx_drag_data_has_image(cef_drag_data_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_drag_data_has_image_delegate(IntPtr self);
+            public static cfx_drag_data_has_image_delegate cfx_drag_data_has_image;
 
         }
 
@@ -5297,15 +5328,6 @@ namespace Chromium {
             public delegate void cfx_settings_get_uncaught_exception_stack_size_delegate(IntPtr self, out int uncaught_exception_stack_size);
             public static cfx_settings_get_uncaught_exception_stack_size_delegate cfx_settings_get_uncaught_exception_stack_size;
 
-            // static void cfx_settings_set_context_safety_implementation(cef_settings_t *self, int context_safety_implementation)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_settings_set_context_safety_implementation_delegate(IntPtr self, int context_safety_implementation);
-            public static cfx_settings_set_context_safety_implementation_delegate cfx_settings_set_context_safety_implementation;
-            // static void cfx_settings_get_context_safety_implementation(cef_settings_t *self, int* context_safety_implementation)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_settings_get_context_safety_implementation_delegate(IntPtr self, out int context_safety_implementation);
-            public static cfx_settings_get_context_safety_implementation_delegate cfx_settings_get_context_safety_implementation;
-
             // static void cfx_settings_set_ignore_certificate_errors(cef_settings_t *self, int ignore_certificate_errors)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_settings_set_ignore_certificate_errors_delegate(IntPtr self, int ignore_certificate_errors);
@@ -6618,15 +6640,6 @@ namespace Chromium {
             public delegate void cfx_window_info_linux_get_windowless_rendering_enabled_delegate(IntPtr self, out int windowless_rendering_enabled);
             public static cfx_window_info_linux_get_windowless_rendering_enabled_delegate cfx_window_info_linux_get_windowless_rendering_enabled;
 
-            // static void cfx_window_info_linux_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_window_info_linux_set_transparent_painting_enabled_delegate(IntPtr self, int transparent_painting_enabled);
-            public static cfx_window_info_linux_set_transparent_painting_enabled_delegate cfx_window_info_linux_set_transparent_painting_enabled;
-            // static void cfx_window_info_linux_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_window_info_linux_get_transparent_painting_enabled_delegate(IntPtr self, out int transparent_painting_enabled);
-            public static cfx_window_info_linux_get_transparent_painting_enabled_delegate cfx_window_info_linux_get_transparent_painting_enabled;
-
             // static void cfx_window_info_linux_set_window(cef_window_info_t *self, cef_window_handle_t window)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_window_info_linux_set_window_delegate(IntPtr self, IntPtr window);
@@ -6738,15 +6751,6 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_window_info_windows_get_windowless_rendering_enabled_delegate(IntPtr self, out int windowless_rendering_enabled);
             public static cfx_window_info_windows_get_windowless_rendering_enabled_delegate cfx_window_info_windows_get_windowless_rendering_enabled;
-
-            // static void cfx_window_info_windows_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_window_info_windows_set_transparent_painting_enabled_delegate(IntPtr self, int transparent_painting_enabled);
-            public static cfx_window_info_windows_set_transparent_painting_enabled_delegate cfx_window_info_windows_set_transparent_painting_enabled;
-            // static void cfx_window_info_windows_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_window_info_windows_get_transparent_painting_enabled_delegate(IntPtr self, out int transparent_painting_enabled);
-            public static cfx_window_info_windows_get_transparent_painting_enabled_delegate cfx_window_info_windows_get_transparent_painting_enabled;
 
             // static void cfx_window_info_windows_set_window(cef_window_info_t *self, cef_window_handle_t window)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

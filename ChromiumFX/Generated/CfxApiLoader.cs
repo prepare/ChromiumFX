@@ -68,6 +68,8 @@ namespace Chromium {
             cfx_visit_web_plugin_info,
             cfx_write_json,
             cfx_zip_directory,
+            cfx_accessibility_handler_ctor,
+            cfx_accessibility_handler_set_callback,
             cfx_app_ctor,
             cfx_app_set_callback,
             cfx_auth_callback_cont,
@@ -175,6 +177,7 @@ namespace Chromium {
             cfx_browser_host_drag_source_ended_at,
             cfx_browser_host_drag_source_system_drag_ended,
             cfx_browser_host_get_visible_navigation_entry,
+            cfx_browser_host_set_accessibility_state,
             cfx_browser_process_handler_ctor,
             cfx_browser_process_handler_set_callback,
             cfx_browser_settings_ctor,
@@ -473,6 +476,9 @@ namespace Chromium {
             cfx_drag_data_set_fragment_base_url,
             cfx_drag_data_reset_file_contents,
             cfx_drag_data_add_file,
+            cfx_drag_data_get_image,
+            cfx_drag_data_get_image_hotspot,
+            cfx_drag_data_has_image,
             cfx_drag_handler_ctor,
             cfx_drag_handler_set_callback,
             cfx_draggable_region_ctor,
@@ -1016,8 +1022,6 @@ namespace Chromium {
             cfx_settings_get_remote_debugging_port,
             cfx_settings_set_uncaught_exception_stack_size,
             cfx_settings_get_uncaught_exception_stack_size,
-            cfx_settings_set_context_safety_implementation,
-            cfx_settings_get_context_safety_implementation,
             cfx_settings_set_ignore_certificate_errors,
             cfx_settings_get_ignore_certificate_errors,
             cfx_settings_set_enable_net_security_expiration,
@@ -1263,8 +1267,6 @@ namespace Chromium {
             cfx_window_info_linux_get_parent_window,
             cfx_window_info_linux_set_windowless_rendering_enabled,
             cfx_window_info_linux_get_windowless_rendering_enabled,
-            cfx_window_info_linux_set_transparent_painting_enabled,
-            cfx_window_info_linux_get_transparent_painting_enabled,
             cfx_window_info_linux_set_window,
             cfx_window_info_linux_get_window,
             cfx_window_info_windows_ctor,
@@ -1289,8 +1291,6 @@ namespace Chromium {
             cfx_window_info_windows_get_menu,
             cfx_window_info_windows_set_windowless_rendering_enabled,
             cfx_window_info_windows_get_windowless_rendering_enabled,
-            cfx_window_info_windows_set_transparent_painting_enabled,
-            cfx_window_info_windows_get_transparent_painting_enabled,
             cfx_window_info_windows_set_window,
             cfx_window_info_windows_get_window,
             cfx_write_handler_ctor,
@@ -1472,6 +1472,13 @@ namespace Chromium {
             CfxApi.Runtime.cfx_string_multimap_free = (CfxApi.Runtime.cfx_string_multimap_free_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_string_multimap_free, typeof(CfxApi.Runtime.cfx_string_multimap_free_delegate));
         }
 
+        internal static void LoadCfxAccessibilityHandlerApi() {
+            CfxApi.Probe();
+            CfxApi.AccessibilityHandler.cfx_accessibility_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_accessibility_handler_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.AccessibilityHandler.cfx_accessibility_handler_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_accessibility_handler_set_callback, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxAccessibilityHandler.SetNativeCallbacks();
+        }
+
         internal static void LoadCfxAppApi() {
             CfxApi.Probe();
             CfxApi.App.cfx_app_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_app_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
@@ -1606,6 +1613,7 @@ namespace Chromium {
             CfxApi.BrowserHost.cfx_browser_host_drag_source_ended_at = (CfxApi.BrowserHost.cfx_browser_host_drag_source_ended_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_drag_source_ended_at, typeof(CfxApi.BrowserHost.cfx_browser_host_drag_source_ended_at_delegate));
             CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended = (CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_drag_source_system_drag_ended, typeof(CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended_delegate));
             CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry = (CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_visible_navigation_entry, typeof(CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry_delegate));
+            CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state = (CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_set_accessibility_state, typeof(CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state_delegate));
         }
 
         internal static void LoadCfxBrowserProcessHandlerApi() {
@@ -2015,6 +2023,9 @@ namespace Chromium {
             CfxApi.DragData.cfx_drag_data_set_fragment_base_url = (CfxApi.DragData.cfx_drag_data_set_fragment_base_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_set_fragment_base_url, typeof(CfxApi.DragData.cfx_drag_data_set_fragment_base_url_delegate));
             CfxApi.DragData.cfx_drag_data_reset_file_contents = (CfxApi.DragData.cfx_drag_data_reset_file_contents_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_reset_file_contents, typeof(CfxApi.DragData.cfx_drag_data_reset_file_contents_delegate));
             CfxApi.DragData.cfx_drag_data_add_file = (CfxApi.DragData.cfx_drag_data_add_file_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_add_file, typeof(CfxApi.DragData.cfx_drag_data_add_file_delegate));
+            CfxApi.DragData.cfx_drag_data_get_image = (CfxApi.DragData.cfx_drag_data_get_image_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_get_image, typeof(CfxApi.DragData.cfx_drag_data_get_image_delegate));
+            CfxApi.DragData.cfx_drag_data_get_image_hotspot = (CfxApi.DragData.cfx_drag_data_get_image_hotspot_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_get_image_hotspot, typeof(CfxApi.DragData.cfx_drag_data_get_image_hotspot_delegate));
+            CfxApi.DragData.cfx_drag_data_has_image = (CfxApi.DragData.cfx_drag_data_has_image_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_drag_data_has_image, typeof(CfxApi.DragData.cfx_drag_data_has_image_delegate));
         }
 
         internal static void LoadCfxDragHandlerApi() {
@@ -2841,8 +2852,6 @@ namespace Chromium {
             CfxApi.Settings.cfx_settings_get_remote_debugging_port = (CfxApi.Settings.cfx_settings_get_remote_debugging_port_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_remote_debugging_port, typeof(CfxApi.Settings.cfx_settings_get_remote_debugging_port_delegate));
             CfxApi.Settings.cfx_settings_set_uncaught_exception_stack_size = (CfxApi.Settings.cfx_settings_set_uncaught_exception_stack_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_uncaught_exception_stack_size, typeof(CfxApi.Settings.cfx_settings_set_uncaught_exception_stack_size_delegate));
             CfxApi.Settings.cfx_settings_get_uncaught_exception_stack_size = (CfxApi.Settings.cfx_settings_get_uncaught_exception_stack_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_uncaught_exception_stack_size, typeof(CfxApi.Settings.cfx_settings_get_uncaught_exception_stack_size_delegate));
-            CfxApi.Settings.cfx_settings_set_context_safety_implementation = (CfxApi.Settings.cfx_settings_set_context_safety_implementation_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_context_safety_implementation, typeof(CfxApi.Settings.cfx_settings_set_context_safety_implementation_delegate));
-            CfxApi.Settings.cfx_settings_get_context_safety_implementation = (CfxApi.Settings.cfx_settings_get_context_safety_implementation_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_context_safety_implementation, typeof(CfxApi.Settings.cfx_settings_get_context_safety_implementation_delegate));
             CfxApi.Settings.cfx_settings_set_ignore_certificate_errors = (CfxApi.Settings.cfx_settings_set_ignore_certificate_errors_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_ignore_certificate_errors, typeof(CfxApi.Settings.cfx_settings_set_ignore_certificate_errors_delegate));
             CfxApi.Settings.cfx_settings_get_ignore_certificate_errors = (CfxApi.Settings.cfx_settings_get_ignore_certificate_errors_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_ignore_certificate_errors, typeof(CfxApi.Settings.cfx_settings_get_ignore_certificate_errors_delegate));
             CfxApi.Settings.cfx_settings_set_enable_net_security_expiration = (CfxApi.Settings.cfx_settings_set_enable_net_security_expiration_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_enable_net_security_expiration, typeof(CfxApi.Settings.cfx_settings_set_enable_net_security_expiration_delegate));
@@ -3204,8 +3213,6 @@ namespace Chromium {
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_parent_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_windowless_rendering_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_windowless_rendering_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled_delegate));
-            CfxApi.WindowInfoLinux.cfx_window_info_linux_set_transparent_painting_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_transparent_painting_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_transparent_painting_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_transparent_painting_enabled_delegate));
-            CfxApi.WindowInfoLinux.cfx_window_info_linux_get_transparent_painting_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_transparent_painting_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_transparent_painting_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_transparent_painting_enabled_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window_delegate));
         }
@@ -3234,8 +3241,6 @@ namespace Chromium {
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_menu, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_windowless_rendering_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_windowless_rendering_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled_delegate));
-            CfxApi.WindowInfoWindows.cfx_window_info_windows_set_transparent_painting_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_transparent_painting_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_transparent_painting_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_transparent_painting_enabled_delegate));
-            CfxApi.WindowInfoWindows.cfx_window_info_windows_get_transparent_painting_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_transparent_painting_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_transparent_painting_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_transparent_painting_enabled_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_window, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_window, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window_delegate));
         }

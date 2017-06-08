@@ -67,14 +67,6 @@ static void cfx_window_info_linux_get_windowless_rendering_enabled(cef_window_in
     *windowless_rendering_enabled = self->windowless_rendering_enabled;
 }
 
-// cef_window_info_t->transparent_painting_enabled
-static void cfx_window_info_linux_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled) {
-    self->transparent_painting_enabled = transparent_painting_enabled;
-}
-static void cfx_window_info_linux_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled) {
-    *transparent_painting_enabled = self->transparent_painting_enabled;
-}
-
 // cef_window_info_t->window
 static void cfx_window_info_linux_set_window(cef_window_info_t *self, cef_window_handle_t window) {
     self->window = window;
@@ -98,8 +90,6 @@ static void cfx_window_info_linux_get_window(cef_window_info_t *self, cef_window
 #define cfx_window_info_linux_get_parent_window 0
 #define cfx_window_info_linux_set_windowless_rendering_enabled 0
 #define cfx_window_info_linux_get_windowless_rendering_enabled 0
-#define cfx_window_info_linux_set_transparent_painting_enabled 0
-#define cfx_window_info_linux_get_transparent_painting_enabled 0
 #define cfx_window_info_linux_set_window 0
 #define cfx_window_info_linux_get_window 0
 #endif //ifdef CFX_LINUX

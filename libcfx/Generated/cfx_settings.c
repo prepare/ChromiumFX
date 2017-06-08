@@ -227,14 +227,6 @@ static void cfx_settings_get_uncaught_exception_stack_size(cef_settings_t *self,
     *uncaught_exception_stack_size = self->uncaught_exception_stack_size;
 }
 
-// cef_settings_t->context_safety_implementation
-static void cfx_settings_set_context_safety_implementation(cef_settings_t *self, int context_safety_implementation) {
-    self->context_safety_implementation = context_safety_implementation;
-}
-static void cfx_settings_get_context_safety_implementation(cef_settings_t *self, int* context_safety_implementation) {
-    *context_safety_implementation = self->context_safety_implementation;
-}
-
 // cef_settings_t->ignore_certificate_errors
 static void cfx_settings_set_ignore_certificate_errors(cef_settings_t *self, int ignore_certificate_errors) {
     self->ignore_certificate_errors = ignore_certificate_errors;
