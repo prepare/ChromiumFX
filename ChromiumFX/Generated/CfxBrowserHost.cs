@@ -836,5 +836,38 @@ namespace Chromium {
         public void DragSourceSystemDragEnded() {
             CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended(NativePtr);
         }
+
+        /// <summary>
+        /// Set accessibility state for all frames. |accessibilityState| may be
+        /// default, enabled or disabled. If |accessibilityState| is STATE_DEFAULT
+        /// then accessibility will be disabled by default and the state may be further
+        /// controlled with the "force-renderer-accessibility" and "disable-renderer-
+        /// accessibility" command-line switches. If |accessibilityState| is
+        /// STATE_ENABLED then accessibility will be enabled. If |accessibilityState|
+        /// is STATE_DISABLED then accessibility will be completely disabled.
+        /// 
+        /// For windowed browsers accessibility will be enabled in Complete mode (which
+        /// corresponds to kAccessibilityModeComplete in Chromium). In this mode all
+        /// platform accessibility objects will be created and managed by Chromium's
+        /// internal implementation. The client needs only to detect the screen reader
+        /// and call this function appropriately. For example, on macOS the client can
+        /// handle the @"AXEnhancedUserStructure" accessibility attribute to detect
+        /// VoiceOver state changes and on Windows the client can handle WM_GETOBJECT
+        /// with OBJID_CLIENT to detect accessibility readers.
+        /// 
+        /// For windowless browsers accessibility will be enabled in TreeOnly mode
+        /// (which corresponds to kAccessibilityModeWebContentsOnly in Chromium). In
+        /// this mode renderer accessibility is enabled, the full tree is computed, and
+        /// events are passed to CfxAccessibiltyHandler, but platform accessibility
+        /// objects are not created. The client may implement platform accessibility
+        /// objects using CfxAccessibiltyHandler callbacks if desired.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void SetAccessibilityState(CfxState accessibilityState) {
+            CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state(NativePtr, (int)accessibilityState);
+        }
     }
 }

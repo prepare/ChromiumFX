@@ -8,6 +8,7 @@
 
 
 #include "cfx_runtime.c"
+#include "cfx_accessibility_handler.c"
 #include "cfx_app.c"
 #include "cfx_auth_callback.c"
 #include "cfx_before_download_callback.c"

@@ -25,6 +25,7 @@ namespace Chromium {
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {
+            get_accessibility_handler_native = get_accessibility_handler;
             get_root_screen_rect_native = get_root_screen_rect;
             get_view_rect_native = get_view_rect;
             get_screen_point_native = get_screen_point;
@@ -38,6 +39,7 @@ namespace Chromium {
             on_scroll_offset_changed_native = on_scroll_offset_changed;
             on_ime_composition_range_changed_native = on_ime_composition_range_changed;
 
+            get_accessibility_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_accessibility_handler_native);
             get_root_screen_rect_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_root_screen_rect_native);
             get_view_rect_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_view_rect_native);
             get_screen_point_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_screen_point_native);
@@ -50,6 +52,24 @@ namespace Chromium {
             update_drag_cursor_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(update_drag_cursor_native);
             on_scroll_offset_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_scroll_offset_changed_native);
             on_ime_composition_range_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_ime_composition_range_changed_native);
+        }
+
+        // get_accessibility_handler
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void get_accessibility_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_accessibility_handler_delegate get_accessibility_handler_native;
+        private static IntPtr get_accessibility_handler_native_ptr;
+
+        internal static void get_accessibility_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
+            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                __retval = default(IntPtr);
+                return;
+            }
+            var e = new CfxGetAccessibilityHandlerEventArgs();
+            self.m_GetAccessibilityHandler?.Invoke(self, e);
+            e.m_isInvalid = true;
+            __retval = CfxAccessibilityHandler.Unwrap(e.m_returnValue);
         }
 
         // get_root_screen_rect
@@ -337,6 +357,51 @@ namespace Chromium {
         public CfxRenderHandler() : base(CfxApi.RenderHandler.cfx_render_handler_ctor) {}
 
         /// <summary>
+        /// Return the handler for accessibility notifications. If no handler is
+        /// provided the default implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxGetAccessibilityHandlerEventHandler GetAccessibilityHandler {
+            add {
+                lock(eventLock) {
+                    if(m_GetAccessibilityHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
+                    }
+                    CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, get_accessibility_handler_native_ptr);
+                    m_GetAccessibilityHandler += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_GetAccessibilityHandler -= value;
+                    if(m_GetAccessibilityHandler == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxAccessibilityHandler provided by the event handler attached to the GetAccessibilityHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxAccessibilityHandler RetrieveAccessibilityHandler() {
+            var h = m_GetAccessibilityHandler;
+            if(h != null) {
+                var e = new CfxGetAccessibilityHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
+        private CfxGetAccessibilityHandlerEventHandler m_GetAccessibilityHandler;
+
+        /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
         /// true (1) if the rectangle was provided.
         /// </summary>
@@ -348,7 +413,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetRootScreenRect == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, get_root_screen_rect_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, get_root_screen_rect_native_ptr);
                     }
                     m_GetRootScreenRect += value;
                 }
@@ -357,7 +422,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetRootScreenRect -= value;
                     if(m_GetRootScreenRect == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -377,7 +442,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetViewRect == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, get_view_rect_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, get_view_rect_native_ptr);
                     }
                     m_GetViewRect += value;
                 }
@@ -386,7 +451,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetViewRect -= value;
                     if(m_GetViewRect == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -406,7 +471,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetScreenPoint == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, get_screen_point_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, get_screen_point_native_ptr);
                     }
                     m_GetScreenPoint += value;
                 }
@@ -415,7 +480,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetScreenPoint -= value;
                     if(m_GetScreenPoint == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -440,7 +505,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetScreenInfo == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, get_screen_info_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, get_screen_info_native_ptr);
                     }
                     m_GetScreenInfo += value;
                 }
@@ -449,7 +514,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetScreenInfo -= value;
                     if(m_GetScreenInfo == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -469,7 +534,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnPopupShow == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, on_popup_show_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, on_popup_show_native_ptr);
                     }
                     m_OnPopupShow += value;
                 }
@@ -478,7 +543,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPopupShow -= value;
                     if(m_OnPopupShow == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -498,7 +563,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnPopupSize == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, on_popup_size_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, on_popup_size_native_ptr);
                     }
                     m_OnPopupSize += value;
                 }
@@ -507,7 +572,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPopupSize -= value;
                     if(m_OnPopupSize == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, IntPtr.Zero);
                     }
                 }
             }
@@ -533,7 +598,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnPaint == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, on_paint_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, on_paint_native_ptr);
                     }
                     m_OnPaint += value;
                 }
@@ -542,7 +607,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPaint -= value;
                     if(m_OnPaint == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, IntPtr.Zero);
                     }
                 }
             }
@@ -562,7 +627,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnCursorChange == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, on_cursor_change_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, on_cursor_change_native_ptr);
                     }
                     m_OnCursorChange += value;
                 }
@@ -571,7 +636,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnCursorChange -= value;
                     if(m_OnCursorChange == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
             }
@@ -601,7 +666,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_StartDragging == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, start_dragging_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, start_dragging_native_ptr);
                     }
                     m_StartDragging += value;
                 }
@@ -610,7 +675,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_StartDragging -= value;
                     if(m_StartDragging == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
                     }
                 }
             }
@@ -631,7 +696,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_UpdateDragCursor == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, update_drag_cursor_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, update_drag_cursor_native_ptr);
                     }
                     m_UpdateDragCursor += value;
                 }
@@ -640,7 +705,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_UpdateDragCursor -= value;
                     if(m_UpdateDragCursor == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
             }
@@ -659,7 +724,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnScrollOffsetChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, on_scroll_offset_changed_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, on_scroll_offset_changed_native_ptr);
                     }
                     m_OnScrollOffsetChanged += value;
                 }
@@ -668,7 +733,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnScrollOffsetChanged -= value;
                     if(m_OnScrollOffsetChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
                     }
                 }
             }
@@ -689,7 +754,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnImeCompositionRangeChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, on_ime_composition_range_changed_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, on_ime_composition_range_changed_native_ptr);
                     }
                     m_OnImeCompositionRangeChanged += value;
                 }
@@ -698,7 +763,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnImeCompositionRangeChanged -= value;
                     if(m_OnImeCompositionRangeChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
                     }
                 }
             }
@@ -707,53 +772,57 @@ namespace Chromium {
         private CfxOnImeCompositionRangeChangedEventHandler m_OnImeCompositionRangeChanged;
 
         internal override void OnDispose(IntPtr nativePtr) {
+            if(m_GetAccessibilityHandler != null) {
+                m_GetAccessibilityHandler = null;
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+            }
             if(m_GetRootScreenRect != null) {
                 m_GetRootScreenRect = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_GetViewRect != null) {
                 m_GetViewRect = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_GetScreenPoint != null) {
                 m_GetScreenPoint = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_GetScreenInfo != null) {
                 m_GetScreenInfo = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_OnPopupShow != null) {
                 m_OnPopupShow = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, IntPtr.Zero);
             }
             if(m_OnPopupSize != null) {
                 m_OnPopupSize = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 5, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, IntPtr.Zero);
             }
             if(m_OnPaint != null) {
                 m_OnPaint = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 6, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, IntPtr.Zero);
             }
             if(m_OnCursorChange != null) {
                 m_OnCursorChange = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
             }
             if(m_StartDragging != null) {
                 m_StartDragging = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
             }
             if(m_UpdateDragCursor != null) {
                 m_UpdateDragCursor = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
             }
             if(m_OnScrollOffsetChanged != null) {
                 m_OnScrollOffsetChanged = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
             }
             if(m_OnImeCompositionRangeChanged != null) {
                 m_OnImeCompositionRangeChanged = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -761,6 +830,46 @@ namespace Chromium {
 
 
     namespace Event {
+
+        /// <summary>
+        /// Return the handler for accessibility notifications. If no handler is
+        /// provided the default implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetAccessibilityHandlerEventHandler(object sender, CfxGetAccessibilityHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for accessibility notifications. If no handler is
+        /// provided the default implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxGetAccessibilityHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxAccessibilityHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetAccessibilityHandlerEventArgs() {}
+
+            /// <summary>
+            /// Set the return value for the <see cref="CfxRenderHandler.GetAccessibilityHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(CfxAccessibilityHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
 
         /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
