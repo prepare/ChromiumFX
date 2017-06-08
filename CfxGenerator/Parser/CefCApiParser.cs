@@ -60,7 +60,7 @@ namespace Parser {
             var success =
                 ParseSummary(m.Comments)
                 && ParseType(m.Signature.ReturnType)
-                && Skip(@"\(\s*CEF_CALLBACK \*")
+                && Skip(@"\(\s*CEF_CALLBACK\s*\*\s*")
                 && Scan(@"\w+", () => m.Name = Value)
                 && Skip(@"\)\(")
                 && ParseParameterList(m.Signature.Parameters)
