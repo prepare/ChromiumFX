@@ -58,6 +58,9 @@ If you earn money with ChromiumFX and want to sponsor development and maintenanc
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.3071.1 ###
+- Removed an erroneous line of code introduced when trying to reproduce an issue. Sorry for that.
+
 ### Version 3.3071.0 ###
 - Update to CEF 3.3071.1634 with API changes.
 - Implemented a new method to retrieve the ChromiumWebBrowser object for a given CfxBrowser object.
