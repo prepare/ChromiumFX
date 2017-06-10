@@ -271,9 +271,6 @@ namespace Chromium.WebBrowser {
                     | ControlStyles.Selectable
                     , true);
 
-
-                RightToLeft = RightToLeft.Yes;
-
                 if(initialUrl == null)
                     this.initialUrl = "about:blank";
                 else
