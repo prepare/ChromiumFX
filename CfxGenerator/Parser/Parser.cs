@@ -29,16 +29,16 @@ namespace Parser {
 
         internal static CefApiNode Parse() {
 
-            var api = new CefApiNode();
+            var apiNode = new CefApiNode();
 
             Parser p = new CefCApiParser();
             p.SetFile(Path.Combine("cef", "include", "cef_version.h"));
-            p.Parse(api);
+            p.Parse(apiNode);
             var files = Directory.GetFiles(Path.Combine("cef", "include", "capi"));
             foreach(var f in files) {
                 if(Path.GetFileName(f) == "cef_base_capi.h") continue;
                 p.SetFile(f);
-                p.Parse(api);
+                p.Parse(apiNode);
             }
 
 
@@ -46,13 +46,13 @@ namespace Parser {
             p = new CefInternalsParser();
 
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_types.h"));
-            p.Parse(api);
+            p.Parse(apiNode);
 
             CefApiNode tmpApi = new CefApiNode();
 
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
             p.Parse(tmpApi);
-            api.CefValueStructs.AddRange(tmpApi.CefValueStructs);
+            apiNode.CefValueStructs.AddRange(tmpApi.CefValueStructs);
 
             tmpApi = new CefApiNode();
 
@@ -62,19 +62,19 @@ namespace Parser {
             p.Parse(tmpApi);
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_string_multimap.h"));
             p.Parse(tmpApi);
-            api.CefStringCollectionFunctions = tmpApi.CefFunctions.ToArray();
+            apiNode.CefStringCollectionFunctions = tmpApi.CefFunctions.ToArray();
 
             tmpApi = new CefApiNode();
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_types_win.h"));
             p.Parse(tmpApi);
-            api.CefFunctionsWindows = tmpApi.CefFunctions;
-            api.CefStructsWindows = tmpApi.CefValueStructs;
+            apiNode.CefFunctionsWindows = tmpApi.CefFunctions;
+            apiNode.CefStructsWindows = tmpApi.CefValueStructs;
 
             tmpApi = new CefApiNode();
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_types_linux.h"));
             p.Parse(tmpApi);
-            api.CefFunctionsLinux = tmpApi.CefFunctions;
-            api.CefStructsLinux = tmpApi.CefValueStructs;
+            apiNode.CefFunctionsLinux = tmpApi.CefFunctions;
+            apiNode.CefStructsLinux = tmpApi.CefValueStructs;
 
             p = new CefClassesParser();
 
@@ -87,128 +87,12 @@ namespace Parser {
                 if(Path.GetFileName(f) == "cef_version.h") continue;
 
                 p.SetFile(f);
-                p.Parse(api);
+                p.Parse(apiNode);
             }
-
-
-            api.ApiHashUniversal = ParseApiHash();
-
-            // process c++ findings (compat with previous parser)
-
-            var classes = new Dictionary<string, CefClassNode>(api.CefClasses.Count);
-            var funcs = new Dictionary<string, CefCppFunctionNode>();
-            foreach(var f in api.CefCppFunctions) {
-                if(f.CefConfig.CApiName == null) {
-                    funcs.Add(CppStyle2CStyle(f.Name), f);
-                } else {
-                    f.CefConfig.CppApiName = f.Name;
-                    funcs.Add(f.CefConfig.CApiName, f);
-                }
-            }
-            foreach(var c in api.CefClasses) {
-                classes.Add(CppStyle2CStyle(c.Name) + "_t", c);
-                foreach(var f in c.Methods) {
-                    if(f.CefConfig.CApiName == null) {
-                        if(f.IsStatic && f.Name.EndsWith(c.Name.Substring(3))) {
-                            funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name.Substring(0, f.Name.Length - (c.Name.Length - 3))), f);
-                        } else {
-                            funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name), f);
-                        }
-                    } else {
-                        f.CefConfig.CppApiName = f.Name;
-                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + f.CefConfig.CApiName, f);
-                    }
-                }
-            }
-
-            foreach(var s in api.CefCallbackStructs) {
-                if(classes.ContainsKey(s.Name)) {
-                    var c = classes[s.Name];
-                    classes.Remove(s.Name);
-                    s.CefConfig = c.CefConfig;
-                } else {
-                    if(s.CefFunctions.Count > 0)
-                        Debugger.Break();
-                }
-                foreach(var c in s.CefCallbacks) {
-                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + c.Name)) {
-                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + c.Name];
-                        c.CefConfig = cf.CefConfig;
-                        ApplyBoolParameters(c.Signature, cf);
-                    } else {
-                        if(c.Signature != null)
-                            Debugger.Break();
-                    }
-                }
-            }
-
-            foreach(var f in api.CefFunctions) {
-                if(funcs.ContainsKey(f.Name)) {
-                    var cf = funcs[f.Name];
-                    ApplyBoolParameters(f.Signature, cf);
-                } else {
-                    //Debugger.Break();
-                }
-            }
-
-            api.CefCallbackStructs.Sort((x, y) => {
-                return y.Name.Length - x.Name.Length;
-            });
-
-            int ifunc = 0;
-            while(ifunc < api.CefFunctions.Count) {
-                var f = api.CefFunctions[ifunc];
-                var found = false;
-                foreach(var s in api.CefCallbackStructs) {
-                    if(f.Name.StartsWith(s.Name.Substring(0, s.Name.Length - 1))) {
-                        s.CefFunctions.Add(f);
-                        found = true;
-                        break;
-                    }
-                }
-                if(found) {
-                    api.CefFunctions.RemoveAt(ifunc);
-                } else {
-                    ++ifunc;
-                }
-            }
-
-            return api;
+            
+            return apiNode;
         }
-
-        private static void ApplyBoolParameters(SignatureNode signature, CefCppFunctionNode cf) {
-            if(cf.IsRetvalBoolean) {
-                signature.ReturnType.Name = "bool";
-            }
-            foreach(var pm in cf.BooleanParameters) {
-                var success = false;
-                foreach(var pm1 in signature.Parameters) {
-                    if(pm1.Var == pm) {
-                        pm1.ParameterType.Name = "bool";
-                        success = true;
-                        break;
-                    }
-                }
-                if(!success) {
-                    Debugger.Break();
-                }
-            }
-        }
-
-        private static string CppStyle2CStyle(string symbol) {
-            var s = new StringBuilder();
-            for(int i = 0; i < symbol.Length; ++i) {
-                var c = symbol[i];
-                if(char.IsUpper(c)) {
-                    if(s.Length > 0 && char.IsLower(symbol[i - 1])) s.Append("_");
-                    s.Append(char.ToLowerInvariant(c));
-                } else {
-                    s.Append(c);
-                }
-            }
-            return s.ToString();
-        }
-
+        
         public static string ParseApiHash() {
             var code = File.ReadAllText(System.IO.Path.Combine("cef", "include", "cef_version.h"));
             var ex = new Regex(@"CEF_API_HASH_UNIVERSAL ""(\w+)""");

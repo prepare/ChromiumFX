@@ -10,6 +10,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using Parser;
 
 public class ApiTypeBuilder {
 
@@ -24,6 +26,7 @@ public class ApiTypeBuilder {
         string hash = Parser.Parser.ParseApiHash();
         if(apiNode == null || !hash.Equals(apiNode.ApiHashUniversal)) {
             apiNode = Parser.Parser.Parse();
+            apiNode.ApiHashUniversal = hash;
             Serialize(apiNode);
         }
         return BuildTypes();
@@ -52,7 +55,125 @@ public class ApiTypeBuilder {
         }
     }
 
+    private void ProcessApi() {
+        // process c++ findings (compat with previous parser)
+
+        var classes = new Dictionary<string, CefClassNode>(apiNode.CefClasses.Count);
+        var funcs = new Dictionary<string, CefCppFunctionNode>();
+        foreach(var f in apiNode.CefCppFunctions) {
+            if(f.CefConfig.CApiName == null) {
+                funcs.Add(CppStyle2CStyle(f.Name), f);
+            } else {
+                f.CefConfig.CppApiName = f.Name;
+                funcs.Add(f.CefConfig.CApiName, f);
+            }
+        }
+        foreach(var c in apiNode.CefClasses) {
+            classes.Add(CppStyle2CStyle(c.Name) + "_t", c);
+            foreach(var f in c.Methods) {
+                if(f.CefConfig.CApiName == null) {
+                    if(f.IsStatic && f.Name.EndsWith(c.Name.Substring(3))) {
+                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name.Substring(0, f.Name.Length - (c.Name.Length - 3))), f);
+                    } else {
+                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name), f);
+                    }
+                } else {
+                    f.CefConfig.CppApiName = f.Name;
+                    funcs.Add(CppStyle2CStyle(c.Name) + "_" + f.CefConfig.CApiName, f);
+                }
+            }
+        }
+
+        foreach(var s in apiNode.CefCallbackStructs) {
+            if(classes.ContainsKey(s.Name)) {
+                var c = classes[s.Name];
+                classes.Remove(s.Name);
+                s.CefConfig = c.CefConfig;
+            } else {
+                if(s.CefFunctions.Count > 0)
+                    Debugger.Break();
+            }
+            foreach(var c in s.CefCallbacks) {
+                if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + c.Name)) {
+                    var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + c.Name];
+                    c.CefConfig = cf.CefConfig;
+                    ApplyBoolParameters(c.Signature, cf);
+                } else {
+                    if(c.Signature != null)
+                        Debugger.Break();
+                }
+            }
+        }
+
+        foreach(var f in apiNode.CefFunctions) {
+            if(funcs.ContainsKey(f.Name)) {
+                var cf = funcs[f.Name];
+                ApplyBoolParameters(f.Signature, cf);
+            } else {
+                //Debugger.Break();
+            }
+        }
+
+        apiNode.CefCallbackStructs.Sort((x, y) => {
+            return y.Name.Length - x.Name.Length;
+        });
+
+        int ifunc = 0;
+        while(ifunc < apiNode.CefFunctions.Count) {
+            var f = apiNode.CefFunctions[ifunc];
+            var found = false;
+            foreach(var s in apiNode.CefCallbackStructs) {
+                if(f.Name.StartsWith(s.Name.Substring(0, s.Name.Length - 1))) {
+                    s.CefFunctions.Add(f);
+                    found = true;
+                    break;
+                }
+            }
+            if(found) {
+                apiNode.CefFunctions.RemoveAt(ifunc);
+            } else {
+                ++ifunc;
+            }
+        }
+    }
+
+    private static void ApplyBoolParameters(SignatureNode signature, CefCppFunctionNode cf) {
+        if(cf.IsRetvalBoolean) {
+            signature.ReturnType.Name = "bool";
+        }
+        foreach(var pm in cf.BooleanParameters) {
+            var success = false;
+            foreach(var pm1 in signature.Parameters) {
+                if(pm1.Var == pm) {
+                    pm1.ParameterType.Name = "bool";
+                    success = true;
+                    break;
+                }
+            }
+            if(!success) {
+                Debugger.Break();
+            }
+        }
+    }
+
+    private static string CppStyle2CStyle(string symbol) {
+        var s = new StringBuilder();
+        for(int i = 0; i < symbol.Length; ++i) {
+            var c = symbol[i];
+            if(char.IsUpper(c)) {
+                if(s.Length > 0 && char.IsLower(symbol[i - 1])) s.Append("_");
+                s.Append(char.ToLowerInvariant(c));
+            } else {
+                s.Append(c);
+            }
+        }
+        return s.ToString();
+    }
+
     private CefApiDeclarations BuildTypes() {
+
+        ProcessApi();
+
         var structs = new List<CefStructType>();
         var enums = new List<CefEnumType>();
         var stringCollectionTypes = new List<StringCollectionType>();
