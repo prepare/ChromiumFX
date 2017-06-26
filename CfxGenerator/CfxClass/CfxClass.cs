@@ -77,18 +77,14 @@ public enum StructCategory {
 public abstract class CfxClass {
 
     public static CfxClass Create(CefStructType cefStruct, Parser.CallbackStructNode s, ApiTypeBuilder api) {
-        if(s.CefConfig != null) {
-            switch(s.CefConfig.Source) {
-                case "client":
-                    return new CfxClientClass(cefStruct, s, api);
-                case "library":
-                    return new CfxLibraryClass(cefStruct, s, api);
-                default:
-                    Debug.Assert(false);
-                    throw new Exception();
-            }
-        } else {
-            throw new Exception();
+        switch(cefStruct.Category) {
+            case StructCategory.Client:
+                return new CfxClientClass(cefStruct, s, api);
+            case StructCategory.Library:
+                return new CfxLibraryClass(cefStruct, s, api);
+            default:
+                Debug.Assert(false);
+                throw new Exception();
         }
     }
 
@@ -141,7 +137,7 @@ public abstract class CfxClass {
         ApiClassName = ClassName.Substring(3);
         RemoteClassName = cefStruct.RemoteClassName;
         Comments = comments;
-        
+
     }
 
     protected void GetCallbackFunctions(Parser.CallbackStructNode sd, ApiTypeBuilder api) {
@@ -176,5 +172,5 @@ public abstract class CfxClass {
     public abstract void EmitRemoteCalls(CodeBuilder b, List<string> callIds);
 
     public abstract void EmitRemoteClass(CodeBuilder b);
-    
+
 }

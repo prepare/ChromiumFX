@@ -40,7 +40,6 @@ namespace Parser {
         public readonly List<FunctionNode> CefFunctions = new List<FunctionNode>();
         public readonly List<CallbackNode> CefCallbacks = new List<CallbackNode>();
         public CommentNode Comments = new CommentNode();
-        public CefConfigNode CefConfig;
         public override string ToString() {
             return Name;
         }
