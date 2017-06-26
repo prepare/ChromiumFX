@@ -56,22 +56,22 @@ namespace Parser {
 
             tmpApi = new CefApiNode();
 
-            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_list.h")));
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_string_list.h"));
             p.Parse(tmpApi);
-            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_map.h")));
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_string_map.h"));
             p.Parse(tmpApi);
-            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_multimap.h")));
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_string_multimap.h"));
             p.Parse(tmpApi);
             api.CefStringCollectionFunctions = tmpApi.CefFunctions.ToArray();
 
             tmpApi = new CefApiNode();
-            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_win.h")));
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_types_win.h"));
             p.Parse(tmpApi);
             api.CefFunctionsWindows = tmpApi.CefFunctions;
             api.CefStructsWindows = tmpApi.CefValueStructs;
 
             tmpApi = new CefApiNode();
-            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h")));
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_types_linux.h"));
             p.Parse(tmpApi);
             api.CefFunctionsLinux = tmpApi.CefFunctions;
             api.CefStructsLinux = tmpApi.CefValueStructs;
