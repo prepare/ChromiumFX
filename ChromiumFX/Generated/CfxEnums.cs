@@ -1087,7 +1087,7 @@ namespace Chromium {
         /// destination is HTTP. This is the default behavior.
         /// </summary>
         ClearReferrerOnTransitionFromSecureToInsecure,
-        Default = unchecked((int)REFERRER_POLICY_CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE),
+        Default = ClearReferrerOnTransitionFromSecureToInsecure,
         /// <summary>
         /// A slight variant on CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE:
         /// If the request destination is HTTP, an HTTPS referrer will be cleared. If

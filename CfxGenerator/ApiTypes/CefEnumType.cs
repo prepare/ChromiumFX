@@ -109,6 +109,8 @@ public class CefEnumType : ApiType {
                 return "CertValidityTooLong";
             case "UINT_MAX":
                 return "unchecked((int)UInt32.MaxValue)";
+            case "REFERRER_POLICY_CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE":
+                return "ClearReferrerOnTransitionFromSecureToInsecure";
             default:
                 return string.Format("unchecked((int){0})", originalValue);
         }
