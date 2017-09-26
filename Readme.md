@@ -58,6 +58,10 @@ If you earn money with ChromiumFX and want to sponsor development and maintenanc
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.3163.0 ###
+- Update to CEF 3.3163.1670 with API changes.
+
+
 ### Version 3.3071.2 ###
 - Update to CEF 3.3071.1644 with minor API changes.
 
