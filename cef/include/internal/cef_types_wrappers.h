@@ -488,9 +488,7 @@ struct CefPopupFeaturesTraits {
     s->menuBarVisible = true;
     s->statusBarVisible = true;
     s->toolBarVisible = true;
-    s->locationBarVisible = true;
     s->scrollbarsVisible = true;
-    s->resizable = true;
   }
 
   static inline void clear(struct_type* s) {}
@@ -509,11 +507,7 @@ struct CefPopupFeaturesTraits {
     target->menuBarVisible = src->menuBarVisible;
     target->statusBarVisible = src->statusBarVisible;
     target->toolBarVisible = src->toolBarVisible;
-    target->locationBarVisible = src->locationBarVisible;
     target->scrollbarsVisible = src->scrollbarsVisible;
-    target->resizable = src->resizable;
-    target->fullscreen = src->fullscreen;
-    target->dialog = src->dialog;
   }
 };
 
@@ -679,7 +673,6 @@ struct CefBrowserSettingsTraits {
 
     target->remote_fonts = src->remote_fonts;
     target->javascript = src->javascript;
-    target->javascript_open_windows = src->javascript_open_windows;
     target->javascript_close_windows = src->javascript_close_windows;
     target->javascript_access_clipboard = src->javascript_access_clipboard;
     target->javascript_dom_paste = src->javascript_dom_paste;
