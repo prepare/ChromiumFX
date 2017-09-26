@@ -147,14 +147,6 @@ static void cfx_browser_settings_get_javascript(cef_browser_settings_t *self, ce
     *javascript = self->javascript;
 }
 
-// cef_browser_settings_t->javascript_open_windows
-static void cfx_browser_settings_set_javascript_open_windows(cef_browser_settings_t *self, cef_state_t javascript_open_windows) {
-    self->javascript_open_windows = javascript_open_windows;
-}
-static void cfx_browser_settings_get_javascript_open_windows(cef_browser_settings_t *self, cef_state_t* javascript_open_windows) {
-    *javascript_open_windows = self->javascript_open_windows;
-}
-
 // cef_browser_settings_t->javascript_close_windows
 static void cfx_browser_settings_set_javascript_close_windows(cef_browser_settings_t *self, cef_state_t javascript_close_windows) {
     self->javascript_close_windows = javascript_close_windows;

@@ -143,6 +143,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_launch_process_delegate(IntPtr command_line);
             public static cfx_launch_process_delegate cfx_launch_process;
+            // CEF_EXPORT void cef_load_crlsets_file(const cef_string_t* path);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_load_crlsets_file_delegate(IntPtr path_str, int path_length);
+            public static cfx_load_crlsets_file_delegate cfx_load_crlsets_file;
             // CEF_EXPORT int64 cef_now_from_system_trace_time();
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate long cfx_now_from_system_trace_time_delegate();
@@ -1070,15 +1074,6 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_browser_settings_get_javascript_delegate(IntPtr self, out int javascript);
             public static cfx_browser_settings_get_javascript_delegate cfx_browser_settings_get_javascript;
-
-            // static void cfx_browser_settings_set_javascript_open_windows(cef_browser_settings_t *self, cef_state_t javascript_open_windows)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_settings_set_javascript_open_windows_delegate(IntPtr self, int javascript_open_windows);
-            public static cfx_browser_settings_set_javascript_open_windows_delegate cfx_browser_settings_set_javascript_open_windows;
-            // static void cfx_browser_settings_get_javascript_open_windows(cef_browser_settings_t *self, cef_state_t* javascript_open_windows)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_settings_get_javascript_open_windows_delegate(IntPtr self, out int javascript_open_windows);
-            public static cfx_browser_settings_get_javascript_open_windows_delegate cfx_browser_settings_get_javascript_open_windows;
 
             // static void cfx_browser_settings_set_javascript_close_windows(cef_browser_settings_t *self, cef_state_t javascript_close_windows)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -4013,15 +4008,6 @@ namespace Chromium {
             public delegate void cfx_popup_features_get_toolBarVisible_delegate(IntPtr self, out int toolBarVisible);
             public static cfx_popup_features_get_toolBarVisible_delegate cfx_popup_features_get_toolBarVisible;
 
-            // static void cfx_popup_features_set_locationBarVisible(cef_popup_features_t *self, int locationBarVisible)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_set_locationBarVisible_delegate(IntPtr self, int locationBarVisible);
-            public static cfx_popup_features_set_locationBarVisible_delegate cfx_popup_features_set_locationBarVisible;
-            // static void cfx_popup_features_get_locationBarVisible(cef_popup_features_t *self, int* locationBarVisible)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_get_locationBarVisible_delegate(IntPtr self, out int locationBarVisible);
-            public static cfx_popup_features_get_locationBarVisible_delegate cfx_popup_features_get_locationBarVisible;
-
             // static void cfx_popup_features_set_scrollbarsVisible(cef_popup_features_t *self, int scrollbarsVisible)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_popup_features_set_scrollbarsVisible_delegate(IntPtr self, int scrollbarsVisible);
@@ -4030,33 +4016,6 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_popup_features_get_scrollbarsVisible_delegate(IntPtr self, out int scrollbarsVisible);
             public static cfx_popup_features_get_scrollbarsVisible_delegate cfx_popup_features_get_scrollbarsVisible;
-
-            // static void cfx_popup_features_set_resizable(cef_popup_features_t *self, int resizable)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_set_resizable_delegate(IntPtr self, int resizable);
-            public static cfx_popup_features_set_resizable_delegate cfx_popup_features_set_resizable;
-            // static void cfx_popup_features_get_resizable(cef_popup_features_t *self, int* resizable)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_get_resizable_delegate(IntPtr self, out int resizable);
-            public static cfx_popup_features_get_resizable_delegate cfx_popup_features_get_resizable;
-
-            // static void cfx_popup_features_set_fullscreen(cef_popup_features_t *self, int fullscreen)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_set_fullscreen_delegate(IntPtr self, int fullscreen);
-            public static cfx_popup_features_set_fullscreen_delegate cfx_popup_features_set_fullscreen;
-            // static void cfx_popup_features_get_fullscreen(cef_popup_features_t *self, int* fullscreen)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_get_fullscreen_delegate(IntPtr self, out int fullscreen);
-            public static cfx_popup_features_get_fullscreen_delegate cfx_popup_features_get_fullscreen;
-
-            // static void cfx_popup_features_set_dialog(cef_popup_features_t *self, int dialog)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_set_dialog_delegate(IntPtr self, int dialog);
-            public static cfx_popup_features_set_dialog_delegate cfx_popup_features_set_dialog;
-            // static void cfx_popup_features_get_dialog(cef_popup_features_t *self, int* dialog)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_popup_features_get_dialog_delegate(IntPtr self, out int dialog);
-            public static cfx_popup_features_get_dialog_delegate cfx_popup_features_get_dialog;
 
         }
 

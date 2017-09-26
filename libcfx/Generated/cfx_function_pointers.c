@@ -7,7 +7,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1369] =  {
+static void* cfx_function_pointers[1360] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_base64decode,
@@ -40,6 +40,7 @@ static void* cfx_function_pointers[1369] =  {
     (void*)cfx_is_cert_status_minor_error,
     (void*)cfx_is_web_plugin_unstable,
     (void*)cfx_launch_process,
+    (void*)cfx_load_crlsets_file,
     (void*)cfx_now_from_system_trace_time,
     (void*)cfx_parse_json,
     (void*)cfx_parse_jsonand_return_error,
@@ -206,8 +207,6 @@ static void* cfx_function_pointers[1369] =  {
     (void*)cfx_browser_settings_get_remote_fonts,
     (void*)cfx_browser_settings_set_javascript,
     (void*)cfx_browser_settings_get_javascript,
-    (void*)cfx_browser_settings_set_javascript_open_windows,
-    (void*)cfx_browser_settings_get_javascript_open_windows,
     (void*)cfx_browser_settings_set_javascript_close_windows,
     (void*)cfx_browser_settings_get_javascript_close_windows,
     (void*)cfx_browser_settings_set_javascript_access_clipboard,
@@ -773,16 +772,8 @@ static void* cfx_function_pointers[1369] =  {
     (void*)cfx_popup_features_get_statusBarVisible,
     (void*)cfx_popup_features_set_toolBarVisible,
     (void*)cfx_popup_features_get_toolBarVisible,
-    (void*)cfx_popup_features_set_locationBarVisible,
-    (void*)cfx_popup_features_get_locationBarVisible,
     (void*)cfx_popup_features_set_scrollbarsVisible,
     (void*)cfx_popup_features_get_scrollbarsVisible,
-    (void*)cfx_popup_features_set_resizable,
-    (void*)cfx_popup_features_get_resizable,
-    (void*)cfx_popup_features_set_fullscreen,
-    (void*)cfx_popup_features_get_fullscreen,
-    (void*)cfx_popup_features_set_dialog,
-    (void*)cfx_popup_features_get_dialog,
     (void*)cfx_post_data_create,
     (void*)cfx_post_data_is_read_only,
     (void*)cfx_post_data_has_excluded_elements,

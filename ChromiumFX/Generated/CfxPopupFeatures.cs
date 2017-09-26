@@ -154,17 +154,6 @@ namespace Chromium {
             }
         }
 
-        public int LocationBarVisible {
-            get {
-                int value;
-                CfxApi.PopupFeatures.cfx_popup_features_get_locationBarVisible(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.PopupFeatures.cfx_popup_features_set_locationBarVisible(nativePtrUnchecked, value);
-            }
-        }
-
         public int ScrollbarsVisible {
             get {
                 int value;
@@ -173,39 +162,6 @@ namespace Chromium {
             }
             set {
                 CfxApi.PopupFeatures.cfx_popup_features_set_scrollbarsVisible(nativePtrUnchecked, value);
-            }
-        }
-
-        public int Resizable {
-            get {
-                int value;
-                CfxApi.PopupFeatures.cfx_popup_features_get_resizable(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.PopupFeatures.cfx_popup_features_set_resizable(nativePtrUnchecked, value);
-            }
-        }
-
-        public int Fullscreen {
-            get {
-                int value;
-                CfxApi.PopupFeatures.cfx_popup_features_get_fullscreen(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.PopupFeatures.cfx_popup_features_set_fullscreen(nativePtrUnchecked, value);
-            }
-        }
-
-        public int Dialog {
-            get {
-                int value;
-                CfxApi.PopupFeatures.cfx_popup_features_get_dialog(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.PopupFeatures.cfx_popup_features_set_dialog(nativePtrUnchecked, value);
             }
         }
 
