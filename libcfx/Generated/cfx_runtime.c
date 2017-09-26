@@ -219,6 +219,12 @@ static int cfx_launch_process(cef_command_line_t* command_line) {
     return cef_launch_process(command_line);
 }
 
+// CEF_EXPORT void cef_load_crlsets_file(const cef_string_t* path);
+static void cfx_load_crlsets_file(char16 *path_str, int path_length) {
+    cef_string_t path = { path_str, path_length, 0 };
+    cef_load_crlsets_file(&path);
+}
+
 // CEF_EXPORT int64 cef_now_from_system_trace_time();
 static int64 cfx_now_from_system_trace_time() {
     return cef_now_from_system_trace_time();

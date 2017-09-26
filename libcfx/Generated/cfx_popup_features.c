@@ -105,44 +105,12 @@ static void cfx_popup_features_get_toolBarVisible(cef_popup_features_t *self, in
     *toolBarVisible = self->toolBarVisible;
 }
 
-// cef_popup_features_t->locationBarVisible
-static void cfx_popup_features_set_locationBarVisible(cef_popup_features_t *self, int locationBarVisible) {
-    self->locationBarVisible = locationBarVisible;
-}
-static void cfx_popup_features_get_locationBarVisible(cef_popup_features_t *self, int* locationBarVisible) {
-    *locationBarVisible = self->locationBarVisible;
-}
-
 // cef_popup_features_t->scrollbarsVisible
 static void cfx_popup_features_set_scrollbarsVisible(cef_popup_features_t *self, int scrollbarsVisible) {
     self->scrollbarsVisible = scrollbarsVisible;
 }
 static void cfx_popup_features_get_scrollbarsVisible(cef_popup_features_t *self, int* scrollbarsVisible) {
     *scrollbarsVisible = self->scrollbarsVisible;
-}
-
-// cef_popup_features_t->resizable
-static void cfx_popup_features_set_resizable(cef_popup_features_t *self, int resizable) {
-    self->resizable = resizable;
-}
-static void cfx_popup_features_get_resizable(cef_popup_features_t *self, int* resizable) {
-    *resizable = self->resizable;
-}
-
-// cef_popup_features_t->fullscreen
-static void cfx_popup_features_set_fullscreen(cef_popup_features_t *self, int fullscreen) {
-    self->fullscreen = fullscreen;
-}
-static void cfx_popup_features_get_fullscreen(cef_popup_features_t *self, int* fullscreen) {
-    *fullscreen = self->fullscreen;
-}
-
-// cef_popup_features_t->dialog
-static void cfx_popup_features_set_dialog(cef_popup_features_t *self, int dialog) {
-    self->dialog = dialog;
-}
-static void cfx_popup_features_get_dialog(cef_popup_features_t *self, int* dialog) {
-    *dialog = self->dialog;
 }
 
 

@@ -314,6 +314,7 @@ namespace Chromium.Remote {
         CfxRuntimeGetTempDirectoryRemoteCall,
         CfxRuntimeIsCertStatusErrorRemoteCall,
         CfxRuntimeIsCertStatusMinorErrorRemoteCall,
+        CfxRuntimeLoadCrlsetsFileRemoteCall,
         CfxRuntimePostDelayedTaskRemoteCall,
         CfxRuntimePostTaskRemoteCall,
         CfxRuntimeRegisterExtensionRemoteCall,

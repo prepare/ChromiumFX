@@ -303,6 +303,25 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Loads the existing "Certificate Revocation Lists" file that is managed by
+        /// Google Chrome. This file can generally be found in Chrome's User Data
+        /// directory (e.g. "C:\Users\[User]\AppData\Local\Google\Chrome\User Data\" on
+        /// Windows) and is updated periodically by Chrome's component updater service.
+        /// Must be called in the browser process after the context has been initialized.
+        /// See https://dev.chromium.org/Home/chromium-security/crlsets for background.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static void LoadCrlsetsFile(string path) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
+            var call = new CfxRuntimeLoadCrlsetsFileRemoteCall();
+            call.path = path;
+            call.RequestExecution(connection);
+        }
+
+        /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
         /// using CfrTaskRunner.GetForThread(threadId).PostDelayedTask(task,
         /// delay_ms).

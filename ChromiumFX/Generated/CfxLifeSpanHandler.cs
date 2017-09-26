@@ -136,7 +136,7 @@ namespace Chromium {
         public CfxLifeSpanHandler() : base(CfxApi.LifeSpanHandler.cfx_life_span_handler_ctor) {}
 
         /// <summary>
-        /// Called on the IO thread before a new popup browser is created. The
+        /// Called on the UI thread before a new popup browser is created. The
         /// |Browser| and |Frame| values represent the source of the popup request. The
         /// |TargetUrl| and |TargetFrameName| values indicate where the popup
         /// browser should navigate and may be NULL if not specified with the request.
@@ -382,7 +382,7 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called on the IO thread before a new popup browser is created. The
+        /// Called on the UI thread before a new popup browser is created. The
         /// |Browser| and |Frame| values represent the source of the popup request. The
         /// |TargetUrl| and |TargetFrameName| values indicate where the popup
         /// browser should navigate and may be NULL if not specified with the request.
@@ -410,7 +410,7 @@ namespace Chromium {
         public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
         /// <summary>
-        /// Called on the IO thread before a new popup browser is created. The
+        /// Called on the UI thread before a new popup browser is created. The
         /// |Browser| and |Frame| values represent the source of the popup request. The
         /// |TargetUrl| and |TargetFrameName| values indicate where the popup
         /// browser should navigate and may be NULL if not specified with the request.

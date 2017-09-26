@@ -254,26 +254,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Controls whether JavaScript can be used for opening windows. Also
-        /// configurable using the "disable-javascript-open-windows" command-line
-        /// switch.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public CfxState JavascriptOpenWindows {
-            get {
-                int value;
-                CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_open_windows(nativePtrUnchecked, out value);
-                return (CfxState)value;
-            }
-            set {
-                CfxApi.BrowserSettings.cfx_browser_settings_set_javascript_open_windows(nativePtrUnchecked, (int)value);
-            }
-        }
-
-        /// <summary>
         /// Controls whether JavaScript can be used to close windows that were not
         /// opened via JavaScript. JavaScript can still be used to close windows that
         /// were opened via JavaScript or that have no back/forward history. Also

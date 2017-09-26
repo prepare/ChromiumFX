@@ -41,6 +41,7 @@ static int (*cef_is_cert_status_error_ptr)(cef_cert_status_t status);
 static int (*cef_is_cert_status_minor_error_ptr)(cef_cert_status_t status);
 static void (*cef_is_web_plugin_unstable_ptr)(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
 static int (*cef_launch_process_ptr)(cef_command_line_t* command_line);
+static void (*cef_load_crlsets_file_ptr)(const cef_string_t* path);
 static int64 (*cef_now_from_system_trace_time_ptr)();
 static cef_value_t* (*cef_parse_json_ptr)(const cef_string_t* json_string, cef_json_parser_options_t options);
 static cef_value_t* (*cef_parse_jsonand_return_error_ptr)(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
@@ -173,6 +174,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_is_cert_status_minor_error_ptr = (int (*)(cef_cert_status_t))cfx_platform_get_fptr(libcef, "cef_is_cert_status_minor_error");
     cef_is_web_plugin_unstable_ptr = (void (*)(const cef_string_t*, cef_web_plugin_unstable_callback_t*))cfx_platform_get_fptr(libcef, "cef_is_web_plugin_unstable");
     cef_launch_process_ptr = (int (*)(cef_command_line_t*))cfx_platform_get_fptr(libcef, "cef_launch_process");
+    cef_load_crlsets_file_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_load_crlsets_file");
     cef_now_from_system_trace_time_ptr = (int64 (*)())cfx_platform_get_fptr(libcef, "cef_now_from_system_trace_time");
     cef_parse_json_ptr = (cef_value_t* (*)(const cef_string_t*, cef_json_parser_options_t))cfx_platform_get_fptr(libcef, "cef_parse_json");
     cef_parse_jsonand_return_error_ptr = (cef_value_t* (*)(const cef_string_t*, cef_json_parser_options_t, cef_json_parser_error_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_parse_jsonand_return_error");
@@ -306,6 +308,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_is_cert_status_minor_error cef_is_cert_status_minor_error_ptr
 #define cef_is_web_plugin_unstable cef_is_web_plugin_unstable_ptr
 #define cef_launch_process cef_launch_process_ptr
+#define cef_load_crlsets_file cef_load_crlsets_file_ptr
 #define cef_now_from_system_trace_time cef_now_from_system_trace_time_ptr
 #define cef_parse_json cef_parse_json_ptr
 #define cef_parse_jsonand_return_error cef_parse_jsonand_return_error_ptr

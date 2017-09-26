@@ -316,6 +316,7 @@ namespace Chromium.Remote {
             () => { return new CfxRuntimeGetTempDirectoryRemoteCall(); },
             () => { return new CfxRuntimeIsCertStatusErrorRemoteCall(); },
             () => { return new CfxRuntimeIsCertStatusMinorErrorRemoteCall(); },
+            () => { return new CfxRuntimeLoadCrlsetsFileRemoteCall(); },
             () => { return new CfxRuntimePostDelayedTaskRemoteCall(); },
             () => { return new CfxRuntimePostTaskRemoteCall(); },
             () => { return new CfxRuntimeRegisterExtensionRemoteCall(); },
