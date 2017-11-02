@@ -230,8 +230,8 @@ int CEF_CALLBACK cfx_client_on_process_message_received(cef_client_t* self, cef_
     int browser_release;
     int message_release;
     ((cfx_client_t*)self)->on_process_message_received(((cfx_client_t*)self)->gc_handle, &__retval, browser, &browser_release, source_process, message, &message_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(message_release) message->base.release((cef_base_ref_counted_t*)message);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(message_release && message) message->base.release((cef_base_ref_counted_t*)message);
     return __retval;
 }
 

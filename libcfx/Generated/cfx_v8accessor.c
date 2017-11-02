@@ -59,7 +59,7 @@ int CEF_CALLBACK cfx_v8accessor_get(cef_v8accessor_t* self, const cef_string_t* 
     int object_release;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
     ((cfx_v8accessor_t*)self)->get(((cfx_v8accessor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &object_release, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
-    if(object_release) object->base.release((cef_base_ref_counted_t*)object);
+    if(object_release && object) object->base.release((cef_base_ref_counted_t*)object);
     if(*retval)((cef_base_ref_counted_t*)*retval)->add_ref((cef_base_ref_counted_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
@@ -76,8 +76,8 @@ int CEF_CALLBACK cfx_v8accessor_set(cef_v8accessor_t* self, const cef_string_t* 
     int value_release;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
     ((cfx_v8accessor_t*)self)->set(((cfx_v8accessor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &object_release, value, &value_release, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
-    if(object_release) object->base.release((cef_base_ref_counted_t*)object);
-    if(value_release) value->base.release((cef_base_ref_counted_t*)value);
+    if(object_release && object) object->base.release((cef_base_ref_counted_t*)object);
+    if(value_release && value) value->base.release((cef_base_ref_counted_t*)value);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
         cfx_gc_handle_switch(&exception_gc_handle, GC_HANDLE_FREE);

@@ -56,7 +56,7 @@ static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle, int wrapper_
 void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {
     int document_release;
     ((cfx_domvisitor_t*)self)->visit(((cfx_domvisitor_t*)self)->gc_handle, document, &document_release);
-    if(document_release) document->base.release((cef_base_ref_counted_t*)document);
+    if(document_release && document) document->base.release((cef_base_ref_counted_t*)document);
 }
 
 static void cfx_domvisitor_set_callback(cef_domvisitor_t* self, int index, void* callback) {

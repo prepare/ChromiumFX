@@ -59,9 +59,9 @@ cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_schem
     int frame_release;
     int request_release;
     ((cfx_scheme_handler_factory_t*)self)->create(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, scheme_name ? scheme_name->str : 0, scheme_name ? (int)scheme_name->length : 0, request, &request_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
-    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(request_release && request) request->base.release((cef_base_ref_counted_t*)request);
     if(__retval) {
         ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }

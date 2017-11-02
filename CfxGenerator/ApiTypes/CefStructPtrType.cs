@@ -87,7 +87,7 @@ public class CefStructPtrType : ApiType {
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted && var != "self")
-            b.AppendLine("if({0}_release) {0}->base.release((cef_base_ref_counted_t*){0});", var);
+            b.AppendLine("if({0}_release && {0}) {0}->base.release((cef_base_ref_counted_t*){0});", var);
     }
 
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {

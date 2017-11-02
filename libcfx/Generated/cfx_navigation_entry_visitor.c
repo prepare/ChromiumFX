@@ -57,7 +57,7 @@ int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor
     int __retval;
     int entry_release;
     ((cfx_navigation_entry_visitor_t*)self)->visit(((cfx_navigation_entry_visitor_t*)self)->gc_handle, &__retval, entry, &entry_release, current, index, total);
-    if(entry_release) entry->base.release((cef_base_ref_counted_t*)entry);
+    if(entry_release && entry) entry->base.release((cef_base_ref_counted_t*)entry);
     return __retval;
 }
 

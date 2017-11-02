@@ -63,7 +63,7 @@ int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t
     int arguments_release;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
     ((cfx_v8handler_t*)self)->execute(((cfx_v8handler_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &object_release, argumentsCount, arguments, &arguments_release, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
-    if(object_release) object->base.release((cef_base_ref_counted_t*)object);
+    if(object_release && object) object->base.release((cef_base_ref_counted_t*)object);
     if(arguments_release) {
         for(size_t i = 0; i < argumentsCount; ++i) {
             arguments[i]->base.release((cef_base_ref_counted_t*)arguments[i]);

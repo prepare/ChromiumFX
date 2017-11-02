@@ -56,7 +56,7 @@ static cfx_download_image_callback_t* cfx_download_image_callback_ctor(gc_handle
 void CEF_CALLBACK cfx_download_image_callback_on_download_image_finished(cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, cef_image_t* image) {
     int image_release;
     ((cfx_download_image_callback_t*)self)->on_download_image_finished(((cfx_download_image_callback_t*)self)->gc_handle, image_url ? image_url->str : 0, image_url ? (int)image_url->length : 0, http_status_code, image, &image_release);
-    if(image_release) image->base.release((cef_base_ref_counted_t*)image);
+    if(image_release && image) image->base.release((cef_base_ref_counted_t*)image);
 }
 
 static void cfx_download_image_callback_set_callback(cef_download_image_callback_t* self, int index, void* callback) {

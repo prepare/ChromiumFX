@@ -62,7 +62,7 @@ static gc_handle_t cfx_request_context_handler_get_gc_handle(cfx_request_context
 void CEF_CALLBACK cfx_request_context_handler_on_request_context_initialized(cef_request_context_handler_t* self, cef_request_context_t* request_context) {
     int request_context_release;
     ((cfx_request_context_handler_t*)self)->on_request_context_initialized(((cfx_request_context_handler_t*)self)->gc_handle, request_context, &request_context_release);
-    if(request_context_release) request_context->base.release((cef_base_ref_counted_t*)request_context);
+    if(request_context_release && request_context) request_context->base.release((cef_base_ref_counted_t*)request_context);
 }
 
 // get_cookie_manager
@@ -82,7 +82,7 @@ int CEF_CALLBACK cfx_request_context_handler_on_before_plugin_load(cef_request_c
     int __retval;
     int plugin_info_release;
     ((cfx_request_context_handler_t*)self)->on_before_plugin_load(((cfx_request_context_handler_t*)self)->gc_handle, &__retval, mime_type ? mime_type->str : 0, mime_type ? (int)mime_type->length : 0, plugin_url ? plugin_url->str : 0, plugin_url ? (int)plugin_url->length : 0, is_main_frame, top_origin_url ? top_origin_url->str : 0, top_origin_url ? (int)top_origin_url->length : 0, plugin_info, &plugin_info_release, plugin_policy);
-    if(plugin_info_release) plugin_info->base.release((cef_base_ref_counted_t*)plugin_info);
+    if(plugin_info_release && plugin_info) plugin_info->base.release((cef_base_ref_counted_t*)plugin_info);
     return __retval;
 }
 

@@ -57,7 +57,7 @@ static cfx_accessibility_handler_t* cfx_accessibility_handler_ctor(gc_handle_t g
 void CEF_CALLBACK cfx_accessibility_handler_on_accessibility_tree_change(cef_accessibility_handler_t* self, cef_value_t* value) {
     int value_release;
     ((cfx_accessibility_handler_t*)self)->on_accessibility_tree_change(((cfx_accessibility_handler_t*)self)->gc_handle, value, &value_release);
-    if(value_release) value->base.release((cef_base_ref_counted_t*)value);
+    if(value_release && value) value->base.release((cef_base_ref_counted_t*)value);
 }
 
 // on_accessibility_location_change
@@ -65,7 +65,7 @@ void CEF_CALLBACK cfx_accessibility_handler_on_accessibility_tree_change(cef_acc
 void CEF_CALLBACK cfx_accessibility_handler_on_accessibility_location_change(cef_accessibility_handler_t* self, cef_value_t* value) {
     int value_release;
     ((cfx_accessibility_handler_t*)self)->on_accessibility_location_change(((cfx_accessibility_handler_t*)self)->gc_handle, value, &value_release);
-    if(value_release) value->base.release((cef_base_ref_counted_t*)value);
+    if(value_release && value) value->base.release((cef_base_ref_counted_t*)value);
 }
 
 static void cfx_accessibility_handler_set_callback(cef_accessibility_handler_t* self, int index, void* callback) {

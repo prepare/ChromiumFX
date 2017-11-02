@@ -73,7 +73,7 @@ void CEF_CALLBACK cfx_extension_handler_on_extension_load_failed(cef_extension_h
 void CEF_CALLBACK cfx_extension_handler_on_extension_loaded(cef_extension_handler_t* self, cef_extension_t* extension) {
     int extension_release;
     ((cfx_extension_handler_t*)self)->on_extension_loaded(((cfx_extension_handler_t*)self)->gc_handle, extension, &extension_release);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
 }
 
 // on_extension_unloaded
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_extension_handler_on_extension_loaded(cef_extension_handle
 void CEF_CALLBACK cfx_extension_handler_on_extension_unloaded(cef_extension_handler_t* self, cef_extension_t* extension) {
     int extension_release;
     ((cfx_extension_handler_t*)self)->on_extension_unloaded(((cfx_extension_handler_t*)self)->gc_handle, extension, &extension_release);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
 }
 
 // on_before_background_browser
@@ -90,7 +90,7 @@ int CEF_CALLBACK cfx_extension_handler_on_before_background_browser(cef_extensio
     int __retval;
     int extension_release;
     ((cfx_extension_handler_t*)self)->on_before_background_browser(((cfx_extension_handler_t*)self)->gc_handle, &__retval, extension, &extension_release, url ? url->str : 0, url ? (int)url->length : 0, client, settings);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
     if(*client)((cef_base_ref_counted_t*)*client)->add_ref((cef_base_ref_counted_t*)*client);
     return __retval;
 }
@@ -103,9 +103,9 @@ int CEF_CALLBACK cfx_extension_handler_on_before_browser(cef_extension_handler_t
     int browser_release;
     int active_browser_release;
     ((cfx_extension_handler_t*)self)->on_before_browser(((cfx_extension_handler_t*)self)->gc_handle, &__retval, extension, &extension_release, browser, &browser_release, active_browser, &active_browser_release, index, url ? url->str : 0, url ? (int)url->length : 0, active, windowInfo, client, settings);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(active_browser_release) active_browser->base.release((cef_base_ref_counted_t*)active_browser);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(active_browser_release && active_browser) active_browser->base.release((cef_base_ref_counted_t*)active_browser);
     if(*client)((cef_base_ref_counted_t*)*client)->add_ref((cef_base_ref_counted_t*)*client);
     return __retval;
 }
@@ -117,8 +117,8 @@ cef_browser_t* CEF_CALLBACK cfx_extension_handler_get_active_browser(cef_extensi
     int extension_release;
     int browser_release;
     ((cfx_extension_handler_t*)self)->get_active_browser(((cfx_extension_handler_t*)self)->gc_handle, &__retval, extension, &extension_release, browser, &browser_release, include_incognito);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
     if(__retval) {
         ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
@@ -133,9 +133,9 @@ int CEF_CALLBACK cfx_extension_handler_can_access_browser(cef_extension_handler_
     int browser_release;
     int target_browser_release;
     ((cfx_extension_handler_t*)self)->can_access_browser(((cfx_extension_handler_t*)self)->gc_handle, &__retval, extension, &extension_release, browser, &browser_release, include_incognito, target_browser, &target_browser_release);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(target_browser_release) target_browser->base.release((cef_base_ref_counted_t*)target_browser);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(target_browser_release && target_browser) target_browser->base.release((cef_base_ref_counted_t*)target_browser);
     return __retval;
 }
 
@@ -147,9 +147,9 @@ int CEF_CALLBACK cfx_extension_handler_get_extension_resource(cef_extension_hand
     int browser_release;
     int callback_release;
     ((cfx_extension_handler_t*)self)->get_extension_resource(((cfx_extension_handler_t*)self)->gc_handle, &__retval, extension, &extension_release, browser, &browser_release, file ? file->str : 0, file ? (int)file->length : 0, callback, &callback_release);
-    if(extension_release) extension->base.release((cef_base_ref_counted_t*)extension);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(extension_release && extension) extension->base.release((cef_base_ref_counted_t*)extension);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 

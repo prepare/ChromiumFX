@@ -62,10 +62,10 @@ void CEF_CALLBACK cfx_context_menu_handler_on_before_context_menu(cef_context_me
     int params_release;
     int model_release;
     ((cfx_context_menu_handler_t*)self)->on_before_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, browser, &browser_release, frame, &frame_release, params, &params_release, model, &model_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
-    if(params_release) params->base.release((cef_base_ref_counted_t*)params);
-    if(model_release) model->base.release((cef_base_ref_counted_t*)model);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(params_release && params) params->base.release((cef_base_ref_counted_t*)params);
+    if(model_release && model) model->base.release((cef_base_ref_counted_t*)model);
 }
 
 // run_context_menu
@@ -78,11 +78,11 @@ int CEF_CALLBACK cfx_context_menu_handler_run_context_menu(cef_context_menu_hand
     int model_release;
     int callback_release;
     ((cfx_context_menu_handler_t*)self)->run_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, params, &params_release, model, &model_release, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
-    if(params_release) params->base.release((cef_base_ref_counted_t*)params);
-    if(model_release) model->base.release((cef_base_ref_counted_t*)model);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(params_release && params) params->base.release((cef_base_ref_counted_t*)params);
+    if(model_release && model) model->base.release((cef_base_ref_counted_t*)model);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -94,9 +94,9 @@ int CEF_CALLBACK cfx_context_menu_handler_on_context_menu_command(cef_context_me
     int frame_release;
     int params_release;
     ((cfx_context_menu_handler_t*)self)->on_context_menu_command(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, params, &params_release, command_id, event_flags);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
-    if(params_release) params->base.release((cef_base_ref_counted_t*)params);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(params_release && params) params->base.release((cef_base_ref_counted_t*)params);
     return __retval;
 }
 
@@ -106,8 +106,8 @@ void CEF_CALLBACK cfx_context_menu_handler_on_context_menu_dismissed(cef_context
     int browser_release;
     int frame_release;
     ((cfx_context_menu_handler_t*)self)->on_context_menu_dismissed(((cfx_context_menu_handler_t*)self)->gc_handle, browser, &browser_release, frame, &frame_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
 }
 
 static void cfx_context_menu_handler_set_callback(cef_context_menu_handler_t* self, int index, void* callback) {

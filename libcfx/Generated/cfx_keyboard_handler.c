@@ -58,7 +58,7 @@ int CEF_CALLBACK cfx_keyboard_handler_on_pre_key_event(cef_keyboard_handler_t* s
     int __retval;
     int browser_release;
     ((cfx_keyboard_handler_t*)self)->on_pre_key_event(((cfx_keyboard_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, event, os_event, is_keyboard_shortcut);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -68,7 +68,7 @@ int CEF_CALLBACK cfx_keyboard_handler_on_key_event(cef_keyboard_handler_t* self,
     int __retval;
     int browser_release;
     ((cfx_keyboard_handler_t*)self)->on_key_event(((cfx_keyboard_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, event, os_event);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 

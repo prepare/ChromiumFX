@@ -63,8 +63,8 @@ int CEF_CALLBACK cfx_resource_handler_process_request(cef_resource_handler_t* se
     int request_release;
     int callback_release;
     ((cfx_resource_handler_t*)self)->process_request(((cfx_resource_handler_t*)self)->gc_handle, &__retval, request, &request_release, callback, &callback_release);
-    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(request_release && request) request->base.release((cef_base_ref_counted_t*)request);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -74,7 +74,7 @@ void CEF_CALLBACK cfx_resource_handler_get_response_headers(cef_resource_handler
     int response_release;
     char16* redirectUrl_tmp_str = 0; int redirectUrl_tmp_length = 0; gc_handle_t redirectUrl_gc_handle = 0;
     ((cfx_resource_handler_t*)self)->get_response_headers(((cfx_resource_handler_t*)self)->gc_handle, response, &response_release, response_length, &redirectUrl_tmp_str, &redirectUrl_tmp_length, &redirectUrl_gc_handle);
-    if(response_release) response->base.release((cef_base_ref_counted_t*)response);
+    if(response_release && response) response->base.release((cef_base_ref_counted_t*)response);
     if(redirectUrl_tmp_length > 0) {
         cef_string_set(redirectUrl_tmp_str, redirectUrl_tmp_length, redirectUrl, 1);
         cfx_gc_handle_switch(&redirectUrl_gc_handle, GC_HANDLE_FREE);
@@ -87,7 +87,7 @@ int CEF_CALLBACK cfx_resource_handler_read_response(cef_resource_handler_t* self
     int __retval;
     int callback_release;
     ((cfx_resource_handler_t*)self)->read_response(((cfx_resource_handler_t*)self)->gc_handle, &__retval, data_out, bytes_to_read, bytes_read, callback, &callback_release);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 

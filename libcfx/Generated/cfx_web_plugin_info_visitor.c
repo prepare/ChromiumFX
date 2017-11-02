@@ -57,7 +57,7 @@ int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t
     int __retval;
     int info_release;
     ((cfx_web_plugin_info_visitor_t*)self)->visit(((cfx_web_plugin_info_visitor_t*)self)->gc_handle, &__retval, info, &info_release, count, total);
-    if(info_release) info->base.release((cef_base_ref_counted_t*)info);
+    if(info_release && info) info->base.release((cef_base_ref_counted_t*)info);
     return __retval;
 }
 

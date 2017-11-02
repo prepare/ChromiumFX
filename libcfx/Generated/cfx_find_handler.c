@@ -56,7 +56,7 @@ static cfx_find_handler_t* cfx_find_handler_ctor(gc_handle_t gc_handle, int wrap
 void CEF_CALLBACK cfx_find_handler_on_find_result(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate) {
     int browser_release;
     ((cfx_find_handler_t*)self)->on_find_result(((cfx_find_handler_t*)self)->gc_handle, browser, &browser_release, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_find_handler_set_callback(cef_find_handler_t* self, int index, void* callback) {

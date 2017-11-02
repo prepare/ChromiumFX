@@ -60,7 +60,7 @@ static cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle, int wrapper_kind) {
 void CEF_CALLBACK cfx_app_on_before_command_line_processing(cef_app_t* self, const cef_string_t* process_type, cef_command_line_t* command_line) {
     int command_line_release;
     ((cfx_app_t*)self)->on_before_command_line_processing(((cfx_app_t*)self)->gc_handle, process_type ? process_type->str : 0, process_type ? (int)process_type->length : 0, command_line, &command_line_release);
-    if(command_line_release) command_line->base.release((cef_base_ref_counted_t*)command_line);
+    if(command_line_release && command_line) command_line->base.release((cef_base_ref_counted_t*)command_line);
 }
 
 // on_register_custom_schemes

@@ -62,7 +62,7 @@ static cfx_menu_model_delegate_t* cfx_menu_model_delegate_ctor(gc_handle_t gc_ha
 void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->execute_command(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, command_id, event_flags);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // mouse_outside_menu
@@ -70,7 +70,7 @@ void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegat
 void CEF_CALLBACK cfx_menu_model_delegate_mouse_outside_menu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, const cef_point_t* screen_point) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->mouse_outside_menu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, screen_point);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // unhandled_open_submenu
@@ -78,7 +78,7 @@ void CEF_CALLBACK cfx_menu_model_delegate_mouse_outside_menu(cef_menu_model_dele
 void CEF_CALLBACK cfx_menu_model_delegate_unhandled_open_submenu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->unhandled_open_submenu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, is_rtl);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // unhandled_close_submenu
@@ -86,7 +86,7 @@ void CEF_CALLBACK cfx_menu_model_delegate_unhandled_open_submenu(cef_menu_model_
 void CEF_CALLBACK cfx_menu_model_delegate_unhandled_close_submenu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->unhandled_close_submenu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, is_rtl);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // menu_will_show
@@ -94,7 +94,7 @@ void CEF_CALLBACK cfx_menu_model_delegate_unhandled_close_submenu(cef_menu_model
 void CEF_CALLBACK cfx_menu_model_delegate_menu_will_show(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->menu_will_show(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // menu_closed
@@ -102,7 +102,7 @@ void CEF_CALLBACK cfx_menu_model_delegate_menu_will_show(cef_menu_model_delegate
 void CEF_CALLBACK cfx_menu_model_delegate_menu_closed(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model) {
     int menu_model_release;
     ((cfx_menu_model_delegate_t*)self)->menu_closed(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release);
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
 }
 
 // format_label
@@ -112,7 +112,7 @@ int CEF_CALLBACK cfx_menu_model_delegate_format_label(cef_menu_model_delegate_t*
     int menu_model_release;
     char16* label_tmp_str = label->str; int label_tmp_length = (int)label->length;
     ((cfx_menu_model_delegate_t*)self)->format_label(((cfx_menu_model_delegate_t*)self)->gc_handle, &__retval, menu_model, &menu_model_release, &(label_tmp_str), &(label_tmp_length));
-    if(menu_model_release) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
+    if(menu_model_release && menu_model) menu_model->base.release((cef_base_ref_counted_t*)menu_model);
     if(label_tmp_str != label->str) {
         if(label->dtor) label->dtor(label->str);
         cef_string_set(label_tmp_str, label_tmp_length, label, 1);

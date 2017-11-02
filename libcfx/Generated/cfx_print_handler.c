@@ -61,7 +61,7 @@ static cfx_print_handler_t* cfx_print_handler_ctor(gc_handle_t gc_handle, int wr
 void CEF_CALLBACK cfx_print_handler_on_print_start(cef_print_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_print_handler_t*)self)->on_print_start(((cfx_print_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_print_settings
@@ -70,8 +70,8 @@ void CEF_CALLBACK cfx_print_handler_on_print_settings(cef_print_handler_t* self,
     int browser_release;
     int settings_release;
     ((cfx_print_handler_t*)self)->on_print_settings(((cfx_print_handler_t*)self)->gc_handle, browser, &browser_release, settings, &settings_release, get_defaults);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(settings_release) settings->base.release((cef_base_ref_counted_t*)settings);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(settings_release && settings) settings->base.release((cef_base_ref_counted_t*)settings);
 }
 
 // on_print_dialog
@@ -81,8 +81,8 @@ int CEF_CALLBACK cfx_print_handler_on_print_dialog(cef_print_handler_t* self, ce
     int browser_release;
     int callback_release;
     ((cfx_print_handler_t*)self)->on_print_dialog(((cfx_print_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, has_selection, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -93,8 +93,8 @@ int CEF_CALLBACK cfx_print_handler_on_print_job(cef_print_handler_t* self, cef_b
     int browser_release;
     int callback_release;
     ((cfx_print_handler_t*)self)->on_print_job(((cfx_print_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, document_name ? document_name->str : 0, document_name ? (int)document_name->length : 0, pdf_file_path ? pdf_file_path->str : 0, pdf_file_path ? (int)pdf_file_path->length : 0, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release && callback) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -103,7 +103,7 @@ int CEF_CALLBACK cfx_print_handler_on_print_job(cef_print_handler_t* self, cef_b
 void CEF_CALLBACK cfx_print_handler_on_print_reset(cef_print_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_print_handler_t*)self)->on_print_reset(((cfx_print_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // get_pdf_paper_size

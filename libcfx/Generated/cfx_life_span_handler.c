@@ -61,8 +61,8 @@ int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* 
     int browser_release;
     int frame_release;
     ((cfx_life_span_handler_t*)self)->on_before_popup(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, target_url ? target_url->str : 0, target_url ? (int)target_url->length : 0, target_frame_name ? target_frame_name->str : 0, target_frame_name ? (int)target_frame_name->length : 0, target_disposition, user_gesture, popupFeatures, windowInfo, client, settings, no_javascript_access);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
     if(*client)((cef_base_ref_counted_t*)*client)->add_ref((cef_base_ref_counted_t*)*client);
     return __retval;
 }
@@ -72,7 +72,7 @@ int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* 
 void CEF_CALLBACK cfx_life_span_handler_on_after_created(cef_life_span_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_life_span_handler_t*)self)->on_after_created(((cfx_life_span_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // do_close
@@ -81,7 +81,7 @@ int CEF_CALLBACK cfx_life_span_handler_do_close(cef_life_span_handler_t* self, c
     int __retval;
     int browser_release;
     ((cfx_life_span_handler_t*)self)->do_close(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -90,7 +90,7 @@ int CEF_CALLBACK cfx_life_span_handler_do_close(cef_life_span_handler_t* self, c
 void CEF_CALLBACK cfx_life_span_handler_on_before_close(cef_life_span_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_life_span_handler_t*)self)->on_before_close(((cfx_life_span_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_life_span_handler_set_callback(cef_life_span_handler_t* self, int index, void* callback) {

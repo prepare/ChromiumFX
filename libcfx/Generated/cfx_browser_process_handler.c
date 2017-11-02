@@ -66,7 +66,7 @@ void CEF_CALLBACK cfx_browser_process_handler_on_context_initialized(cef_browser
 void CEF_CALLBACK cfx_browser_process_handler_on_before_child_process_launch(cef_browser_process_handler_t* self, cef_command_line_t* command_line) {
     int command_line_release;
     ((cfx_browser_process_handler_t*)self)->on_before_child_process_launch(((cfx_browser_process_handler_t*)self)->gc_handle, command_line, &command_line_release);
-    if(command_line_release) command_line->base.release((cef_base_ref_counted_t*)command_line);
+    if(command_line_release && command_line) command_line->base.release((cef_base_ref_counted_t*)command_line);
 }
 
 // on_render_process_thread_created
@@ -74,7 +74,7 @@ void CEF_CALLBACK cfx_browser_process_handler_on_before_child_process_launch(cef
 void CEF_CALLBACK cfx_browser_process_handler_on_render_process_thread_created(cef_browser_process_handler_t* self, cef_list_value_t* extra_info) {
     int extra_info_release;
     ((cfx_browser_process_handler_t*)self)->on_render_process_thread_created(((cfx_browser_process_handler_t*)self)->gc_handle, extra_info, &extra_info_release);
-    if(extra_info_release) extra_info->base.release((cef_base_ref_counted_t*)extra_info);
+    if(extra_info_release && extra_info) extra_info->base.release((cef_base_ref_counted_t*)extra_info);
 }
 
 // get_print_handler
