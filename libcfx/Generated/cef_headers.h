@@ -26,6 +26,8 @@
 #include "include/capi/cef_download_item_capi.h"
 #include "include/capi/cef_drag_data_capi.h"
 #include "include/capi/cef_drag_handler_capi.h"
+#include "include/capi/cef_extension_capi.h"
+#include "include/capi/cef_extension_handler_capi.h"
 #include "include/capi/cef_file_util_capi.h"
 #include "include/capi/cef_find_handler_capi.h"
 #include "include/capi/cef_focus_handler_capi.h"

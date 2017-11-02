@@ -22,6 +22,7 @@ typedef struct _cfx_display_handler_t {
     void (CEF_CALLBACK *on_tooltip)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, char16 **text_str, int *text_length);
     void (CEF_CALLBACK *on_status_message)(gc_handle_t self, cef_browser_t* browser, int *browser_release, char16 *value_str, int value_length);
     void (CEF_CALLBACK *on_console_message)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, char16 *message_str, int message_length, char16 *source_str, int source_length, int line);
+    void (CEF_CALLBACK *on_auto_resize)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, const cef_size_t* new_size);
 } cfx_display_handler_t;
 
 void CEF_CALLBACK _cfx_display_handler_add_ref(struct _cef_base_ref_counted_t* base) {
@@ -125,6 +126,16 @@ int CEF_CALLBACK cfx_display_handler_on_console_message(cef_display_handler_t* s
     return __retval;
 }
 
+// on_auto_resize
+
+int CEF_CALLBACK cfx_display_handler_on_auto_resize(cef_display_handler_t* self, cef_browser_t* browser, const cef_size_t* new_size) {
+    int __retval;
+    int browser_release;
+    ((cfx_display_handler_t*)self)->on_auto_resize(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, new_size);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    return __retval;
+}
+
 static void cfx_display_handler_set_callback(cef_display_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
@@ -154,6 +165,10 @@ static void cfx_display_handler_set_callback(cef_display_handler_t* self, int in
     case 6:
         ((cfx_display_handler_t*)self)->on_console_message = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, char16 *message_str, int message_length, char16 *source_str, int source_length, int line))callback;
         self->on_console_message = callback ? cfx_display_handler_on_console_message : 0;
+        break;
+    case 7:
+        ((cfx_display_handler_t*)self)->on_auto_resize = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, const cef_size_t* new_size))callback;
+        self->on_auto_resize = callback ? cfx_display_handler_on_auto_resize : 0;
         break;
     }
 }

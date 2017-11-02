@@ -32,6 +32,7 @@ namespace Chromium {
             on_tooltip_native = on_tooltip;
             on_status_message_native = on_status_message;
             on_console_message_native = on_console_message;
+            on_auto_resize_native = on_auto_resize;
 
             on_address_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_address_change_native);
             on_title_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_title_change_native);
@@ -40,6 +41,7 @@ namespace Chromium {
             on_tooltip_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_tooltip_native);
             on_status_message_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_status_message_native);
             on_console_message_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_console_message_native);
+            on_auto_resize_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_auto_resize_native);
         }
 
         // on_address_change
@@ -197,6 +199,28 @@ namespace Chromium {
             e.m_source_length = source_length;
             e.m_line = line;
             self.m_OnConsoleMessage?.Invoke(self, e);
+            e.m_isInvalid = true;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            __retval = e.m_returnValue ? 1 : 0;
+        }
+
+        // on_auto_resize
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_auto_resize_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr new_size);
+        private static on_auto_resize_delegate on_auto_resize_native;
+        private static IntPtr on_auto_resize_native_ptr;
+
+        internal static void on_auto_resize(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr new_size) {
+            var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                __retval = default(int);
+                browser_release = 1;
+                return;
+            }
+            var e = new CfxOnAutoResizeEventArgs();
+            e.m_browser = browser;
+            e.m_new_size = new_size;
+            self.m_OnAutoResize?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
@@ -411,6 +435,37 @@ namespace Chromium {
 
         private CfxOnConsoleMessageEventHandler m_OnConsoleMessage;
 
+        /// <summary>
+        /// Called when auto-resize is enabled via
+        /// CfxBrowserHost.SetAutoResizeEnabled and the contents have auto-
+        /// resized. |NewSize| will be the desired size in view coordinates. Return
+        /// true (1) if the resize was handled or false (0) for default handling.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnAutoResizeEventHandler OnAutoResize {
+            add {
+                lock(eventLock) {
+                    if(m_OnAutoResize == null) {
+                        CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 7, on_auto_resize_native_ptr);
+                    }
+                    m_OnAutoResize += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnAutoResize -= value;
+                    if(m_OnAutoResize == null) {
+                        CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnAutoResizeEventHandler m_OnAutoResize;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnAddressChange != null) {
                 m_OnAddressChange = null;
@@ -439,6 +494,10 @@ namespace Chromium {
             if(m_OnConsoleMessage != null) {
                 m_OnConsoleMessage = null;
                 CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 6, IntPtr.Zero);
+            }
+            if(m_OnAutoResize != null) {
+                m_OnAutoResize = null;
+                CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 7, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -897,6 +956,78 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, Message={{{1}}}, Source={{{2}}}, Line={{{3}}}", Browser, Message, Source, Line);
+            }
+        }
+
+        /// <summary>
+        /// Called when auto-resize is enabled via
+        /// CfxBrowserHost.SetAutoResizeEnabled and the contents have auto-
+        /// resized. |NewSize| will be the desired size in view coordinates. Return
+        /// true (1) if the resize was handled or false (0) for default handling.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnAutoResizeEventHandler(object sender, CfxOnAutoResizeEventArgs e);
+
+        /// <summary>
+        /// Called when auto-resize is enabled via
+        /// CfxBrowserHost.SetAutoResizeEnabled and the contents have auto-
+        /// resized. |NewSize| will be the desired size in view coordinates. Return
+        /// true (1) if the resize was handled or false (0) for default handling.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnAutoResizeEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_new_size;
+            internal CfxSize m_new_size_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnAutoResizeEventArgs() {}
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnAutoResize"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the NewSize parameter for the <see cref="CfxDisplayHandler.OnAutoResize"/> callback.
+            /// </summary>
+            public CfxSize NewSize {
+                get {
+                    CheckAccess();
+                    if(m_new_size_wrapped == null) m_new_size_wrapped = CfxSize.Wrap(m_new_size);
+                    return m_new_size_wrapped;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxDisplayHandler.OnAutoResize"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, NewSize={{{1}}}", Browser, NewSize);
             }
         }
 

@@ -179,6 +179,9 @@ namespace Chromium {
             cfx_browser_host_drag_source_system_drag_ended,
             cfx_browser_host_get_visible_navigation_entry,
             cfx_browser_host_set_accessibility_state,
+            cfx_browser_host_set_auto_resize_enabled,
+            cfx_browser_host_get_extension,
+            cfx_browser_host_is_background_host,
             cfx_browser_process_handler_ctor,
             cfx_browser_process_handler_set_callback,
             cfx_browser_settings_ctor,
@@ -488,6 +491,17 @@ namespace Chromium {
             cfx_draggable_region_get_draggable,
             cfx_end_tracing_callback_ctor,
             cfx_end_tracing_callback_set_callback,
+            cfx_extension_get_identifier,
+            cfx_extension_get_path,
+            cfx_extension_get_manifest,
+            cfx_extension_is_same,
+            cfx_extension_get_handler,
+            cfx_extension_get_loader_context,
+            cfx_extension_is_loaded,
+            cfx_extension_unload,
+            cfx_extension_handler_ctor,
+            cfx_extension_handler_get_gc_handle,
+            cfx_extension_handler_set_callback,
             cfx_file_dialog_callback_cont,
             cfx_file_dialog_callback_cancel,
             cfx_find_handler_ctor,
@@ -543,6 +557,8 @@ namespace Chromium {
             cfx_geoposition_get_error_code,
             cfx_geoposition_set_error_message,
             cfx_geoposition_get_error_message,
+            cfx_get_extension_resource_callback_cont,
+            cfx_get_extension_resource_callback_cancel,
             cfx_get_geolocation_callback_ctor,
             cfx_get_geolocation_callback_set_callback,
             cfx_image_create,
@@ -897,6 +913,11 @@ namespace Chromium {
             cfx_request_context_close_all_connections,
             cfx_request_context_resolve_host,
             cfx_request_context_resolve_host_cached,
+            cfx_request_context_load_extension,
+            cfx_request_context_did_load_extension,
+            cfx_request_context_has_extension,
+            cfx_request_context_get_extensions,
+            cfx_request_context_get_extension,
             cfx_request_context_handler_ctor,
             cfx_request_context_handler_get_gc_handle,
             cfx_request_context_handler_set_callback,
@@ -1606,6 +1627,9 @@ namespace Chromium {
             CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended = (CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_drag_source_system_drag_ended, typeof(CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended_delegate));
             CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry = (CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_visible_navigation_entry, typeof(CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry_delegate));
             CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state = (CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_set_accessibility_state, typeof(CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state_delegate));
+            CfxApi.BrowserHost.cfx_browser_host_set_auto_resize_enabled = (CfxApi.BrowserHost.cfx_browser_host_set_auto_resize_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_set_auto_resize_enabled, typeof(CfxApi.BrowserHost.cfx_browser_host_set_auto_resize_enabled_delegate));
+            CfxApi.BrowserHost.cfx_browser_host_get_extension = (CfxApi.BrowserHost.cfx_browser_host_get_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_extension, typeof(CfxApi.BrowserHost.cfx_browser_host_get_extension_delegate));
+            CfxApi.BrowserHost.cfx_browser_host_is_background_host = (CfxApi.BrowserHost.cfx_browser_host_is_background_host_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_is_background_host, typeof(CfxApi.BrowserHost.cfx_browser_host_is_background_host_delegate));
         }
 
         internal static void LoadCfxBrowserProcessHandlerApi() {
@@ -2042,6 +2066,26 @@ namespace Chromium {
             CfxEndTracingCallback.SetNativeCallbacks();
         }
 
+        internal static void LoadCfxExtensionApi() {
+            CfxApi.Probe();
+            CfxApi.Extension.cfx_extension_get_identifier = (CfxApi.Extension.cfx_extension_get_identifier_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_get_identifier, typeof(CfxApi.Extension.cfx_extension_get_identifier_delegate));
+            CfxApi.Extension.cfx_extension_get_path = (CfxApi.Extension.cfx_extension_get_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_get_path, typeof(CfxApi.Extension.cfx_extension_get_path_delegate));
+            CfxApi.Extension.cfx_extension_get_manifest = (CfxApi.Extension.cfx_extension_get_manifest_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_get_manifest, typeof(CfxApi.Extension.cfx_extension_get_manifest_delegate));
+            CfxApi.Extension.cfx_extension_is_same = (CfxApi.Extension.cfx_extension_is_same_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_is_same, typeof(CfxApi.Extension.cfx_extension_is_same_delegate));
+            CfxApi.Extension.cfx_extension_get_handler = (CfxApi.Extension.cfx_extension_get_handler_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_get_handler, typeof(CfxApi.Extension.cfx_extension_get_handler_delegate));
+            CfxApi.Extension.cfx_extension_get_loader_context = (CfxApi.Extension.cfx_extension_get_loader_context_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_get_loader_context, typeof(CfxApi.Extension.cfx_extension_get_loader_context_delegate));
+            CfxApi.Extension.cfx_extension_is_loaded = (CfxApi.Extension.cfx_extension_is_loaded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_is_loaded, typeof(CfxApi.Extension.cfx_extension_is_loaded_delegate));
+            CfxApi.Extension.cfx_extension_unload = (CfxApi.Extension.cfx_extension_unload_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_unload, typeof(CfxApi.Extension.cfx_extension_unload_delegate));
+        }
+
+        internal static void LoadCfxExtensionHandlerApi() {
+            CfxApi.Probe();
+            CfxApi.ExtensionHandler.cfx_extension_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_handler_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.ExtensionHandler.cfx_extension_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_handler_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.ExtensionHandler.cfx_extension_handler_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_extension_handler_set_callback, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxExtensionHandler.SetNativeCallbacks();
+        }
+
         internal static void LoadCfxFileDialogCallbackApi() {
             CfxApi.Probe();
             CfxApi.FileDialogCallback.cfx_file_dialog_callback_cont = (CfxApi.FileDialogCallback.cfx_file_dialog_callback_cont_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_file_dialog_callback_cont, typeof(CfxApi.FileDialogCallback.cfx_file_dialog_callback_cont_delegate));
@@ -2126,6 +2170,12 @@ namespace Chromium {
             CfxApi.Geoposition.cfx_geoposition_get_error_code = (CfxApi.Geoposition.cfx_geoposition_get_error_code_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_geoposition_get_error_code, typeof(CfxApi.Geoposition.cfx_geoposition_get_error_code_delegate));
             CfxApi.Geoposition.cfx_geoposition_set_error_message = (CfxApi.Geoposition.cfx_geoposition_set_error_message_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_geoposition_set_error_message, typeof(CfxApi.Geoposition.cfx_geoposition_set_error_message_delegate));
             CfxApi.Geoposition.cfx_geoposition_get_error_message = (CfxApi.Geoposition.cfx_geoposition_get_error_message_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_geoposition_get_error_message, typeof(CfxApi.Geoposition.cfx_geoposition_get_error_message_delegate));
+        }
+
+        internal static void LoadCfxGetExtensionResourceCallbackApi() {
+            CfxApi.Probe();
+            CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cont = (CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cont_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_extension_resource_callback_cont, typeof(CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cont_delegate));
+            CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cancel = (CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cancel_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_extension_resource_callback_cancel, typeof(CfxApi.GetExtensionResourceCallback.cfx_get_extension_resource_callback_cancel_delegate));
         }
 
         internal static void LoadCfxGetGeolocationCallbackApi() {
@@ -2641,6 +2691,11 @@ namespace Chromium {
             CfxApi.RequestContext.cfx_request_context_close_all_connections = (CfxApi.RequestContext.cfx_request_context_close_all_connections_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_close_all_connections, typeof(CfxApi.RequestContext.cfx_request_context_close_all_connections_delegate));
             CfxApi.RequestContext.cfx_request_context_resolve_host = (CfxApi.RequestContext.cfx_request_context_resolve_host_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_resolve_host, typeof(CfxApi.RequestContext.cfx_request_context_resolve_host_delegate));
             CfxApi.RequestContext.cfx_request_context_resolve_host_cached = (CfxApi.RequestContext.cfx_request_context_resolve_host_cached_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_resolve_host_cached, typeof(CfxApi.RequestContext.cfx_request_context_resolve_host_cached_delegate));
+            CfxApi.RequestContext.cfx_request_context_load_extension = (CfxApi.RequestContext.cfx_request_context_load_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_load_extension, typeof(CfxApi.RequestContext.cfx_request_context_load_extension_delegate));
+            CfxApi.RequestContext.cfx_request_context_did_load_extension = (CfxApi.RequestContext.cfx_request_context_did_load_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_did_load_extension, typeof(CfxApi.RequestContext.cfx_request_context_did_load_extension_delegate));
+            CfxApi.RequestContext.cfx_request_context_has_extension = (CfxApi.RequestContext.cfx_request_context_has_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_has_extension, typeof(CfxApi.RequestContext.cfx_request_context_has_extension_delegate));
+            CfxApi.RequestContext.cfx_request_context_get_extensions = (CfxApi.RequestContext.cfx_request_context_get_extensions_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_get_extensions, typeof(CfxApi.RequestContext.cfx_request_context_get_extensions_delegate));
+            CfxApi.RequestContext.cfx_request_context_get_extension = (CfxApi.RequestContext.cfx_request_context_get_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_get_extension, typeof(CfxApi.RequestContext.cfx_request_context_get_extension_delegate));
         }
 
         internal static void LoadCfxRequestContextHandlerApi() {

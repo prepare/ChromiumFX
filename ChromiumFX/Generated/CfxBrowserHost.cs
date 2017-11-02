@@ -257,6 +257,35 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the extension hosted in this browser or NULL if no extension is
+        /// hosted. See CfxRequestContext.LoadExtension for details.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public CfxExtension Extension {
+            get {
+                return CfxExtension.Wrap(CfxApi.BrowserHost.cfx_browser_host_get_extension(NativePtr));
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if this browser is hosting an extension background script.
+        /// Background hosts do not have a window and are not displayable. See
+        /// CfxRequestContext.LoadExtension for details.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public bool IsBackgroundHost {
+            get {
+                return 0 != CfxApi.BrowserHost.cfx_browser_host_is_background_host(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Request that the browser close. The JavaScript 'onbeforeunload' event will
         /// be fired. If |forceClose| is false (0) the event handler, if any, will be
         /// allowed to prompt the user and the user can optionally cancel the close. If
@@ -868,6 +897,19 @@ namespace Chromium {
         /// </remarks>
         public void SetAccessibilityState(CfxState accessibilityState) {
             CfxApi.BrowserHost.cfx_browser_host_set_accessibility_state(NativePtr, (int)accessibilityState);
+        }
+
+        /// <summary>
+        /// Enable notifications of auto resize via
+        /// CfxDisplayHandler.OnAutoResize. Notifications are disabled by default.
+        /// |minSize| and |maxSize| define the range of allowed sizes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void SetAutoResizeEnabled(bool enabled, CfxSize minSize, CfxSize maxSize) {
+            CfxApi.BrowserHost.cfx_browser_host_set_auto_resize_enabled(NativePtr, enabled ? 1 : 0, CfxSize.Unwrap(minSize), CfxSize.Unwrap(maxSize));
         }
     }
 }
