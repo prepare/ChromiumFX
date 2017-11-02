@@ -127,4 +127,35 @@ static cef_errorcode_t cfx_request_context_resolve_host_cached(cef_request_conte
     return self->resolve_host_cached(self, &origin, resolved_ips);
 }
 
+// load_extension
+static void cfx_request_context_load_extension(cef_request_context_t* self, char16 *root_directory_str, int root_directory_length, cef_dictionary_value_t* manifest, cef_extension_handler_t* handler) {
+    cef_string_t root_directory = { root_directory_str, root_directory_length, 0 };
+    if(manifest) ((cef_base_ref_counted_t*)manifest)->add_ref((cef_base_ref_counted_t*)manifest);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
+    self->load_extension(self, &root_directory, manifest, handler);
+}
+
+// did_load_extension
+static int cfx_request_context_did_load_extension(cef_request_context_t* self, char16 *extension_id_str, int extension_id_length) {
+    cef_string_t extension_id = { extension_id_str, extension_id_length, 0 };
+    return self->did_load_extension(self, &extension_id);
+}
+
+// has_extension
+static int cfx_request_context_has_extension(cef_request_context_t* self, char16 *extension_id_str, int extension_id_length) {
+    cef_string_t extension_id = { extension_id_str, extension_id_length, 0 };
+    return self->has_extension(self, &extension_id);
+}
+
+// get_extensions
+static int cfx_request_context_get_extensions(cef_request_context_t* self, cef_string_list_t extension_ids) {
+    return self->get_extensions(self, extension_ids);
+}
+
+// get_extension
+static cef_extension_t* cfx_request_context_get_extension(cef_request_context_t* self, char16 *extension_id_str, int extension_id_length) {
+    cef_string_t extension_id = { extension_id_str, extension_id_length, 0 };
+    return self->get_extension(self, &extension_id);
+}
+
 

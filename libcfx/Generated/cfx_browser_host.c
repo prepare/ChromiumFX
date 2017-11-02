@@ -310,4 +310,19 @@ static void cfx_browser_host_set_accessibility_state(cef_browser_host_t* self, c
     self->set_accessibility_state(self, accessibility_state);
 }
 
+// set_auto_resize_enabled
+static void cfx_browser_host_set_auto_resize_enabled(cef_browser_host_t* self, int enabled, const cef_size_t* min_size, const cef_size_t* max_size) {
+    self->set_auto_resize_enabled(self, enabled, min_size, max_size);
+}
+
+// get_extension
+static cef_extension_t* cfx_browser_host_get_extension(cef_browser_host_t* self) {
+    return self->get_extension(self);
+}
+
+// is_background_host
+static int cfx_browser_host_is_background_host(cef_browser_host_t* self) {
+    return self->is_background_host(self);
+}
+
 

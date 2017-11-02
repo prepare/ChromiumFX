@@ -50,9 +50,9 @@ namespace Chromium {
         public CfxResolveCallback() : base(CfxApi.ResolveCallback.cfx_resolve_callback_ctor) {}
 
         /// <summary>
-        /// Called after the ResolveHost request has completed. |Result| will be the
-        /// result code. |ResolvedIps| will be the list of resolved IP addresses or
-        /// NULL if the resolution failed.
+        /// Called on the UI thread after the ResolveHost request has completed.
+        /// |Result| will be the result code. |ResolvedIps| will be the list of
+        /// resolved IP addresses or NULL if the resolution failed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -92,9 +92,9 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called after the ResolveHost request has completed. |Result| will be the
-        /// result code. |ResolvedIps| will be the list of resolved IP addresses or
-        /// NULL if the resolution failed.
+        /// Called on the UI thread after the ResolveHost request has completed.
+        /// |Result| will be the result code. |ResolvedIps| will be the list of
+        /// resolved IP addresses or NULL if the resolution failed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -103,9 +103,9 @@ namespace Chromium {
         public delegate void CfxResolveCallbackOnResolveCompletedEventHandler(object sender, CfxResolveCallbackOnResolveCompletedEventArgs e);
 
         /// <summary>
-        /// Called after the ResolveHost request has completed. |Result| will be the
-        /// result code. |ResolvedIps| will be the list of resolved IP addresses or
-        /// NULL if the resolution failed.
+        /// Called on the UI thread after the ResolveHost request has completed.
+        /// |Result| will be the result code. |ResolvedIps| will be the list of
+        /// resolved IP addresses or NULL if the resolution failed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

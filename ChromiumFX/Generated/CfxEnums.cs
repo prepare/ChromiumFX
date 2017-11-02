@@ -989,7 +989,12 @@ namespace Chromium {
         /// "Application Data" directory under the user profile directory on Windows
         /// and "~/Library/Application Support" directory on Mac OS X.
         /// </summary>
-        UserData
+        UserData,
+        /// <summary>
+        /// Directory containing application resources. Can be configured via
+        /// CfxSettings.ResourcesDirPath.
+        /// </summary>
+        DirResources
     }
     /// <summary>
     /// Margin type for PDF printing.

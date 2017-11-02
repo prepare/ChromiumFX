@@ -33,11 +33,32 @@ namespace Chromium {
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {
+            on_request_context_initialized_native = on_request_context_initialized;
             get_cookie_manager_native = get_cookie_manager;
             on_before_plugin_load_native = on_before_plugin_load;
 
+            on_request_context_initialized_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_request_context_initialized_native);
             get_cookie_manager_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_cookie_manager_native);
             on_before_plugin_load_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_plugin_load_native);
+        }
+
+        // on_request_context_initialized
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_request_context_initialized_delegate(IntPtr gcHandlePtr, IntPtr request_context, out int request_context_release);
+        private static on_request_context_initialized_delegate on_request_context_initialized_native;
+        private static IntPtr on_request_context_initialized_native_ptr;
+
+        internal static void on_request_context_initialized(IntPtr gcHandlePtr, IntPtr request_context, out int request_context_release) {
+            var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                request_context_release = 1;
+                return;
+            }
+            var e = new CfxOnRequestContextInitializedEventArgs();
+            e.m_request_context = request_context;
+            self.m_OnRequestContextInitialized?.Invoke(self, e);
+            e.m_isInvalid = true;
+            request_context_release = e.m_request_context_wrapped == null? 1 : 0;
         }
 
         // get_cookie_manager
@@ -92,6 +113,35 @@ namespace Chromium {
         public CfxRequestContextHandler() : base(CfxApi.RequestContextHandler.cfx_request_context_handler_ctor) {}
 
         /// <summary>
+        /// Called on the browser process UI thread immediately after the request
+        /// context has been initialized.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnRequestContextInitializedEventHandler OnRequestContextInitialized {
+            add {
+                lock(eventLock) {
+                    if(m_OnRequestContextInitialized == null) {
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, on_request_context_initialized_native_ptr);
+                    }
+                    m_OnRequestContextInitialized += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnRequestContextInitialized -= value;
+                    if(m_OnRequestContextInitialized == null) {
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnRequestContextInitializedEventHandler m_OnRequestContextInitialized;
+
+        /// <summary>
         /// Called on the browser process IO thread to retrieve the cookie manager. If
         /// this function returns NULL the default cookie manager retrievable via
         /// CfxRequestContext.GetDefaultCookieManager() will be used.
@@ -106,7 +156,7 @@ namespace Chromium {
                     if(m_GetCookieManager != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, get_cookie_manager_native_ptr);
+                    CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, get_cookie_manager_native_ptr);
                     m_GetCookieManager += value;
                 }
             }
@@ -114,7 +164,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetCookieManager -= value;
                     if(m_GetCookieManager == null) {
-                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -164,7 +214,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnBeforePluginLoad == null) {
-                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, on_before_plugin_load_native_ptr);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 2, on_before_plugin_load_native_ptr);
                     }
                     m_OnBeforePluginLoad += value;
                 }
@@ -173,7 +223,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforePluginLoad -= value;
                     if(m_OnBeforePluginLoad == null) {
-                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -182,13 +232,17 @@ namespace Chromium {
         private CfxOnBeforePluginLoadEventHandler m_OnBeforePluginLoad;
 
         internal override void OnDispose(IntPtr nativePtr) {
+            if(m_OnRequestContextInitialized != null) {
+                m_OnRequestContextInitialized = null;
+                CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+            }
             if(m_GetCookieManager != null) {
                 m_GetCookieManager = null;
-                CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnBeforePluginLoad != null) {
                 m_OnBeforePluginLoad = null;
-                CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.RequestContextHandler.cfx_request_context_handler_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -196,6 +250,47 @@ namespace Chromium {
 
 
     namespace Event {
+
+        /// <summary>
+        /// Called on the browser process UI thread immediately after the request
+        /// context has been initialized.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnRequestContextInitializedEventHandler(object sender, CfxOnRequestContextInitializedEventArgs e);
+
+        /// <summary>
+        /// Called on the browser process UI thread immediately after the request
+        /// context has been initialized.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnRequestContextInitializedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_request_context;
+            internal CfxRequestContext m_request_context_wrapped;
+
+            internal CfxOnRequestContextInitializedEventArgs() {}
+
+            /// <summary>
+            /// Get the RequestContext parameter for the <see cref="CfxRequestContextHandler.OnRequestContextInitialized"/> callback.
+            /// </summary>
+            public CfxRequestContext RequestContext {
+                get {
+                    CheckAccess();
+                    if(m_request_context_wrapped == null) m_request_context_wrapped = CfxRequestContext.Wrap(m_request_context);
+                    return m_request_context_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("RequestContext={{{0}}}", RequestContext);
+            }
+        }
 
         /// <summary>
         /// Called on the browser process IO thread to retrieve the cookie manager. If

@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Minimal Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             September 23, 2017
+Date:             November 01, 2017
 
-CEF Version:      3.3163.1670.g934eaba
+CEF Version:      3.3202.1678.g28f27be
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @934eaba67c38735addd05c561a73afe154663f05
+                  @28f27be9ca774a13de5d029aa44c11c67b74424a
 
-Chromium Verison: 61.0.3163.91
+Chromium Verison: 62.0.3202.75
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @2acaf3af0eb3d73f8e7e444cad93b663e28cd605
+                  @a81f9fcaaff35205d07ef634bd8fc79e088c68ac
 
 This distribution contains the minimial components necessary to build and
 distribute an application using CEF on the Windows platform. Please see
@@ -68,6 +68,7 @@ The following components are required. CEF will not function without them.
 * V8 snapshot data.
   * natives_blob.bin
   * snapshot_blob.bin
+  * v8_context_snapshot.bin
 
 Optional components:
 
@@ -114,6 +115,12 @@ run but any related functionality may become broken or disabled.
   * libGLESv2.dll
   Without these files HTML5 accelerated content like 2D canvas, 3D CSS and WebGL
   will not function.
+
+* SwiftShader support.
+  * swiftshader/libEGL.dll
+  * swiftshader/libGLESv2.dll
+  Without these files WebGL will not function in software-only mode when the GPU
+  is not available or disabled.
 
 * Widevine CDM support.
   * widevinecdmadapter.dll
