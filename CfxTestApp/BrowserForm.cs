@@ -42,6 +42,9 @@ namespace CfxTestApplication {
                 e.RenderProcessHandler.OnBrowserCreated += (s, e1) => {
                     LogWriteLine("RenderProcessHandler.OnBrowserCreated, process id = {0}, browser id = {1}", CfxRemoteCallContext.CurrentContext.ProcessId, e1.Browser.Identifier);
                 };
+                e.RenderProcessHandler.OnFocusedNodeChanged += (s, e1) => {
+                    LogWriteLine("RenderProcessHandler.OnFocusedNodeChanged, process id = {0}, browser id = {1}, node = {2}", CfxRemoteCallContext.CurrentContext.ProcessId, e1.Browser.Identifier, e1.Node?.Name);
+                };
             };
 
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
@@ -206,6 +209,7 @@ namespace CfxTestApplication {
             WebBrowser.GlobalObject.AddFunction("SubmitAsyncTestFunction").Execute += JS_SubmitAsyncTestFunction;
             WebBrowser.GlobalObject.AddFunction("bigStringFunction").Execute += JS_bigStringFunction;
 
+            
         }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
