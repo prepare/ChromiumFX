@@ -221,30 +221,30 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with about:blank as initial URL.
-        /// The underlying CfxBrowser is created immediately with the
-        /// default CfxRequestContext.
+        /// The underlying CfxBrowser is created immediately with
+        /// default settings and default request context.
         /// </summary>
         public ChromiumWebBrowser() : this(null, true) { }
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with about:blank as initial URL.
         /// If createImmediately is true, then the underlying CfxBrowser is 
-        /// created immediately with the default CfxRequestContext.
+        /// created immediately with default settings and default request context.
         /// </summary>
         /// <param name="createImmediately"></param>
         public ChromiumWebBrowser(bool createImmediately) : this(null, createImmediately) { }
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with the given initial URL.
-        /// The underlying CfxBrowser is created immediately with the
-        /// default CfxRequestContext.
+        /// The underlying CfxBrowser is created immediately with
+        /// default settings and default request context.
         /// </summary>
         public ChromiumWebBrowser(string initialUrl) : this(initialUrl, true) { }
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with the given initial URL.
         /// If createImmediately is true, then the underlying CfxBrowser is 
-        /// created immediately with the default CfxRequestContext.
+        /// created immediately with default settings and default request context.
         /// </summary>
         public ChromiumWebBrowser(string initialUrl, bool createImmediately) {
 
@@ -282,7 +282,7 @@ namespace Chromium.WebBrowser {
                 GlobalObject.SetBrowser("window", this);
 
                 if(createImmediately)
-                    CreateBrowser();
+                    CreateBrowser(DefaultBrowserSettings, null);
 
             } else {
                 BackColor = System.Drawing.Color.White;
@@ -296,42 +296,86 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Creates the underlying CfxBrowser with the default CfxRequestContext.
+        /// Creates the underlying CfxBrowser with the initial URL defined in the constructor, 
+        /// default settings and default request context.
         /// This method should only be called if this ChromiumWebBrowser
         /// was instanciated with createImmediately == false.
         /// </summary>
         public void CreateBrowser() {
-            CreateBrowser((CfxRequestContext)null);
+            CreateBrowser(DefaultBrowserSettings, null);
         }
 
         /// <summary>
-        /// Creates the underlying CfxBrowser with the default CfxRequestContext
-        /// and the given initial URL.
+        /// Creates the underlying CfxBrowser with the given initial URL,
+        /// default settings and default request context.
         /// This method should only be called if this ChromiumWebBrowser
         /// was instanciated with createImmediately == false.
         /// </summary>
         public void CreateBrowser(string initialUrl) {
             this.initialUrl = initialUrl;
-            CreateBrowser((CfxRequestContext)null);
+            CreateBrowser(DefaultBrowserSettings, null);
         }
 
         /// <summary>
-        /// Creates the underlying CfxBrowser with the given 
-        /// CfxRequestContext and initial URL.
+        /// Creates the underlying CfxBrowser with the given initial URL, 
+        /// the given settings and default request context.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(string initialUrl, CfxBrowserSettings browserSettings) {
+            this.initialUrl = initialUrl;
+            CreateBrowser(browserSettings, null);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the given initial URL, 
+        /// default settings and the given request context.
         /// This method should only be called if this ChromiumWebBrowser
         /// was instanciated with createImmediately == false.
         /// </summary>
         public void CreateBrowser(string initialUrl, CfxRequestContext requestContext) {
             this.initialUrl = initialUrl;
-            CreateBrowser(requestContext);
+            CreateBrowser(DefaultBrowserSettings, requestContext);
         }
 
         /// <summary>
-        /// Creates the underlying CfxBrowser with the given CfxRequestContext.
+        /// Creates the underlying CfxBrowser with the given initial URL, 
+        /// the given settings and the given request context.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(string initialUrl, CfxBrowserSettings browserSettings, CfxRequestContext requestContext) {
+            this.initialUrl = initialUrl;
+            CreateBrowser(browserSettings, requestContext);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the initial URL defined in the constructor,
+        /// default settings and the given request context.
         /// This method should only be called if this ChromiumWebBrowser
         /// was instanciated with createImmediately == false.
         /// </summary>
         public void CreateBrowser(CfxRequestContext requestContext) {
+            CreateBrowser(DefaultBrowserSettings, requestContext);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the initial URL defined in the constructor,
+        /// the given settings and default request context.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(CfxBrowserSettings browserSettings) {
+            CreateBrowser(browserSettings, null);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the initial URL defined in the constructor,
+        /// the given settings and the given request context.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(CfxBrowserSettings browserSettings, CfxRequestContext requestContext) {
 
             // avoid illegal cross-thread calls
             if(InvokeRequired) {
@@ -344,7 +388,7 @@ namespace Chromium.WebBrowser {
             // the browser must be created with a disabled child window.
             windowInfo.SetAsDisabledChild(Handle);
 
-            if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
+            if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, browserSettings, requestContext))
                 throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
 
