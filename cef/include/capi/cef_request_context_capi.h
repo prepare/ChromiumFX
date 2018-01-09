@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2018 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=81e857497b1f5e1732af7fca2250edf78c0e5415$
+// $hash=5f6d84d988bab3a600e6fbb6db0523acaeef88b3$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_CAPI_H_
@@ -244,7 +244,7 @@ typedef struct _cef_request_context_t {
   ///
   // Clears all active and idle connections that Chromium currently has. This is
   // only recommended if you have released all other CEF objects but don't yet
-  // want to call cef_shutdown(). If |callback| is non-NULL it will be executed
+  // want to call Cefshutdown(). If |callback| is non-NULL it will be executed
   // on the UI thread after completion.
   ///
   void(CEF_CALLBACK* close_all_connections)(
