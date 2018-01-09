@@ -317,7 +317,7 @@ namespace Chromium {
         /// <summary>
         /// Clears all active and idle connections that Chromium currently has. This is
         /// only recommended if you have released all other CEF objects but don't yet
-        /// want to call cef_shutdown(). If |callback| is non-NULL it will be executed
+        /// want to call Cfxshutdown(). If |callback| is non-NULL it will be executed
         /// on the UI thread after completion.
         /// </summary>
         /// <remarks>

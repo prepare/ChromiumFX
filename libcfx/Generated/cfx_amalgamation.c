@@ -106,6 +106,8 @@
 #include "cfx_scheme_registrar.c"
 #include "cfx_screen_info.c"
 #include "cfx_select_client_certificate_callback.c"
+#include "cfx_server.c"
+#include "cfx_server_handler.c"
 #include "cfx_set_cookie_callback.c"
 #include "cfx_settings.c"
 #include "cfx_size.c"
