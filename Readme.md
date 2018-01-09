@@ -55,6 +55,8 @@ This is a summary of the most important changes and those relevant to embedders 
 
 ### Version 3.3239.0 ###
 - Update to CEF 3.3239.1723 with API changes.
+- Native library libcfx was retargeted to the default platform/toolset for Visual Studio 2017. Since libcfx is statically linked, this has no effect for distribution of ChromiumFX. If you can't install the required toolset, you can backout commit «Retarget libcfx».
+
 
 ### Version 3.3202.1 ###
 - Fixed issue #158.
