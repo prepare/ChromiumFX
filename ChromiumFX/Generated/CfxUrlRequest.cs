@@ -132,6 +132,18 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if the response body was served from the cache. This
+        /// includes responses for which revalidation was required.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
+        public bool ResponseWasCached() {
+            return 0 != CfxApi.UrlRequest.cfx_urlrequest_response_was_cached(NativePtr);
+        }
+
+        /// <summary>
         /// Cancel the request.
         /// </summary>
         /// <remarks>

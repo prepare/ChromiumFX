@@ -162,10 +162,10 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set the URL to the first party for cookies used in combination with
+        /// Get the URL to the first party for cookies used in combination with
         /// CfxUrlRequest.
         /// 
-        /// Get the URL to the first party for cookies used in combination with
+        /// Set the URL to the first party for cookies used in combination with
         /// CfxUrlRequest.
         /// </summary>
         /// <remarks>

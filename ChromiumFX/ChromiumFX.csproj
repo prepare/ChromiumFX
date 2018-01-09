@@ -149,6 +149,8 @@
     <Compile Include="Generated\CfxSchemeRegistrar.cs" />
     <Compile Include="Generated\CfxScreenInfo.cs" />
     <Compile Include="Generated\CfxSelectClientCertificateCallback.cs" />
+    <Compile Include="Generated\CfxServer.cs" />
+    <Compile Include="Generated\CfxServerHandler.cs" />
     <Compile Include="Generated\CfxSetCookieCallback.cs" />
     <Compile Include="Generated\CfxSettings.cs" />
     <Compile Include="Generated\CfxSize.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Generated\Remote\CfrApp.cs" />
     <Compile Include="Generated\Remote\CfrBinaryValue.cs" />
     <Compile Include="Generated\Remote\CfrBrowser.cs" />
+    <Compile Include="Generated\Remote\CfrCallback.cs" />
     <Compile Include="Generated\Remote\CfrCommandLine.cs" />
     <Compile Include="Generated\Remote\CfrDictionaryValue.cs" />
     <Compile Include="Generated\Remote\CfrDomDocument.cs" />
@@ -207,6 +210,8 @@
     <Compile Include="Generated\Remote\CfrResponse.cs" />
     <Compile Include="Generated\Remote\CfrRuntime.cs" />
     <Compile Include="Generated\Remote\CfrSchemeRegistrar.cs" />
+    <Compile Include="Generated\Remote\CfrServer.cs" />
+    <Compile Include="Generated\Remote\CfrServerHandler.cs" />
     <Compile Include="Generated\Remote\CfrStreamReader.cs" />
     <Compile Include="Generated\Remote\CfrStreamWriter.cs" />
     <Compile Include="Generated\Remote\CfrStringVisitor.cs" />
@@ -231,6 +236,7 @@
     <Compile Include="Generated\Remote\CfxAppRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxBinaryValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxBrowserRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxCallbackRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxCommandLineRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDictionaryValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomDocumentRemoteCalls.cs" />
@@ -256,6 +262,9 @@
     <Compile Include="Generated\Remote\CfxResponseRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRuntimeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxSchemeRegistrarRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxServerHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxServerHandlerRemoteClient.cs" />
+    <Compile Include="Generated\Remote\CfxServerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStreamReaderRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStreamWriterRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStringVisitorRemoteCalls.cs" />

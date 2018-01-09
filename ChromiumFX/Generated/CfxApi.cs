@@ -5176,6 +5176,95 @@ namespace Chromium {
 
         }
 
+        internal static class Server {
+
+            static Server () {
+                CfxApiLoader.LoadCfxServerApi();
+            }
+
+            // CEF_EXPORT void cef_server_create(const cef_string_t* address, uint16 port, int backlog, cef_server_handler_t* handler);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_create_delegate(IntPtr address_str, int address_length, ushort port, int backlog, IntPtr handler);
+            public static cfx_server_create_delegate cfx_server_create;
+
+            // static cef_task_runner_t* cfx_server_get_task_runner(cef_server_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_server_get_task_runner_delegate(IntPtr self);
+            public static cfx_server_get_task_runner_delegate cfx_server_get_task_runner;
+
+            // static void cfx_server_shutdown(cef_server_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_shutdown_delegate(IntPtr self);
+            public static cfx_server_shutdown_delegate cfx_server_shutdown;
+
+            // static int cfx_server_is_running(cef_server_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_server_is_running_delegate(IntPtr self);
+            public static cfx_server_is_running_delegate cfx_server_is_running;
+
+            // static cef_string_userfree_t cfx_server_get_address(cef_server_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_server_get_address_delegate(IntPtr self);
+            public static cfx_server_get_address_delegate cfx_server_get_address;
+
+            // static int cfx_server_has_connection(cef_server_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_server_has_connection_delegate(IntPtr self);
+            public static cfx_server_has_connection_delegate cfx_server_has_connection;
+
+            // static int cfx_server_is_valid_connection(cef_server_t* self, int connection_id)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_server_is_valid_connection_delegate(IntPtr self, int connection_id);
+            public static cfx_server_is_valid_connection_delegate cfx_server_is_valid_connection;
+
+            // static void cfx_server_send_http200response(cef_server_t* self, int connection_id, char16 *content_type_str, int content_type_length, const void* data, size_t data_size)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_http200response_delegate(IntPtr self, int connection_id, IntPtr content_type_str, int content_type_length, IntPtr data, UIntPtr data_size);
+            public static cfx_server_send_http200response_delegate cfx_server_send_http200response;
+
+            // static void cfx_server_send_http404response(cef_server_t* self, int connection_id)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_http404response_delegate(IntPtr self, int connection_id);
+            public static cfx_server_send_http404response_delegate cfx_server_send_http404response;
+
+            // static void cfx_server_send_http500response(cef_server_t* self, int connection_id, char16 *error_message_str, int error_message_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_http500response_delegate(IntPtr self, int connection_id, IntPtr error_message_str, int error_message_length);
+            public static cfx_server_send_http500response_delegate cfx_server_send_http500response;
+
+            // static void cfx_server_send_http_response(cef_server_t* self, int connection_id, int response_code, char16 *content_type_str, int content_type_length, int64 content_length, cef_string_multimap_t extra_headers)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_http_response_delegate(IntPtr self, int connection_id, int response_code, IntPtr content_type_str, int content_type_length, long content_length, IntPtr extra_headers);
+            public static cfx_server_send_http_response_delegate cfx_server_send_http_response;
+
+            // static void cfx_server_send_raw_data(cef_server_t* self, int connection_id, const void* data, size_t data_size)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_raw_data_delegate(IntPtr self, int connection_id, IntPtr data, UIntPtr data_size);
+            public static cfx_server_send_raw_data_delegate cfx_server_send_raw_data;
+
+            // static void cfx_server_close_connection(cef_server_t* self, int connection_id)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_close_connection_delegate(IntPtr self, int connection_id);
+            public static cfx_server_close_connection_delegate cfx_server_close_connection;
+
+            // static void cfx_server_send_web_socket_message(cef_server_t* self, int connection_id, const void* data, size_t data_size)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_server_send_web_socket_message_delegate(IntPtr self, int connection_id, IntPtr data, UIntPtr data_size);
+            public static cfx_server_send_web_socket_message_delegate cfx_server_send_web_socket_message;
+
+        }
+
+        internal static class ServerHandler {
+
+            static ServerHandler () {
+                CfxApiLoader.LoadCfxServerHandlerApi();
+            }
+
+            public static cfx_ctor_with_gc_handle_delegate cfx_server_handler_ctor;
+            public static cfx_set_callback_delegate cfx_server_handler_set_callback;
+
+        }
+
         internal static class SetCookieCallback {
 
             static SetCookieCallback () {
@@ -5924,6 +6013,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_urlrequest_get_response_delegate(IntPtr self);
             public static cfx_urlrequest_get_response_delegate cfx_urlrequest_get_response;
+
+            // static int cfx_urlrequest_response_was_cached(cef_urlrequest_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_urlrequest_response_was_cached_delegate(IntPtr self);
+            public static cfx_urlrequest_response_was_cached_delegate cfx_urlrequest_response_was_cached;
 
             // static void cfx_urlrequest_cancel(cef_urlrequest_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

@@ -61,6 +61,7 @@
 #include "include/capi/cef_response_capi.h"
 #include "include/capi/cef_response_filter_capi.h"
 #include "include/capi/cef_scheme_capi.h"
+#include "include/capi/cef_server_capi.h"
 #include "include/capi/cef_ssl_info_capi.h"
 #include "include/capi/cef_ssl_status_capi.h"
 #include "include/capi/cef_stream_capi.h"

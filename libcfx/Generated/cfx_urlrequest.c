@@ -41,6 +41,11 @@ static cef_response_t* cfx_urlrequest_get_response(cef_urlrequest_t* self) {
     return self->get_response(self);
 }
 
+// response_was_cached
+static int cfx_urlrequest_response_was_cached(cef_urlrequest_t* self) {
+    return self->response_was_cached(self);
+}
+
 // cancel
 static void cfx_urlrequest_cancel(cef_urlrequest_t* self) {
     self->cancel(self);

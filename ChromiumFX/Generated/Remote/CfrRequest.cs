@@ -215,10 +215,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Set the URL to the first party for cookies used in combination with
+        /// Get the URL to the first party for cookies used in combination with
         /// CfrUrlRequest.
         /// 
-        /// Get the URL to the first party for cookies used in combination with
+        /// Set the URL to the first party for cookies used in combination with
         /// CfrUrlRequest.
         /// </summary>
         /// <remarks>

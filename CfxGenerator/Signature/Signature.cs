@@ -413,6 +413,9 @@ public class Signature {
         if(cefName == "cef_resource_handler::get_response_headers")
             return;
 
+        if(cefName == "cef_server::send_http_response") // false positive
+            return;
+
         for(var i = 0; i <= Parameters.Length - 1; i++) {
             var suffixLength = CountParameterSuffixLength(Parameters[i]);
             if(suffixLength > 0) {

@@ -1604,14 +1604,24 @@ namespace Chromium {
         /// </summary>
         None = unchecked((int)0),
         /// <summary>
-        /// If set the cache will be skipped when handling the request.
+        /// If set the cache will be skipped when handling the request. Setting this
+        /// value is equivalent to specifying the "Cache-Control: no-cache" request
+        /// header. Setting this value in combination with UR_FLAG_ONLY_FROM_CACHE will
+        /// cause the request to fail.
         /// </summary>
         SkipCache = unchecked((int)1 << 0),
+        /// <summary>
+        /// If set the request will fail if it cannot be served from the cache (or some
+        /// equivalent local store). Setting this value is equivalent to specifying the
+        /// "Cache-Control: only-if-cached" request header. Setting this value in
+        /// combination with UR_FLAG_SKIP_CACHE will cause the request to fail.
+        /// </summary>
+        OnlyFromCache = unchecked((int)1 << 1),
         /// <summary>
         /// If set user name, password, and cookies may be sent with the request, and
         /// cookies may be saved from the response.
         /// </summary>
-        AllowCachedCredentials = unchecked((int)1 << 1),
+        AllowStoredCredentials = unchecked((int)1 << 2),
         /// <summary>
         /// If set upload progress events will be generated when a request has a body.
         /// </summary>
@@ -1619,13 +1629,13 @@ namespace Chromium {
         /// <summary>
         /// If set the CfxURLRequestClient.OnDownloadData method will not be called.
         /// </summary>
-        NoDownloadData = unchecked((int)1 << 6),
+        NoDownloadData = unchecked((int)1 << 4),
         /// <summary>
         /// If set 5XX redirect errors will be propagated to the observer instead of
         /// automatically re-tried. This currently only applies for requests
         /// originated in the browser process.
         /// </summary>
-        NoRetryOn5xx = unchecked((int)1 << 7)
+        NoRetryOn5xx = unchecked((int)1 << 5)
     }
     /// <summary>
     /// Flags that represent CfxURLRequest status.

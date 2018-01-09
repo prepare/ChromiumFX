@@ -984,6 +984,22 @@ namespace Chromium {
             cfx_screen_info_set_available_rect,
             cfx_screen_info_get_available_rect,
             cfx_select_client_certificate_callback_select,
+            cfx_server_create,
+            cfx_server_get_task_runner,
+            cfx_server_shutdown,
+            cfx_server_is_running,
+            cfx_server_get_address,
+            cfx_server_has_connection,
+            cfx_server_is_valid_connection,
+            cfx_server_send_http200response,
+            cfx_server_send_http404response,
+            cfx_server_send_http500response,
+            cfx_server_send_http_response,
+            cfx_server_send_raw_data,
+            cfx_server_close_connection,
+            cfx_server_send_web_socket_message,
+            cfx_server_handler_ctor,
+            cfx_server_handler_set_callback,
             cfx_set_cookie_callback_ctor,
             cfx_set_cookie_callback_set_callback,
             cfx_settings_ctor,
@@ -1130,6 +1146,7 @@ namespace Chromium {
             cfx_urlrequest_get_request_status,
             cfx_urlrequest_get_request_error,
             cfx_urlrequest_get_response,
+            cfx_urlrequest_response_was_cached,
             cfx_urlrequest_cancel,
             cfx_urlrequest_client_ctor,
             cfx_urlrequest_client_get_gc_handle,
@@ -2832,6 +2849,31 @@ namespace Chromium {
             CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select = (CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_select_client_certificate_callback_select, typeof(CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select_delegate));
         }
 
+        internal static void LoadCfxServerApi() {
+            CfxApi.Probe();
+            CfxApi.Server.cfx_server_create = (CfxApi.Server.cfx_server_create_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_create, typeof(CfxApi.Server.cfx_server_create_delegate));
+            CfxApi.Server.cfx_server_get_task_runner = (CfxApi.Server.cfx_server_get_task_runner_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_get_task_runner, typeof(CfxApi.Server.cfx_server_get_task_runner_delegate));
+            CfxApi.Server.cfx_server_shutdown = (CfxApi.Server.cfx_server_shutdown_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_shutdown, typeof(CfxApi.Server.cfx_server_shutdown_delegate));
+            CfxApi.Server.cfx_server_is_running = (CfxApi.Server.cfx_server_is_running_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_is_running, typeof(CfxApi.Server.cfx_server_is_running_delegate));
+            CfxApi.Server.cfx_server_get_address = (CfxApi.Server.cfx_server_get_address_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_get_address, typeof(CfxApi.Server.cfx_server_get_address_delegate));
+            CfxApi.Server.cfx_server_has_connection = (CfxApi.Server.cfx_server_has_connection_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_has_connection, typeof(CfxApi.Server.cfx_server_has_connection_delegate));
+            CfxApi.Server.cfx_server_is_valid_connection = (CfxApi.Server.cfx_server_is_valid_connection_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_is_valid_connection, typeof(CfxApi.Server.cfx_server_is_valid_connection_delegate));
+            CfxApi.Server.cfx_server_send_http200response = (CfxApi.Server.cfx_server_send_http200response_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_http200response, typeof(CfxApi.Server.cfx_server_send_http200response_delegate));
+            CfxApi.Server.cfx_server_send_http404response = (CfxApi.Server.cfx_server_send_http404response_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_http404response, typeof(CfxApi.Server.cfx_server_send_http404response_delegate));
+            CfxApi.Server.cfx_server_send_http500response = (CfxApi.Server.cfx_server_send_http500response_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_http500response, typeof(CfxApi.Server.cfx_server_send_http500response_delegate));
+            CfxApi.Server.cfx_server_send_http_response = (CfxApi.Server.cfx_server_send_http_response_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_http_response, typeof(CfxApi.Server.cfx_server_send_http_response_delegate));
+            CfxApi.Server.cfx_server_send_raw_data = (CfxApi.Server.cfx_server_send_raw_data_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_raw_data, typeof(CfxApi.Server.cfx_server_send_raw_data_delegate));
+            CfxApi.Server.cfx_server_close_connection = (CfxApi.Server.cfx_server_close_connection_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_close_connection, typeof(CfxApi.Server.cfx_server_close_connection_delegate));
+            CfxApi.Server.cfx_server_send_web_socket_message = (CfxApi.Server.cfx_server_send_web_socket_message_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_send_web_socket_message, typeof(CfxApi.Server.cfx_server_send_web_socket_message_delegate));
+        }
+
+        internal static void LoadCfxServerHandlerApi() {
+            CfxApi.Probe();
+            CfxApi.ServerHandler.cfx_server_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_handler_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.ServerHandler.cfx_server_handler_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_server_handler_set_callback, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxServerHandler.SetNativeCallbacks();
+        }
+
         internal static void LoadCfxSetCookieCallbackApi() {
             CfxApi.Probe();
             CfxApi.SetCookieCallback.cfx_set_cookie_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_set_cookie_callback_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
@@ -3035,6 +3077,7 @@ namespace Chromium {
             CfxApi.UrlRequest.cfx_urlrequest_get_request_status = (CfxApi.UrlRequest.cfx_urlrequest_get_request_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_urlrequest_get_request_status, typeof(CfxApi.UrlRequest.cfx_urlrequest_get_request_status_delegate));
             CfxApi.UrlRequest.cfx_urlrequest_get_request_error = (CfxApi.UrlRequest.cfx_urlrequest_get_request_error_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_urlrequest_get_request_error, typeof(CfxApi.UrlRequest.cfx_urlrequest_get_request_error_delegate));
             CfxApi.UrlRequest.cfx_urlrequest_get_response = (CfxApi.UrlRequest.cfx_urlrequest_get_response_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_urlrequest_get_response, typeof(CfxApi.UrlRequest.cfx_urlrequest_get_response_delegate));
+            CfxApi.UrlRequest.cfx_urlrequest_response_was_cached = (CfxApi.UrlRequest.cfx_urlrequest_response_was_cached_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_urlrequest_response_was_cached, typeof(CfxApi.UrlRequest.cfx_urlrequest_response_was_cached_delegate));
             CfxApi.UrlRequest.cfx_urlrequest_cancel = (CfxApi.UrlRequest.cfx_urlrequest_cancel_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_urlrequest_cancel, typeof(CfxApi.UrlRequest.cfx_urlrequest_cancel_delegate));
         }
 

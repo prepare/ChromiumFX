@@ -7,7 +7,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1381] =  {
+static void* cfx_function_pointers[1398] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_base64decode,
@@ -980,6 +980,22 @@ static void* cfx_function_pointers[1381] =  {
     (void*)cfx_screen_info_set_available_rect,
     (void*)cfx_screen_info_get_available_rect,
     (void*)cfx_select_client_certificate_callback_select,
+    (void*)cfx_server_create,
+    (void*)cfx_server_get_task_runner,
+    (void*)cfx_server_shutdown,
+    (void*)cfx_server_is_running,
+    (void*)cfx_server_get_address,
+    (void*)cfx_server_has_connection,
+    (void*)cfx_server_is_valid_connection,
+    (void*)cfx_server_send_http200response,
+    (void*)cfx_server_send_http404response,
+    (void*)cfx_server_send_http500response,
+    (void*)cfx_server_send_http_response,
+    (void*)cfx_server_send_raw_data,
+    (void*)cfx_server_close_connection,
+    (void*)cfx_server_send_web_socket_message,
+    (void*)cfx_server_handler_ctor,
+    (void*)cfx_server_handler_set_callback,
     (void*)cfx_set_cookie_callback_ctor,
     (void*)cfx_set_cookie_callback_set_callback,
     (void*)cfx_settings_ctor,
@@ -1126,6 +1142,7 @@ static void* cfx_function_pointers[1381] =  {
     (void*)cfx_urlrequest_get_request_status,
     (void*)cfx_urlrequest_get_request_error,
     (void*)cfx_urlrequest_get_response,
+    (void*)cfx_urlrequest_response_was_cached,
     (void*)cfx_urlrequest_cancel,
     (void*)cfx_urlrequest_client_ctor,
     (void*)cfx_urlrequest_client_get_gc_handle,
