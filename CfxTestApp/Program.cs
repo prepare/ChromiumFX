@@ -21,7 +21,7 @@ namespace CfxTestApplication {
         [STAThread]
         public static void Main() {
 
-            var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().EscapedCodeBase).LocalPath);
 
             Environment.CurrentDirectory = System.IO.Path.Combine(assemblyDir, @"..\..\");
 
