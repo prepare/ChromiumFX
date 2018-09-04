@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=68988be0c2e0a1481ee6b27930391976c7041317$
+// $hash=c7641e41aca6bf30b9c36092861f061d2b16ff82$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_DISPLAY_HANDLER_CAPI_H_
@@ -118,6 +118,7 @@ typedef struct _cef_display_handler_t {
   ///
   int(CEF_CALLBACK* on_console_message)(struct _cef_display_handler_t* self,
                                         struct _cef_browser_t* browser,
+                                        cef_log_severity_t level,
                                         const cef_string_t* message,
                                         const cef_string_t* source,
                                         int line);
@@ -131,6 +132,15 @@ typedef struct _cef_display_handler_t {
   int(CEF_CALLBACK* on_auto_resize)(struct _cef_display_handler_t* self,
                                     struct _cef_browser_t* browser,
                                     const cef_size_t* new_size);
+
+  ///
+  // Called when the overall page loading progress has changed. |progress|
+  // ranges from 0.0 to 1.0.
+  ///
+  void(CEF_CALLBACK* on_loading_progress_change)(
+      struct _cef_display_handler_t* self,
+      struct _cef_browser_t* browser,
+      double progress);
 } cef_display_handler_t;
 
 #ifdef __cplusplus

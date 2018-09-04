@@ -106,12 +106,15 @@ class CefRequestHandler : public virtual CefBaseRefCounted {
   // If the navigation is allowed CefLoadHandler::OnLoadStart and
   // CefLoadHandler::OnLoadEnd will be called. If the navigation is canceled
   // CefLoadHandler::OnLoadError will be called with an |errorCode| value of
-  // ERR_ABORTED.
+  // ERR_ABORTED. The |user_gesture| value will be true if the browser
+  // navigated via explicit user gesture (e.g. clicking a link) or false if it
+  // navigated automatically (e.g. via the DomContentLoaded event).
   ///
   /*--cef()--*/
   virtual bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
                               CefRefPtr<CefFrame> frame,
                               CefRefPtr<CefRequest> request,
+                              bool user_gesture,
                               bool is_redirect) {
     return false;
   }
@@ -250,6 +253,33 @@ class CefRequestHandler : public virtual CefBaseRefCounted {
                                   const CefString& scheme,
                                   CefRefPtr<CefAuthCallback> callback) {
     return false;
+  }
+
+  ///
+  // Called on the IO thread before sending a network request with a "Cookie"
+  // request header. Return true to allow cookies to be included in the network
+  // request or false to block cookies. The |request| object should not be
+  // modified in this callback.
+  ///
+  /*--cef()--*/
+  virtual bool CanGetCookies(CefRefPtr<CefBrowser> browser,
+                             CefRefPtr<CefFrame> frame,
+                             CefRefPtr<CefRequest> request) {
+    return true;
+  }
+
+  ///
+  // Called on the IO thread when receiving a network request with a
+  // "Set-Cookie" response header value represented by |cookie|. Return true to
+  // allow the cookie to be stored or false to block the cookie. The |request|
+  // object should not be modified in this callback.
+  ///
+  /*--cef()--*/
+  virtual bool CanSetCookie(CefRefPtr<CefBrowser> browser,
+                            CefRefPtr<CefFrame> frame,
+                            CefRefPtr<CefRequest> request,
+                            const CefCookie& cookie) {
+    return true;
   }
 
   ///
