@@ -15,6 +15,8 @@ public class CefEnumType : ApiType {
         public readonly string Name;
         public readonly string Value;
 
+        public string PublicName;
+
         public readonly CommentNode Comments;
 
         public EnumMember(string name, string value, CommentNode Comments) {
@@ -100,18 +102,17 @@ public class CefEnumType : ApiType {
         b.AppendLine("call.{0} = (int){0};", CSharp.Escape(var));
     }
 
-    private static string GetEnumMemberValue(string originalValue) {
+    private string GetEnumMemberValue(string originalValue) {
         switch(originalValue) {
-
-            case "ERR_CERT_COMMON_NAME_INVALID":
-                return "CertCommonNameInvalid";
-            case "ERR_CERT_VALIDITY_TOO_LONG":
-                return "CertValidityTooLong";
             case "UINT_MAX":
                 return "unchecked((int)UInt32.MaxValue)";
-            case "REFERRER_POLICY_CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE":
-                return "ClearReferrerOnTransitionFromSecureToInsecure";
             default:
+                foreach(var m in members) {
+                    if(m.PublicName == null) break;
+                    if(m.Name == originalValue) {
+                        return m.PublicName;
+                    }
+                }
                 return string.Format("unchecked((int){0})", originalValue);
         }
     }
@@ -146,12 +147,12 @@ public class CefEnumType : ApiType {
 
         b.BeginBlock("public enum {0}", enumName);
         foreach(var m in members) {
-            var var = CSharp.ApplyStyle(m.Name.Substring(prefixBuilder.Length));
+            m.PublicName = CSharp.ApplyStyle(m.Name.Substring(prefixBuilder.Length));
 
-            if(char.IsDigit(var[0])) {
+            if(char.IsDigit(m.PublicName[0])) {
                 switch(enumName) {
                     case "CfxScaleFactor":
-                        var = "ScaleFactor" + var;
+                        m.PublicName = "ScaleFactor" + m.PublicName;
                         break;
                     default:
                         Debug.Assert(false);
@@ -160,7 +161,7 @@ public class CefEnumType : ApiType {
             }
 
             b.AppendSummary(m.Comments);
-            b.Append(var);
+            b.Append(m.PublicName);
             if(m.Value != null) {
                 b.Append(" = {0}", GetEnumMemberValue(m.Value));
             }
