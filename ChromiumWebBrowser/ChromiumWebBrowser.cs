@@ -448,12 +448,6 @@ namespace Chromium.WebBrowser {
         public CfxFocusHandler FocusHandler { get { return client.FocusHandler; } }
 
         /// <summary>
-        /// Returns the geolocation handler for this browser. If this is never accessed
-        /// geolocation access will be denied by default.
-        /// </summary>
-        public CfxGeolocationHandler GeolocationHandler { get { return client.GeolocationHandler; } }
-
-        /// <summary>
         /// Returns the js dialog handler for this browser. If this is never accessed the default
         /// implementation will be used.
         /// </summary>
