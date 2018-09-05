@@ -12,6 +12,77 @@ using System.Text;
 
 public class CfxClientClass : CfxClass {
 
+
+    public static void DefineEventHandlerNames(CefStructType[] structTypes) {
+
+        // collect all callback functions in a dictionary with the public name as key
+
+        var events = new Dictionary<string, List<CefCallbackFunction>>();
+
+        foreach(var st in structTypes) {
+            if(st.Category == StructCategory.Client) {
+                foreach(var cb in st.ClassBuilder.CallbackFunctions) {
+                    var key = cb.PublicName;
+                    if(!events.TryGetValue(key, out List<CefCallbackFunction> list)) {
+                        list = new List<CefCallbackFunction>();
+                        events.Add(key, list);
+                    }
+                    list.Add(cb);
+                }
+            }
+        }
+
+        // define event names:
+        // for public names with a single callback function:
+        //    for basic events (no arguments, return type void), don't set the event name
+        //    for non-basic events, use the public name prefixed with "Cfx"
+        // for public names with more than one callback function:
+        //    for basic events, don't set the event name
+        //    for non-basic events:
+        //        if all callback functions have the same comments, 
+        //        then use the public name prefixed with "Cfx"
+        //        else, concatenate the parent's class name with the public name
+
+        foreach(var list in events.Values) {
+            if(list.Count > 1) {
+                var allDuplicates = true;
+                var cb0 = list[0];
+                for(int i = 1; i < list.Count && allDuplicates; ++i) {
+                    var cb1 = list[i];
+                    if(cb0.Comments.Lines.Length != cb1.Comments.Lines.Length) {
+                        allDuplicates = false;
+                    } else {
+                        for(int ii = 0; ii < cb0.Comments.Lines.Length && allDuplicates; ++ii) {
+                            if(cb0.Comments.Lines[ii] != cb1.Comments.Lines[ii]) {
+                                allDuplicates = false;
+                            }
+                        }
+                    }
+                }
+                for(int i = 0; i < list.Count; ++i) {
+                    var cb = list[i];
+                    if(cb.Signature.ManagedParameters.Length == 1 && cb.Signature.PublicReturnType.IsVoid) {
+                        // a basic event, don't set event name
+                    } else if(allDuplicates) {
+                        cb.EventName = "Cfx" + cb.PublicName;
+                    } else {
+                        cb.EventName = cb.Parent.ClassName + cb.PublicName;
+                    }
+                }
+            } else {
+                var cb = list[0];
+                if(cb.PublicName.Length < 4) {
+                    // Special case, for short functions like "get" or "set", prepend the parent name
+                    cb.EventName = cb.Parent.ClassName + cb.PublicName;
+                } else if(cb.Signature.ManagedParameters.Length == 1 && cb.Signature.PublicReturnType.IsVoid) {
+                    // a basic event, don't set event name
+                } else {
+                    cb.EventName = "Cfx" + cb.PublicName;
+                } 
+            }
+        }
+    }
+
     public override StructCategory Category {
         get {
             return StructCategory.Client;
@@ -337,35 +408,15 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("private {0} m_{1};", cb.EventHandlerName, cb.PublicName);
     }
 
-    
-    private bool ShouldEmitEventHandler(Dictionary<string, CommentNode> emittedHandlers, CefCallbackFunction cb) {
-        if(emittedHandlers.ContainsKey(cb.EventName)) {
-            var c0 = emittedHandlers[cb.EventName];
-            if(c0 != null) {
-                if(c0.Lines.Length != cb.Comments.Lines.Length) {
-                    System.Diagnostics.Debugger.Break();
-                }
-                for(var i = 0; i <= c0.Lines.Length - 1; i++) {
-                    if(c0.Lines[i] != cb.Comments.Lines[i]) {
-                        // two handlers use same event but with different cb.Comments
-                        System.Diagnostics.Debugger.Break();
-                    }
-                }
-            }
-            return false;
-        }
-        emittedHandlers.Add(cb.EventName, cb.Comments);
-        return true;
-    }
-
-    private static Dictionary<string, CommentNode> emittedPublicHandlers = new Dictionary<string, CommentNode>();
+    private static HashSet<string> emittedEventHandlers = new HashSet<string>();
 
     private void EmitPublicEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
         if(cb.IsBasicEvent)
             return;
 
-        if(!ShouldEmitEventHandler(emittedPublicHandlers, cb)) return;
+        if(emittedEventHandlers.Contains(cb.EventHandlerName)) return;
+        emittedEventHandlers.Add(cb.EventHandlerName);
 
         b.AppendSummaryAndRemarks(cb.Comments, false, true);
         b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.EventHandlerName, cb.PublicEventArgsClassName);
@@ -740,14 +791,13 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
     }
 
-    private static Dictionary<string, CommentNode> emittedRemoteHandlers = new Dictionary<string, CommentNode>();
-
     public void EmitRemoteEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
         if(cb.IsBasicEvent)
             return;
 
-        if(!ShouldEmitEventHandler(emittedRemoteHandlers, cb)) return;
+        if(emittedEventHandlers.Contains(cb.RemoteEventHandlerName)) return;
+        emittedEventHandlers.Add(cb.RemoteEventHandlerName);
 
         b.AppendSummaryAndRemarks(cb.Comments, true, true);
         b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.RemoteEventHandlerName, cb.RemoteEventArgsClassName);

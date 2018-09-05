@@ -21,6 +21,7 @@ public class WrapperGenerator {
         this.decls = decls;
         CheckForNeededWrapFunctions();
         CheckForStringOutParameters();
+        CfxClientClass.DefineEventHandlerNames(decls.CefStructTypes);
         this.remoteDecls = decls.GetRemoteDeclarations();
     }
 

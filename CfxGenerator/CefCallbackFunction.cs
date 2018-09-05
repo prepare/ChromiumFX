@@ -139,26 +139,14 @@ public class CefCallbackFunction  {
         return true;
     }
 
-    public bool IsBasicEvent {
-        get { return Signature.ManagedParameters.Length == 1 && Signature.PublicReturnType.IsVoid; }
-    }
-
     public string NativeCallbackName {
         get { return string.Concat(Parent.CfxName, "_", Name); }
     }
 
-    public string EventName {
-        get {
-            if(Parent.ClassBuilder.CallbackFunctions.Length == 1) {
-                return Parent.ClassName + PublicName;
-            } else if(PublicName == "GetAuthCredentials") {
-                return Parent.ClassName + PublicName;
-            } else if(PublicName.Length < 4) {
-                return Parent.ClassName + PublicName;
-            } else {
-                return "Cfx" + PublicName;
-            }
-        }
+    public string EventName { get; set; }
+
+    public bool IsBasicEvent {
+        get { return EventName == null; }
     }
 
     public string RemoteCallName {
