@@ -288,6 +288,41 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxV8ValueCreateArrayBufferRemoteCall : RemoteCall {
+
+        internal CfxV8ValueCreateArrayBufferRemoteCall()
+            : base(RemoteCallId.CfxV8ValueCreateArrayBufferRemoteCall) {}
+
+        internal IntPtr buffer;
+        internal ulong length;
+        internal IntPtr releaseCallback;
+        internal IntPtr __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(buffer);
+            h.Write(length);
+            h.Write(releaseCallback);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out buffer);
+            h.Read(out length);
+            h.Read(out releaseCallback);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void RemoteProcedure() {
+            __retval = CfxApi.V8Value.cfx_v8value_create_array_buffer(buffer, (UIntPtr)length, releaseCallback);
+        }
+    }
+
     internal class CfxV8ValueCreateFunctionRemoteCall : RemoteCall {
 
         internal CfxV8ValueCreateFunctionRemoteCall()
@@ -638,6 +673,35 @@ namespace Chromium.Remote {
 
         protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Value.cfx_v8value_is_array(@this);
+        }
+    }
+
+    internal class CfxV8ValueIsArrayBufferRemoteCall : RemoteCall {
+
+        internal CfxV8ValueIsArrayBufferRemoteCall()
+            : base(RemoteCallId.CfxV8ValueIsArrayBufferRemoteCall) {}
+
+        internal IntPtr @this;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@this);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @this);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void RemoteProcedure() {
+            __retval = 0 != CfxApi.V8Value.cfx_v8value_is_array_buffer(@this);
         }
     }
 
@@ -1553,6 +1617,64 @@ namespace Chromium.Remote {
 
         protected override void RemoteProcedure() {
             __retval = CfxApi.V8Value.cfx_v8value_get_array_length(@this);
+        }
+    }
+
+    internal class CfxV8ValueGetArrayBufferReleaseCallbackRemoteCall : RemoteCall {
+
+        internal CfxV8ValueGetArrayBufferReleaseCallbackRemoteCall()
+            : base(RemoteCallId.CfxV8ValueGetArrayBufferReleaseCallbackRemoteCall) {}
+
+        internal IntPtr @this;
+        internal IntPtr __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@this);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @this);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void RemoteProcedure() {
+            __retval = CfxApi.V8Value.cfx_v8value_get_array_buffer_release_callback(@this);
+        }
+    }
+
+    internal class CfxV8ValueNeuterArrayBufferRemoteCall : RemoteCall {
+
+        internal CfxV8ValueNeuterArrayBufferRemoteCall()
+            : base(RemoteCallId.CfxV8ValueNeuterArrayBufferRemoteCall) {}
+
+        internal IntPtr @this;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@this);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @this);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void RemoteProcedure() {
+            __retval = 0 != CfxApi.V8Value.cfx_v8value_neuter_array_buffer(@this);
         }
     }
 

@@ -76,4 +76,15 @@ static void cfx_response_set_header_map(cef_response_t* self, cef_string_multima
     self->set_header_map(self, headerMap);
 }
 
+// get_url
+static cef_string_userfree_t cfx_response_get_url(cef_response_t* self) {
+    return self->get_url(self);
+}
+
+// set_url
+static void cfx_response_set_url(cef_response_t* self, char16 *url_str, int url_length) {
+    cef_string_t url = { url_str, url_length, 0 };
+    self->set_url(self, &url);
+}
+
 

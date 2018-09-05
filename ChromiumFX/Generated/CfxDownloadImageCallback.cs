@@ -42,7 +42,7 @@ namespace Chromium {
                 image_release = 1;
                 return;
             }
-            var e = new CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs();
+            var e = new CfxOnDownloadImageFinishedEventArgs();
             e.m_image_url_str = image_url_str;
             e.m_image_url_length = image_url_length;
             e.m_http_status_code = http_status_code;
@@ -64,7 +64,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public event CfxDownloadImageCallbackOnDownloadImageFinishedEventHandler OnDownloadImageFinished {
+        public event CfxOnDownloadImageFinishedEventHandler OnDownloadImageFinished {
             add {
                 lock(eventLock) {
                     if(m_OnDownloadImageFinished == null) {
@@ -83,7 +83,7 @@ namespace Chromium {
             }
         }
 
-        private CfxDownloadImageCallbackOnDownloadImageFinishedEventHandler m_OnDownloadImageFinished;
+        private CfxOnDownloadImageFinishedEventHandler m_OnDownloadImageFinished;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnDownloadImageFinished != null) {
@@ -107,7 +107,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public delegate void CfxDownloadImageCallbackOnDownloadImageFinishedEventHandler(object sender, CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs e);
+        public delegate void CfxOnDownloadImageFinishedEventHandler(object sender, CfxOnDownloadImageFinishedEventArgs e);
 
         /// <summary>
         /// Method that will be executed when the image download has completed.
@@ -119,7 +119,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public class CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs : CfxEventArgs {
+        public class CfxOnDownloadImageFinishedEventArgs : CfxEventArgs {
 
             internal IntPtr m_image_url_str;
             internal int m_image_url_length;
@@ -128,7 +128,7 @@ namespace Chromium {
             internal IntPtr m_image;
             internal CfxImage m_image_wrapped;
 
-            internal CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs() {}
+            internal CfxOnDownloadImageFinishedEventArgs() {}
 
             /// <summary>
             /// Get the ImageUrl parameter for the <see cref="CfxDownloadImageCallback.OnDownloadImageFinished"/> callback.

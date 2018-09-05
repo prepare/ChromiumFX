@@ -32,14 +32,6 @@ static void cfx_settings_dtor(cef_settings_t* self) {
     free(self);
 }
 
-// cef_settings_t->single_process
-static void cfx_settings_set_single_process(cef_settings_t *self, int single_process) {
-    self->single_process = single_process;
-}
-static void cfx_settings_get_single_process(cef_settings_t *self, int* single_process) {
-    *single_process = self->single_process;
-}
-
 // cef_settings_t->no_sandbox
 static void cfx_settings_set_no_sandbox(cef_settings_t *self, int no_sandbox) {
     self->no_sandbox = no_sandbox;

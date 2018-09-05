@@ -32,8 +32,6 @@
 #include "include/capi/cef_find_handler_capi.h"
 #include "include/capi/cef_focus_handler_capi.h"
 #include "include/capi/cef_frame_capi.h"
-#include "include/capi/cef_geolocation_capi.h"
-#include "include/capi/cef_geolocation_handler_capi.h"
 #include "include/capi/cef_image_capi.h"
 #include "include/capi/cef_jsdialog_handler_capi.h"
 #include "include/capi/cef_keyboard_handler_capi.h"

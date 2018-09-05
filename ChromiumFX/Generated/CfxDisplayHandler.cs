@@ -33,6 +33,7 @@ namespace Chromium {
             on_status_message_native = on_status_message;
             on_console_message_native = on_console_message;
             on_auto_resize_native = on_auto_resize;
+            on_loading_progress_change_native = on_loading_progress_change;
 
             on_address_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_address_change_native);
             on_title_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_title_change_native);
@@ -42,6 +43,7 @@ namespace Chromium {
             on_status_message_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_status_message_native);
             on_console_message_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_console_message_native);
             on_auto_resize_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_auto_resize_native);
+            on_loading_progress_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_loading_progress_change_native);
         }
 
         // on_address_change
@@ -180,11 +182,11 @@ namespace Chromium {
 
         // on_console_message
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_console_message_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line);
+        private delegate void on_console_message_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int level, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line);
         private static on_console_message_delegate on_console_message_native;
         private static IntPtr on_console_message_native_ptr;
 
-        internal static void on_console_message(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
+        internal static void on_console_message(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int level, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
@@ -193,6 +195,7 @@ namespace Chromium {
             }
             var e = new CfxOnConsoleMessageEventArgs();
             e.m_browser = browser;
+            e.m_level = level;
             e.m_message_str = message_str;
             e.m_message_length = message_length;
             e.m_source_str = source_str;
@@ -224,6 +227,26 @@ namespace Chromium {
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
+        }
+
+        // on_loading_progress_change
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_loading_progress_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, double progress);
+        private static on_loading_progress_change_delegate on_loading_progress_change_native;
+        private static IntPtr on_loading_progress_change_native_ptr;
+
+        internal static void on_loading_progress_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, double progress) {
+            var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                browser_release = 1;
+                return;
+            }
+            var e = new CfxOnLoadingProgressChangeEventArgs();
+            e.m_browser = browser;
+            e.m_progress = progress;
+            self.m_OnLoadingProgressChange?.Invoke(self, e);
+            e.m_isInvalid = true;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         public CfxDisplayHandler() : base(CfxApi.DisplayHandler.cfx_display_handler_ctor) {}
@@ -466,6 +489,35 @@ namespace Chromium {
 
         private CfxOnAutoResizeEventHandler m_OnAutoResize;
 
+        /// <summary>
+        /// Called when the overall page loading progress has changed. |Progress|
+        /// ranges from 0.0 to 1.0.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnLoadingProgressChangeEventHandler OnLoadingProgressChange {
+            add {
+                lock(eventLock) {
+                    if(m_OnLoadingProgressChange == null) {
+                        CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 8, on_loading_progress_change_native_ptr);
+                    }
+                    m_OnLoadingProgressChange += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnLoadingProgressChange -= value;
+                    if(m_OnLoadingProgressChange == null) {
+                        CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnLoadingProgressChangeEventHandler m_OnLoadingProgressChange;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnAddressChange != null) {
                 m_OnAddressChange = null;
@@ -498,6 +550,10 @@ namespace Chromium {
             if(m_OnAutoResize != null) {
                 m_OnAutoResize = null;
                 CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+            }
+            if(m_OnLoadingProgressChange != null) {
+                m_OnLoadingProgressChange = null;
+                CfxApi.DisplayHandler.cfx_display_handler_set_callback(NativePtr, 8, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -889,6 +945,7 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
+            internal int m_level;
             internal IntPtr m_message_str;
             internal int m_message_length;
             internal string m_message;
@@ -910,6 +967,15 @@ namespace Chromium {
                     CheckAccess();
                     if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
                     return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Level parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.
+            /// </summary>
+            public CfxLogSeverity Level {
+                get {
+                    CheckAccess();
+                    return (CfxLogSeverity)m_level;
                 }
             }
             /// <summary>
@@ -955,7 +1021,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Message={{{1}}}, Source={{{2}}}, Line={{{3}}}", Browser, Message, Source, Line);
+                return String.Format("Browser={{{0}}}, Level={{{1}}}, Message={{{2}}}, Source={{{3}}}, Line={{{4}}}", Browser, Level, Message, Source, Line);
             }
         }
 
@@ -1028,6 +1094,57 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, NewSize={{{1}}}", Browser, NewSize);
+            }
+        }
+
+        /// <summary>
+        /// Called when the overall page loading progress has changed. |Progress|
+        /// ranges from 0.0 to 1.0.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnLoadingProgressChangeEventHandler(object sender, CfxOnLoadingProgressChangeEventArgs e);
+
+        /// <summary>
+        /// Called when the overall page loading progress has changed. |Progress|
+        /// ranges from 0.0 to 1.0.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnLoadingProgressChangeEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal double m_progress;
+
+            internal CfxOnLoadingProgressChangeEventArgs() {}
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnLoadingProgressChange"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Progress parameter for the <see cref="CfxDisplayHandler.OnLoadingProgressChange"/> callback.
+            /// </summary>
+            public double Progress {
+                get {
+                    CheckAccess();
+                    return m_progress;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Progress={{{1}}}", Browser, Progress);
             }
         }
 

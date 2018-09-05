@@ -103,10 +103,6 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_get_extensions_for_mime_type_delegate(IntPtr mime_type_str, int mime_type_length, IntPtr extensions);
             public static cfx_get_extensions_for_mime_type_delegate cfx_get_extensions_for_mime_type;
-            // CEF_EXPORT int cef_get_geolocation(cef_get_geolocation_callback_t* callback);
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_get_geolocation_delegate(IntPtr callback);
-            public static cfx_get_geolocation_delegate cfx_get_geolocation;
             // CEF_EXPORT cef_string_userfree_t cef_get_mime_type(const cef_string_t* extension);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_get_mime_type_delegate(IntPtr extension_str, int extension_length);
@@ -1689,6 +1685,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_cookie_manager_get_global_manager_delegate(IntPtr callback);
             public static cfx_cookie_manager_get_global_manager_delegate cfx_cookie_manager_get_global_manager;
+            // CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_get_blocking_manager();
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_cookie_manager_get_blocking_manager_delegate();
+            public static cfx_cookie_manager_get_blocking_manager_delegate cfx_cookie_manager_get_blocking_manager;
             // CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_create_manager(const cef_string_t* path, int persist_session_cookies, cef_completion_callback_t* callback);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_cookie_manager_create_manager_delegate(IntPtr path_str, int path_length, int persist_session_cookies, IntPtr callback);
@@ -2766,133 +2766,6 @@ namespace Chromium {
 
         }
 
-        internal static class GeolocationCallback {
-
-            static GeolocationCallback () {
-                CfxApiLoader.LoadCfxGeolocationCallbackApi();
-            }
-
-            // static void cfx_geolocation_callback_cont(cef_geolocation_callback_t* self, int allow)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geolocation_callback_cont_delegate(IntPtr self, int allow);
-            public static cfx_geolocation_callback_cont_delegate cfx_geolocation_callback_cont;
-
-        }
-
-        internal static class GeolocationHandler {
-
-            static GeolocationHandler () {
-                CfxApiLoader.LoadCfxGeolocationHandlerApi();
-            }
-
-            public static cfx_ctor_with_gc_handle_delegate cfx_geolocation_handler_ctor;
-            public static cfx_set_callback_delegate cfx_geolocation_handler_set_callback;
-
-        }
-
-        internal static class Geoposition {
-
-            static Geoposition () {
-                CfxApiLoader.LoadCfxGeopositionApi();
-            }
-
-            // static cef_geoposition_t* cfx_geoposition_ctor()
-            public static cfx_ctor_delegate cfx_geoposition_ctor;
-            // static void cfx_geoposition_dtor(cef_geoposition_t* ptr)
-            public static cfx_dtor_delegate cfx_geoposition_dtor;
-
-            // static void cfx_geoposition_set_latitude(cef_geoposition_t *self, double latitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_latitude_delegate(IntPtr self, double latitude);
-            public static cfx_geoposition_set_latitude_delegate cfx_geoposition_set_latitude;
-            // static void cfx_geoposition_get_latitude(cef_geoposition_t *self, double* latitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_latitude_delegate(IntPtr self, out double latitude);
-            public static cfx_geoposition_get_latitude_delegate cfx_geoposition_get_latitude;
-
-            // static void cfx_geoposition_set_longitude(cef_geoposition_t *self, double longitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_longitude_delegate(IntPtr self, double longitude);
-            public static cfx_geoposition_set_longitude_delegate cfx_geoposition_set_longitude;
-            // static void cfx_geoposition_get_longitude(cef_geoposition_t *self, double* longitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_longitude_delegate(IntPtr self, out double longitude);
-            public static cfx_geoposition_get_longitude_delegate cfx_geoposition_get_longitude;
-
-            // static void cfx_geoposition_set_altitude(cef_geoposition_t *self, double altitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_altitude_delegate(IntPtr self, double altitude);
-            public static cfx_geoposition_set_altitude_delegate cfx_geoposition_set_altitude;
-            // static void cfx_geoposition_get_altitude(cef_geoposition_t *self, double* altitude)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_altitude_delegate(IntPtr self, out double altitude);
-            public static cfx_geoposition_get_altitude_delegate cfx_geoposition_get_altitude;
-
-            // static void cfx_geoposition_set_accuracy(cef_geoposition_t *self, double accuracy)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_accuracy_delegate(IntPtr self, double accuracy);
-            public static cfx_geoposition_set_accuracy_delegate cfx_geoposition_set_accuracy;
-            // static void cfx_geoposition_get_accuracy(cef_geoposition_t *self, double* accuracy)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_accuracy_delegate(IntPtr self, out double accuracy);
-            public static cfx_geoposition_get_accuracy_delegate cfx_geoposition_get_accuracy;
-
-            // static void cfx_geoposition_set_altitude_accuracy(cef_geoposition_t *self, double altitude_accuracy)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_altitude_accuracy_delegate(IntPtr self, double altitude_accuracy);
-            public static cfx_geoposition_set_altitude_accuracy_delegate cfx_geoposition_set_altitude_accuracy;
-            // static void cfx_geoposition_get_altitude_accuracy(cef_geoposition_t *self, double* altitude_accuracy)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_altitude_accuracy_delegate(IntPtr self, out double altitude_accuracy);
-            public static cfx_geoposition_get_altitude_accuracy_delegate cfx_geoposition_get_altitude_accuracy;
-
-            // static void cfx_geoposition_set_heading(cef_geoposition_t *self, double heading)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_heading_delegate(IntPtr self, double heading);
-            public static cfx_geoposition_set_heading_delegate cfx_geoposition_set_heading;
-            // static void cfx_geoposition_get_heading(cef_geoposition_t *self, double* heading)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_heading_delegate(IntPtr self, out double heading);
-            public static cfx_geoposition_get_heading_delegate cfx_geoposition_get_heading;
-
-            // static void cfx_geoposition_set_speed(cef_geoposition_t *self, double speed)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_speed_delegate(IntPtr self, double speed);
-            public static cfx_geoposition_set_speed_delegate cfx_geoposition_set_speed;
-            // static void cfx_geoposition_get_speed(cef_geoposition_t *self, double* speed)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_speed_delegate(IntPtr self, out double speed);
-            public static cfx_geoposition_get_speed_delegate cfx_geoposition_get_speed;
-
-            // static void cfx_geoposition_set_timestamp(cef_geoposition_t *self, cef_time_t* timestamp)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_timestamp_delegate(IntPtr self, IntPtr timestamp);
-            public static cfx_geoposition_set_timestamp_delegate cfx_geoposition_set_timestamp;
-            // static void cfx_geoposition_get_timestamp(cef_geoposition_t *self, cef_time_t** timestamp)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_timestamp_delegate(IntPtr self, out IntPtr timestamp);
-            public static cfx_geoposition_get_timestamp_delegate cfx_geoposition_get_timestamp;
-
-            // static void cfx_geoposition_set_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t error_code)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_error_code_delegate(IntPtr self, int error_code);
-            public static cfx_geoposition_set_error_code_delegate cfx_geoposition_set_error_code;
-            // static void cfx_geoposition_get_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t* error_code)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_error_code_delegate(IntPtr self, out int error_code);
-            public static cfx_geoposition_get_error_code_delegate cfx_geoposition_get_error_code;
-
-            // static void cfx_geoposition_set_error_message(cef_geoposition_t *self, char16 *error_message_str, int error_message_length)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_set_error_message_delegate(IntPtr self, IntPtr error_message_str, int error_message_length);
-            public static cfx_geoposition_set_error_message_delegate cfx_geoposition_set_error_message;
-            // static void cfx_geoposition_get_error_message(cef_geoposition_t *self, char16 **error_message_str, int *error_message_length)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_geoposition_get_error_message_delegate(IntPtr self, out IntPtr error_message_str, out int error_message_length);
-            public static cfx_geoposition_get_error_message_delegate cfx_geoposition_get_error_message;
-
-        }
-
         internal static class GetExtensionResourceCallback {
 
             static GetExtensionResourceCallback () {
@@ -2908,17 +2781,6 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_get_extension_resource_callback_cancel_delegate(IntPtr self);
             public static cfx_get_extension_resource_callback_cancel_delegate cfx_get_extension_resource_callback_cancel;
-
-        }
-
-        internal static class GetGeolocationCallback {
-
-            static GetGeolocationCallback () {
-                CfxApiLoader.LoadCfxGetGeolocationCallbackApi();
-            }
-
-            public static cfx_ctor_with_gc_handle_delegate cfx_get_geolocation_callback_ctor;
-            public static cfx_set_callback_delegate cfx_get_geolocation_callback_set_callback;
 
         }
 
@@ -5030,6 +4892,16 @@ namespace Chromium {
             public delegate void cfx_response_set_header_map_delegate(IntPtr self, IntPtr headerMap);
             public static cfx_response_set_header_map_delegate cfx_response_set_header_map;
 
+            // static cef_string_userfree_t cfx_response_get_url(cef_response_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_response_get_url_delegate(IntPtr self);
+            public static cfx_response_get_url_delegate cfx_response_get_url;
+
+            // static void cfx_response_set_url(cef_response_t* self, char16 *url_str, int url_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_response_set_url_delegate(IntPtr self, IntPtr url_str, int url_length);
+            public static cfx_response_set_url_delegate cfx_response_set_url;
+
         }
 
         internal static class ResponseFilter {
@@ -5286,15 +5158,6 @@ namespace Chromium {
             public static cfx_ctor_delegate cfx_settings_ctor;
             // static void cfx_settings_dtor(cef_settings_t* ptr)
             public static cfx_dtor_delegate cfx_settings_dtor;
-
-            // static void cfx_settings_set_single_process(cef_settings_t *self, int single_process)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_settings_set_single_process_delegate(IntPtr self, int single_process);
-            public static cfx_settings_set_single_process_delegate cfx_settings_set_single_process;
-            // static void cfx_settings_get_single_process(cef_settings_t *self, int* single_process)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_settings_get_single_process_delegate(IntPtr self, out int single_process);
-            public static cfx_settings_get_single_process_delegate cfx_settings_get_single_process;
 
             // static void cfx_settings_set_no_sandbox(cef_settings_t *self, int no_sandbox)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -6049,6 +5912,18 @@ namespace Chromium {
 
         }
 
+        internal static class V8ArrayBufferReleaseCallback {
+
+            static V8ArrayBufferReleaseCallback () {
+                CfxApiLoader.LoadCfxV8ArrayBufferReleaseCallbackApi();
+            }
+
+            public static cfx_ctor_with_gc_handle_delegate cfx_v8array_buffer_release_callback_ctor;
+            public static cfx_get_gc_handle_delegate cfx_v8array_buffer_release_callback_get_gc_handle;
+            public static cfx_set_callback_delegate cfx_v8array_buffer_release_callback_set_callback;
+
+        }
+
         internal static class V8Context {
 
             static V8Context () {
@@ -6308,6 +6183,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_v8value_create_array_delegate(int length);
             public static cfx_v8value_create_array_delegate cfx_v8value_create_array;
+            // CEF_EXPORT cef_v8value_t* cef_v8value_create_array_buffer(void* buffer, size_t length, cef_v8array_buffer_release_callback_t* release_callback);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_v8value_create_array_buffer_delegate(IntPtr buffer, UIntPtr length, IntPtr release_callback);
+            public static cfx_v8value_create_array_buffer_delegate cfx_v8value_create_array_buffer;
             // CEF_EXPORT cef_v8value_t* cef_v8value_create_function(const cef_string_t* name, cef_v8handler_t* handler);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_v8value_create_function_delegate(IntPtr name_str, int name_length, IntPtr handler);
@@ -6367,6 +6246,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_v8value_is_array_delegate(IntPtr self);
             public static cfx_v8value_is_array_delegate cfx_v8value_is_array;
+
+            // static int cfx_v8value_is_array_buffer(cef_v8value_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_v8value_is_array_buffer_delegate(IntPtr self);
+            public static cfx_v8value_is_array_buffer_delegate cfx_v8value_is_array_buffer;
 
             // static int cfx_v8value_is_function(cef_v8value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -6512,6 +6396,16 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_v8value_get_array_length_delegate(IntPtr self);
             public static cfx_v8value_get_array_length_delegate cfx_v8value_get_array_length;
+
+            // static cef_v8array_buffer_release_callback_t* cfx_v8value_get_array_buffer_release_callback(cef_v8value_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_v8value_get_array_buffer_release_callback_delegate(IntPtr self);
+            public static cfx_v8value_get_array_buffer_release_callback_delegate cfx_v8value_get_array_buffer_release_callback;
+
+            // static int cfx_v8value_neuter_array_buffer(cef_v8value_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_v8value_neuter_array_buffer_delegate(IntPtr self);
+            public static cfx_v8value_neuter_array_buffer_delegate cfx_v8value_neuter_array_buffer;
 
             // static cef_string_userfree_t cfx_v8value_get_function_name(cef_v8value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

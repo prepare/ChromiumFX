@@ -42,7 +42,7 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxFindHandlerOnFindResultEventArgs();
+            var e = new CfxOnFindResultEventArgs();
             e.m_browser = browser;
             e.m_identifier = identifier;
             e.m_count = count;
@@ -68,7 +68,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_find_handler_capi.h">cef/include/capi/cef_find_handler_capi.h</see>.
         /// </remarks>
-        public event CfxFindHandlerOnFindResultEventHandler OnFindResult {
+        public event CfxOnFindResultEventHandler OnFindResult {
             add {
                 lock(eventLock) {
                     if(m_OnFindResult == null) {
@@ -87,7 +87,7 @@ namespace Chromium {
             }
         }
 
-        private CfxFindHandlerOnFindResultEventHandler m_OnFindResult;
+        private CfxOnFindResultEventHandler m_OnFindResult;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnFindResult != null) {
@@ -113,7 +113,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_find_handler_capi.h">cef/include/capi/cef_find_handler_capi.h</see>.
         /// </remarks>
-        public delegate void CfxFindHandlerOnFindResultEventHandler(object sender, CfxFindHandlerOnFindResultEventArgs e);
+        public delegate void CfxOnFindResultEventHandler(object sender, CfxOnFindResultEventArgs e);
 
         /// <summary>
         /// Called to report find results returned by CfxBrowserHost.Find().
@@ -127,7 +127,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_find_handler_capi.h">cef/include/capi/cef_find_handler_capi.h</see>.
         /// </remarks>
-        public class CfxFindHandlerOnFindResultEventArgs : CfxEventArgs {
+        public class CfxOnFindResultEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
@@ -138,7 +138,7 @@ namespace Chromium {
             internal int m_activeMatchOrdinal;
             internal int m_finalUpdate;
 
-            internal CfxFindHandlerOnFindResultEventArgs() {}
+            internal CfxOnFindResultEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxFindHandler.OnFindResult"/> callback.

@@ -149,12 +149,6 @@ static void cfx_get_extensions_for_mime_type(char16 *mime_type_str, int mime_typ
     cef_get_extensions_for_mime_type(&mime_type, extensions);
 }
 
-// CEF_EXPORT int cef_get_geolocation(cef_get_geolocation_callback_t* callback);
-static int cfx_get_geolocation(cef_get_geolocation_callback_t* callback) {
-    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
-    return cef_get_geolocation(callback);
-}
-
 // CEF_EXPORT cef_string_userfree_t cef_get_mime_type(const cef_string_t* extension);
 static cef_string_userfree_t cfx_get_mime_type(char16 *extension_str, int extension_length) {
     cef_string_t extension = { extension_str, extension_length, 0 };

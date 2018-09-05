@@ -165,6 +165,24 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Create a new CfxV8Value object of type ArrayBuffer which wraps the
+        /// provided |buffer| of size |length| bytes. The ArrayBuffer is externalized,
+        /// meaning that it does not own |buffer|. The caller is responsible for freeing
+        /// |buffer| when requested via a call to CfxV8ArrayBufferReleaseCallback::
+        /// ReleaseBuffer. This function should only be called from within the scope of a
+        /// CfxRenderProcessHandler, CfxV8Handler or CfxV8Accessor callback,
+        /// or in combination with calling enter() and exit() on a stored CfxV8Context
+        /// reference.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static CfxV8Value CreateArrayBuffer(IntPtr buffer, ulong length, CfxV8ArrayBufferReleaseCallback releaseCallback) {
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_array_buffer(buffer, (UIntPtr)length, CfxV8ArrayBufferReleaseCallback.Unwrap(releaseCallback)));
+        }
+
+        /// <summary>
         /// Create a new CfxV8Value object of type function. This function should only
         /// be called from within the scope of a CfxRenderProcessHandler,
         /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
@@ -323,6 +341,19 @@ namespace Chromium {
         public bool IsArray {
             get {
                 return 0 != CfxApi.V8Value.cfx_v8value_is_array(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// True if the value type is an ArrayBuffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public bool IsArrayBuffer {
+            get {
+                return 0 != CfxApi.V8Value.cfx_v8value_is_array_buffer(NativePtr);
             }
         }
 
@@ -497,6 +528,20 @@ namespace Chromium {
         public int ArrayLength {
             get {
                 return CfxApi.V8Value.cfx_v8value_get_array_length(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns the ReleaseCallback object associated with the ArrayBuffer or NULL
+        /// if the ArrayBuffer was not created with CreateArrayBuffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public CfxV8ArrayBufferReleaseCallback ArrayBufferReleaseCallback {
+            get {
+                return CfxV8ArrayBufferReleaseCallback.Wrap(CfxApi.V8Value.cfx_v8value_get_array_buffer_release_callback(NativePtr));
             }
         }
 
@@ -756,6 +801,21 @@ namespace Chromium {
         /// </remarks>
         public int AdjustExternallyAllocatedMemory(int changeInBytes) {
             return CfxApi.V8Value.cfx_v8value_adjust_externally_allocated_memory(NativePtr, changeInBytes);
+        }
+
+        /// <summary>
+        /// Prevent the ArrayBuffer from using it's memory block by setting the length
+        /// to zero. This operation cannot be undone. If the ArrayBuffer was created
+        /// with CreateArrayBuffer then
+        /// CfxV8ArrayBufferReleaseCallback.ReleaseBuffer will be called to
+        /// release the underlying buffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public bool NeuterArrayBuffer() {
+            return 0 != CfxApi.V8Value.cfx_v8value_neuter_array_buffer(NativePtr);
         }
 
         /// <summary>

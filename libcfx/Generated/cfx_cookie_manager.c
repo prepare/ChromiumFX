@@ -14,6 +14,10 @@ static cef_cookie_manager_t* cfx_cookie_manager_get_global_manager(cef_completio
     if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     return cef_cookie_manager_get_global_manager(callback);
 }
+// CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_get_blocking_manager();
+static cef_cookie_manager_t* cfx_cookie_manager_get_blocking_manager() {
+    return cef_cookie_manager_get_blocking_manager();
+}
 // CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_create_manager(const cef_string_t* path, int persist_session_cookies, cef_completion_callback_t* callback);
 static cef_cookie_manager_t* cfx_cookie_manager_create_manager(char16 *path_str, int path_length, int persist_session_cookies, cef_completion_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };

@@ -52,6 +52,11 @@ static cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor, cef_
 static cef_v8value_t* cfx_v8value_create_array(int length) {
     return cef_v8value_create_array(length);
 }
+// CEF_EXPORT cef_v8value_t* cef_v8value_create_array_buffer(void* buffer, size_t length, cef_v8array_buffer_release_callback_t* release_callback);
+static cef_v8value_t* cfx_v8value_create_array_buffer(void* buffer, size_t length, cef_v8array_buffer_release_callback_t* release_callback) {
+    if(release_callback) ((cef_base_ref_counted_t*)release_callback)->add_ref((cef_base_ref_counted_t*)release_callback);
+    return cef_v8value_create_array_buffer(buffer, length, release_callback);
+}
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_function(const cef_string_t* name, cef_v8handler_t* handler);
 static cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name_length, cef_v8handler_t* handler) {
     cef_string_t name = { name_str, name_length, 0 };
@@ -111,6 +116,11 @@ static int cfx_v8value_is_object(cef_v8value_t* self) {
 // is_array
 static int cfx_v8value_is_array(cef_v8value_t* self) {
     return self->is_array(self);
+}
+
+// is_array_buffer
+static int cfx_v8value_is_array_buffer(cef_v8value_t* self) {
+    return self->is_array_buffer(self);
 }
 
 // is_function
@@ -266,6 +276,16 @@ static int cfx_v8value_adjust_externally_allocated_memory(cef_v8value_t* self, i
 // get_array_length
 static int cfx_v8value_get_array_length(cef_v8value_t* self) {
     return self->get_array_length(self);
+}
+
+// get_array_buffer_release_callback
+static cef_v8array_buffer_release_callback_t* cfx_v8value_get_array_buffer_release_callback(cef_v8value_t* self) {
+    return self->get_array_buffer_release_callback(self);
+}
+
+// neuter_array_buffer
+static int cfx_v8value_neuter_array_buffer(cef_v8value_t* self) {
+    return self->neuter_array_buffer(self);
 }
 
 // get_function_name

@@ -154,7 +154,7 @@ namespace Chromium {
                 __retval = default(int);
                 return;
             }
-            var e = new CfxCanSetCookieEventArgs();
+            var e = new CfxResourceHandlerCanSetCookieEventArgs();
             e.m_cookie = cookie;
             self.m_CanSetCookie?.Invoke(self, e);
             e.m_isInvalid = true;
@@ -317,7 +317,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
         /// </remarks>
-        public event CfxCanSetCookieEventHandler CanSetCookie {
+        public event CfxResourceHandlerCanSetCookieEventHandler CanSetCookie {
             add {
                 lock(eventLock) {
                     if(m_CanSetCookie == null) {
@@ -336,7 +336,7 @@ namespace Chromium {
             }
         }
 
-        private CfxCanSetCookieEventHandler m_CanSetCookie;
+        private CfxResourceHandlerCanSetCookieEventHandler m_CanSetCookie;
 
         /// <summary>
         /// Request processing has been canceled.
@@ -705,7 +705,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
         /// </remarks>
-        public delegate void CfxCanSetCookieEventHandler(object sender, CfxCanSetCookieEventArgs e);
+        public delegate void CfxResourceHandlerCanSetCookieEventHandler(object sender, CfxResourceHandlerCanSetCookieEventArgs e);
 
         /// <summary>
         /// Return true (1) if the specified cookie returned with the response can be
@@ -715,7 +715,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
         /// </remarks>
-        public class CfxCanSetCookieEventArgs : CfxEventArgs {
+        public class CfxResourceHandlerCanSetCookieEventArgs : CfxEventArgs {
 
             internal IntPtr m_cookie;
             internal CfxCookie m_cookie_wrapped;
@@ -723,7 +723,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxCanSetCookieEventArgs() {}
+            internal CfxResourceHandlerCanSetCookieEventArgs() {}
 
             /// <summary>
             /// Get the Cookie parameter for the <see cref="CfxResourceHandler.CanSetCookie"/> callback.

@@ -40,7 +40,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxResolveCallbackOnResolveCompletedEventArgs();
+            var e = new CfxOnResolveCompletedEventArgs();
             e.m_result = result;
             e.m_resolved_ips = resolved_ips;
             self.m_OnResolveCompleted?.Invoke(self, e);
@@ -58,7 +58,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
-        public event CfxResolveCallbackOnResolveCompletedEventHandler OnResolveCompleted {
+        public event CfxOnResolveCompletedEventHandler OnResolveCompleted {
             add {
                 lock(eventLock) {
                     if(m_OnResolveCompleted == null) {
@@ -77,7 +77,7 @@ namespace Chromium {
             }
         }
 
-        private CfxResolveCallbackOnResolveCompletedEventHandler m_OnResolveCompleted;
+        private CfxOnResolveCompletedEventHandler m_OnResolveCompleted;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnResolveCompleted != null) {
@@ -100,7 +100,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
-        public delegate void CfxResolveCallbackOnResolveCompletedEventHandler(object sender, CfxResolveCallbackOnResolveCompletedEventArgs e);
+        public delegate void CfxOnResolveCompletedEventHandler(object sender, CfxOnResolveCompletedEventArgs e);
 
         /// <summary>
         /// Called on the UI thread after the ResolveHost request has completed.
@@ -111,12 +111,12 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
-        public class CfxResolveCallbackOnResolveCompletedEventArgs : CfxEventArgs {
+        public class CfxOnResolveCompletedEventArgs : CfxEventArgs {
 
             internal int m_result;
             internal IntPtr m_resolved_ips;
 
-            internal CfxResolveCallbackOnResolveCompletedEventArgs() {}
+            internal CfxOnResolveCompletedEventArgs() {}
 
             /// <summary>
             /// Get the Result parameter for the <see cref="CfxResolveCallback.OnResolveCompleted"/> callback.

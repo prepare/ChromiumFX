@@ -607,19 +607,6 @@ namespace Chromium {
         System
     }
     /// <summary>
-    /// Geoposition error codes.
-    /// </summary>
-    /// <remarks>
-    /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-    /// </remarks>
-    public enum CfxGeopositionErrorCode {
-        None = unchecked((int)0),
-        PermissionDenied,
-        PositionUnavailable,
-        Timeout
-    }
-    /// <summary>
     /// Specifies the horizontal text alignment mode.
     /// </summary>
     /// <remarks>
@@ -767,6 +754,10 @@ namespace Chromium {
         /// Verbose logging.
         /// </summary>
         Verbose,
+        /// <summary>
+        /// DEBUG logging.
+        /// </summary>
+        Debug = Verbose,
         /// <summary>
         /// INFO logging.
         /// </summary>
@@ -1386,20 +1377,38 @@ namespace Chromium {
         /// <summary>
         /// The main thread in the browser. This will be the same as the main
         /// application thread if CfxInitialize() is called with a
-        /// CfxSettings.MultiThreadedMessageLoop value of false.
+        /// CfxSettings.MultiThreadedMessageLoop value of false. Do not perform
+        /// blocking tasks on this thread. All tasks posted after
+        /// CfxBrowserProcessHandler.OnContextInitialized() and before CfxShutdown()
+        /// are guaranteed to run. This thread will outlive all other CEF threads.
         /// </summary>
         Ui,
         /// <summary>
-        /// Used to interact with the database.
+        /// Used for blocking tasks (e.g. file system access) where the user won't
+        /// notice if the task takes an arbitrarily long time to complete. All tasks
+        /// posted after CfxBrowserProcessHandler.OnContextInitialized() and before
+        /// CfxShutdown() are guaranteed to run.
         /// </summary>
-        Db,
+        FileBackground,
+        File = FileBackground,
         /// <summary>
-        /// Used to interact with the file system.
+        /// Used for blocking tasks (e.g. file system access) that affect UI or
+        /// responsiveness of future user interactions. Do not use if an immediate
+        /// response to a user interaction is expected. All tasks posted after
+        /// CfxBrowserProcessHandler.OnContextInitialized() and before CfxShutdown()
+        /// are guaranteed to run.
+        /// Examples:
+        /// - Updating the UI to reflect progress on a long task.
+        /// - Loading data that might be shown in the UI after a future user
+        ///   interaction.
         /// </summary>
-        File,
+        FileUserVisible,
         /// <summary>
-        /// Used for file system operations that block user interactions.
-        /// Responsiveness of this thread affects users.
+        /// Used for blocking tasks (e.g. file system access) that affect UI
+        /// immediately after a user interaction. All tasks posted after
+        /// CfxBrowserProcessHandler.OnContextInitialized() and before CfxShutdown()
+        /// are guaranteed to run.
+        /// Example: Generating data shown in the UI immediately after a click.
         /// </summary>
         FileUserBlocking,
         /// <summary>
@@ -1407,15 +1416,18 @@ namespace Chromium {
         /// </summary>
         ProcessLauncher,
         /// <summary>
-        /// Used to handle slow HTTP cache operations.
-        /// </summary>
-        Cache,
-        /// <summary>
-        /// Used to process IPC and network messages.
+        /// Used to process IPC and network messages. Do not perform blocking tasks on
+        /// this thread. All tasks posted after
+        /// CfxBrowserProcessHandler.OnContextInitialized() and before CfxShutdown()
+        /// are guaranteed to run.
         /// </summary>
         Io,
         /// <summary>
         /// The main thread in the renderer. Used for all WebKit and V8 interaction.
+        /// Tasks may be posted to this thread after
+        /// CfxRenderProcessHandler.OnRenderThreadCreated but are not guaranteed to
+        /// run before sub-process termination (sub-processes may be killed at any time
+        /// without warning).
         /// </summary>
         Renderer
     }
@@ -1635,7 +1647,12 @@ namespace Chromium {
         /// automatically re-tried. This currently only applies for requests
         /// originated in the browser process.
         /// </summary>
-        NoRetryOn5xx = unchecked((int)1 << 5)
+        NoRetryOn5xx = unchecked((int)1 << 5),
+        /// <summary>
+        /// If set 3XX responses will cause the fetch to halt immediately rather than
+        /// continue through the redirect.
+        /// </summary>
+        StopOnRedirect = unchecked((int)1 << 6)
     }
     /// <summary>
     /// Flags that represent CfxURLRequest status.

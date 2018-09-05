@@ -178,6 +178,32 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Get the resolved URL after redirects or changed as a result of HSTS.
+        /// 
+        /// Set the resolved URL after redirects or changed as a result of HSTS.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
+        public string Url {
+            get {
+                var connection = RemotePtr.connection;
+                var call = new CfxResponseGetUrlRemoteCall();
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(connection);
+                return call.__retval;
+            }
+            set {
+                var connection = RemotePtr.connection;
+                var call = new CfxResponseSetUrlRemoteCall();
+                call.@this = RemotePtr.ptr;
+                call.value = value;
+                call.RequestExecution(connection);
+            }
+        }
+
+        /// <summary>
         /// Get the value for the specified response header field.
         /// </summary>
         /// <remarks>

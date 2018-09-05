@@ -18,7 +18,6 @@ namespace Chromium.Remote {
             on_browser_created_native = on_browser_created;
             on_browser_destroyed_native = on_browser_destroyed;
             get_load_handler_native = get_load_handler;
-            on_before_navigation_native = on_before_navigation;
             on_context_created_native = on_context_created;
             on_context_released_native = on_context_released;
             on_uncaught_exception_native = on_uncaught_exception;
@@ -29,7 +28,6 @@ namespace Chromium.Remote {
             on_browser_created_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_browser_created_native);
             on_browser_destroyed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_browser_destroyed_native);
             get_load_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_load_handler_native);
-            on_before_navigation_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_navigation_native);
             on_context_created_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_created_native);
             on_context_released_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_released_native);
             on_uncaught_exception_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_uncaught_exception_native);
@@ -55,21 +53,18 @@ namespace Chromium.Remote {
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? get_load_handler_native_ptr : IntPtr.Zero);
                     break;
                 case 5:
-                    CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_before_navigation_native_ptr : IntPtr.Zero);
-                    break;
-                case 6:
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_context_created_native_ptr : IntPtr.Zero);
                     break;
-                case 7:
+                case 6:
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_context_released_native_ptr : IntPtr.Zero);
                     break;
-                case 8:
+                case 7:
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_uncaught_exception_native_ptr : IntPtr.Zero);
                     break;
-                case 9:
+                case 8:
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_focused_node_changed_native_ptr : IntPtr.Zero);
                     break;
-                case 10:
+                case 9:
                     CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(self, index, active ? on_process_message_received_native_ptr : IntPtr.Zero);
                     break;
             }
@@ -139,27 +134,6 @@ namespace Chromium.Remote {
             var call = new CfxRenderProcessHandlerGetLoadHandlerRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.RequestExecution();
-            __retval = call.__retval;
-        }
-
-        // on_before_navigation
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect);
-        private static on_before_navigation_delegate on_before_navigation_native;
-        private static IntPtr on_before_navigation_native_ptr;
-
-        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect) {
-            var call = new CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall();
-            call.gcHandlePtr = gcHandlePtr;
-            call.browser = browser;
-            call.frame = frame;
-            call.request = request;
-            call.navigation_type = navigation_type;
-            call.is_redirect = is_redirect;
-            call.RequestExecution();
-            browser_release = call.browser_release;
-            frame_release = call.frame_release;
-            request_release = call.request_release;
             __retval = call.__retval;
         }
 

@@ -46,7 +46,7 @@ namespace Chromium {
                 request_release = 1;
                 return;
             }
-            var e = new CfxSchemeHandlerFactoryCreateEventArgs();
+            var e = new CfxCreateEventArgs();
             e.m_browser = browser;
             e.m_frame = frame;
             e.m_scheme_name_str = scheme_name_str;
@@ -74,7 +74,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
-        public event CfxSchemeHandlerFactoryCreateEventHandler Create {
+        public event CfxCreateEventHandler Create {
             add {
                 lock(eventLock) {
                     if(m_Create == null) {
@@ -93,7 +93,7 @@ namespace Chromium {
             }
         }
 
-        private CfxSchemeHandlerFactoryCreateEventHandler m_Create;
+        private CfxCreateEventHandler m_Create;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Create != null) {
@@ -119,7 +119,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
-        public delegate void CfxSchemeHandlerFactoryCreateEventHandler(object sender, CfxSchemeHandlerFactoryCreateEventArgs e);
+        public delegate void CfxCreateEventHandler(object sender, CfxCreateEventArgs e);
 
         /// <summary>
         /// Return a new resource handler instance to handle the request or an NULL
@@ -133,7 +133,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
-        public class CfxSchemeHandlerFactoryCreateEventArgs : CfxEventArgs {
+        public class CfxCreateEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
@@ -148,7 +148,7 @@ namespace Chromium {
             internal CfxResourceHandler m_returnValue;
             private bool returnValueSet;
 
-            internal CfxSchemeHandlerFactoryCreateEventArgs() {}
+            internal CfxCreateEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxSchemeHandlerFactory.Create"/> callback.

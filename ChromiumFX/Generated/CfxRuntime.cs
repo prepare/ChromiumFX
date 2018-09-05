@@ -243,14 +243,12 @@ namespace Chromium {
         /// 
         /// CrashKeys section:
         /// 
-        /// Any number of crash keys can be specified for use by the application. Crash
-        /// key values will be truncated based on the specified size (small = 63 bytes,
-        /// medium = 252 bytes, large = 1008 bytes). The value of crash keys can be set
-        /// from any thread or process using the CfxSetCrashKeyValue function. These
-        /// key/value pairs will be sent to the crash server along with the crash dump
-        /// file. Medium and large values will be chunked for submission. For example, if
-        /// your key is named "mykey" then the value will be broken into ordered chunks
-        /// and submitted using keys named "mykey-1", "mykey-2", etc.
+        /// A maximum of 26 crash keys of each size can be specified for use by the
+        /// application. Crash key values will be truncated based on the specified size
+        /// (small = 64 bytes, medium = 256 bytes, large = 1024 bytes). The value of
+        /// crash keys can be set from any thread or process using the
+        /// CfxSetCrashKeyValue function. These key/value pairs will be sent to the crash
+        /// server along with the crash dump file.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -533,19 +531,6 @@ namespace Chromium {
             StringFunctions.FreePinnedStrings(extensions_handles);
             StringFunctions.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
             CfxApi.Runtime.cfx_string_list_free(extensions_unwrapped);
-        }
-
-        /// <summary>
-        /// Request a one-time geolocation update. This function bypasses any user
-        /// permission checks so should only be used by code that is allowed to access
-        /// location information.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
-        /// </remarks>
-        public static bool GetGeolocation(CfxGetGeolocationCallback callback) {
-            return 0 != CfxApi.Runtime.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
         }
 
         /// <summary>
@@ -944,9 +929,6 @@ namespace Chromium {
         ///   2. widevinecdm file from the CDM binary distribution (e.g.
         ///      widevinecdm.dll on on Windows, libwidevinecdm.dylib on OS X,
         ///      libwidevinecdm.so on Linux).
-        ///   3. widevidecdmadapter file from the CEF binary distribution (e.g.
-        ///      widevinecdmadapter.dll on Windows, widevinecdmadapter.plugin on OS X,
-        ///      libwidevinecdmadapter.so on Linux).
         /// 
         /// If any of these files are missing or if the manifest file has incorrect
         /// contents the registration will fail and |callback| will receive a |result|

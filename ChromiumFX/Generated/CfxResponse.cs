@@ -132,6 +132,24 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Get or set the resolved URL after redirects or changed as a result of HSTS.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
+        public string Url {
+            get {
+                return StringFunctions.ConvertStringUserfree(CfxApi.Response.cfx_response_get_url(NativePtr));
+            }
+            set {
+                var value_pinned = new PinnedString(value);
+                CfxApi.Response.cfx_response_set_url(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
+            }
+        }
+
+        /// <summary>
         /// Get the value for the specified response header field.
         /// </summary>
         /// <remarks>

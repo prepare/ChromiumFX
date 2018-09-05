@@ -367,4 +367,58 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxResponseGetUrlRemoteCall : RemoteCall {
+
+        internal CfxResponseGetUrlRemoteCall()
+            : base(RemoteCallId.CfxResponseGetUrlRemoteCall) {}
+
+        internal IntPtr @this;
+        internal string __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@this);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @this);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void RemoteProcedure() {
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.Response.cfx_response_get_url(@this));
+        }
+    }
+
+    internal class CfxResponseSetUrlRemoteCall : RemoteCall {
+
+        internal CfxResponseSetUrlRemoteCall()
+            : base(RemoteCallId.CfxResponseSetUrlRemoteCall) {}
+
+        internal IntPtr @this;
+        internal string value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@this);
+            h.Write(value);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @this);
+            h.Read(out value);
+        }
+
+        protected override void RemoteProcedure() {
+            var value_pinned = new PinnedString(value);
+            CfxApi.Response.cfx_response_set_url(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            value_pinned.Obj.Free();
+        }
+    }
+
 }

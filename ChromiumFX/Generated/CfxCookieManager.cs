@@ -53,6 +53,22 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns a cookie manager that neither stores nor retrieves cookies. All usage
+        /// of cookies will be blocked including cookies accessed via the network
+        /// (request/response headers), via JavaScript (document.cookie), and via
+        /// CfxCookieManager functions. No cookies will be displayed in DevTools. If
+        /// you wish to only block cookies sent via the network use the
+        /// CfxRequestHandler CanGetCookies and CanSetCookie functions instead.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
+        public static CfxCookieManager GetBlockingManager() {
+            return CfxCookieManager.Wrap(CfxApi.CookieManager.cfx_cookie_manager_get_blocking_manager());
+        }
+
+        /// <summary>
         /// Creates a new cookie manager. If |path| is NULL data will be stored in memory
         /// only. Otherwise, data will be stored at the specified |path|. To persist
         /// session cookies (cookies without an expiry date or validity interval) set

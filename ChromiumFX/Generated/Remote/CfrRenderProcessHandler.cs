@@ -202,41 +202,6 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public event CfrOnBeforeNavigationEventHandler OnBeforeNavigation {
-            add {
-                if(m_OnBeforeNavigation == null) {
-                    var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
-                    call.self = RemotePtr.ptr;
-                    call.index = 5;
-                    call.active = true;
-                    call.RequestExecution(RemotePtr.connection);
-                }
-                m_OnBeforeNavigation += value;
-            }
-            remove {
-                m_OnBeforeNavigation -= value;
-                if(m_OnBeforeNavigation == null) {
-                    var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
-                    call.self = RemotePtr.ptr;
-                    call.index = 5;
-                    call.active = false;
-                    call.RequestExecution(RemotePtr.connection);
-                }
-            }
-        }
-
-        internal CfrOnBeforeNavigationEventHandler m_OnBeforeNavigation;
-
-
-        /// <summary>
         /// Called immediately after the V8 context for a frame has been created. To
         /// retrieve the JavaScript 'window' object use the
         /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
@@ -253,7 +218,7 @@ namespace Chromium.Remote {
                 if(m_OnContextCreated == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 6;
+                    call.index = 5;
                     call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -264,7 +229,7 @@ namespace Chromium.Remote {
                 if(m_OnContextCreated == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 6;
+                    call.index = 5;
                     call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -287,7 +252,7 @@ namespace Chromium.Remote {
                 if(m_OnContextReleased == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 7;
+                    call.index = 6;
                     call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -298,7 +263,7 @@ namespace Chromium.Remote {
                 if(m_OnContextReleased == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 7;
+                    call.index = 6;
                     call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -322,7 +287,7 @@ namespace Chromium.Remote {
                 if(m_OnUncaughtException == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 8;
+                    call.index = 7;
                     call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -333,7 +298,7 @@ namespace Chromium.Remote {
                 if(m_OnUncaughtException == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 8;
+                    call.index = 7;
                     call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -360,7 +325,7 @@ namespace Chromium.Remote {
                 if(m_OnFocusedNodeChanged == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 9;
+                    call.index = 8;
                     call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -371,7 +336,7 @@ namespace Chromium.Remote {
                 if(m_OnFocusedNodeChanged == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 9;
+                    call.index = 8;
                     call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -395,7 +360,7 @@ namespace Chromium.Remote {
                 if(m_OnProcessMessageReceived == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 10;
+                    call.index = 9;
                     call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -406,7 +371,7 @@ namespace Chromium.Remote {
                 if(m_OnProcessMessageReceived == null) {
                     var call = new CfxRenderProcessHandlerSetCallbackRemoteCall();
                     call.self = RemotePtr.ptr;
-                    call.index = 10;
+                    call.index = 9;
                     call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -587,104 +552,6 @@ namespace Chromium.Remote {
                 }
                 m_returnValue = returnValue;
                 returnValueSet = true;
-            }
-        }
-
-        /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfrOnBeforeNavigationEventHandler(object sender, CfrOnBeforeNavigationEventArgs e);
-
-        /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public class CfrOnBeforeNavigationEventArgs : CfrEventArgs {
-
-            private CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall call;
-
-            internal CfrBrowser m_browser_wrapped;
-            internal CfrFrame m_frame_wrapped;
-            internal CfrRequest m_request_wrapped;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
-
-            internal CfrOnBeforeNavigationEventArgs(CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall call) { this.call = call; }
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// </summary>
-            public CfrBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(connection, call.browser));
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Frame parameter for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// </summary>
-            public CfrFrame Frame {
-                get {
-                    CheckAccess();
-                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(connection, call.frame));
-                    return m_frame_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Request parameter for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// </summary>
-            public CfrRequest Request {
-                get {
-                    CheckAccess();
-                    if(m_request_wrapped == null) m_request_wrapped = CfrRequest.Wrap(new RemotePtr(connection, call.request));
-                    return m_request_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the NavigationType parameter for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// </summary>
-            public CfxNavigationType NavigationType {
-                get {
-                    CheckAccess();
-                    return (CfxNavigationType)call.navigation_type;
-                }
-            }
-            /// <summary>
-            /// Get the IsRedirect parameter for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// </summary>
-            public bool IsRedirect {
-                get {
-                    CheckAccess();
-                    return 0 != call.is_redirect;
-                }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfrRenderProcessHandler.OnBeforeNavigation"/> render process callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                m_returnValue = returnValue;
-                returnValueSet = true;
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
             }
         }
 

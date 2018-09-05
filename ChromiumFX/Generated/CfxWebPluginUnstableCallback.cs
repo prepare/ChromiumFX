@@ -41,7 +41,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxWebPluginUnstableCallbackIsUnstableEventArgs();
+            var e = new CfxIsUnstableEventArgs();
             e.m_path_str = path_str;
             e.m_path_length = path_length;
             e.m_unstable = unstable;
@@ -60,7 +60,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public event CfxWebPluginUnstableCallbackIsUnstableEventHandler IsUnstable {
+        public event CfxIsUnstableEventHandler IsUnstable {
             add {
                 lock(eventLock) {
                     if(m_IsUnstable == null) {
@@ -79,7 +79,7 @@ namespace Chromium {
             }
         }
 
-        private CfxWebPluginUnstableCallbackIsUnstableEventHandler m_IsUnstable;
+        private CfxIsUnstableEventHandler m_IsUnstable;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_IsUnstable != null) {
@@ -102,7 +102,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public delegate void CfxWebPluginUnstableCallbackIsUnstableEventHandler(object sender, CfxWebPluginUnstableCallbackIsUnstableEventArgs e);
+        public delegate void CfxIsUnstableEventHandler(object sender, CfxIsUnstableEventArgs e);
 
         /// <summary>
         /// Method that will be called for the requested plugin. |Unstable| will be
@@ -113,14 +113,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public class CfxWebPluginUnstableCallbackIsUnstableEventArgs : CfxEventArgs {
+        public class CfxIsUnstableEventArgs : CfxEventArgs {
 
             internal IntPtr m_path_str;
             internal int m_path_length;
             internal string m_path;
             internal int m_unstable;
 
-            internal CfxWebPluginUnstableCallbackIsUnstableEventArgs() {}
+            internal CfxIsUnstableEventArgs() {}
 
             /// <summary>
             /// Get the Path parameter for the <see cref="CfxWebPluginUnstableCallback.IsUnstable"/> callback.

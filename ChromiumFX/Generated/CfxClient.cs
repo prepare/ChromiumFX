@@ -38,7 +38,6 @@ namespace Chromium {
             get_drag_handler_native = get_drag_handler;
             get_find_handler_native = get_find_handler;
             get_focus_handler_native = get_focus_handler;
-            get_geolocation_handler_native = get_geolocation_handler;
             get_jsdialog_handler_native = get_jsdialog_handler;
             get_keyboard_handler_native = get_keyboard_handler;
             get_life_span_handler_native = get_life_span_handler;
@@ -54,7 +53,6 @@ namespace Chromium {
             get_drag_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_drag_handler_native);
             get_find_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_find_handler_native);
             get_focus_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_focus_handler_native);
-            get_geolocation_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_geolocation_handler_native);
             get_jsdialog_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_jsdialog_handler_native);
             get_keyboard_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_keyboard_handler_native);
             get_life_span_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_life_span_handler_native);
@@ -188,24 +186,6 @@ namespace Chromium {
             self.m_GetFocusHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxFocusHandler.Unwrap(e.m_returnValue);
-        }
-
-        // get_geolocation_handler
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_geolocation_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static get_geolocation_handler_delegate get_geolocation_handler_native;
-        private static IntPtr get_geolocation_handler_native_ptr;
-
-        internal static void get_geolocation_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
-            var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.CallbacksDisabled) {
-                __retval = default(IntPtr);
-                return;
-            }
-            var e = new CfxGetGeolocationHandlerEventArgs();
-            self.m_GetGeolocationHandler?.Invoke(self, e);
-            e.m_isInvalid = true;
-            __retval = CfxGeolocationHandler.Unwrap(e.m_returnValue);
         }
 
         // get_jsdialog_handler
@@ -656,51 +636,6 @@ namespace Chromium {
         private CfxGetFocusHandlerEventHandler m_GetFocusHandler;
 
         /// <summary>
-        /// Return the handler for geolocation permissions requests. If no handler is
-        /// provided geolocation access will be denied by default.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-        /// </remarks>
-        public event CfxGetGeolocationHandlerEventHandler GetGeolocationHandler {
-            add {
-                lock(eventLock) {
-                    if(m_GetGeolocationHandler != null) {
-                        throw new CfxException("Can't add more than one event handler to this type of event.");
-                    }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 7, get_geolocation_handler_native_ptr);
-                    m_GetGeolocationHandler += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_GetGeolocationHandler -= value;
-                    if(m_GetGeolocationHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 7, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the CfxGeolocationHandler provided by the event handler attached to the GetGeolocationHandler event, if any.
-        /// Returns null if no event handler is attached.
-        /// </summary>
-        public CfxGeolocationHandler RetrieveGeolocationHandler() {
-            var h = m_GetGeolocationHandler;
-            if(h != null) {
-                var e = new CfxGetGeolocationHandlerEventArgs();
-                h(this, e);
-                return e.m_returnValue;
-            } else {
-                return null;
-            }
-        }
-
-        private CfxGetGeolocationHandlerEventHandler m_GetGeolocationHandler;
-
-        /// <summary>
         /// Return the handler for JavaScript dialogs. If no handler is provided the
         /// default implementation will be used.
         /// </summary>
@@ -714,7 +649,7 @@ namespace Chromium {
                     if(m_GetJsDialogHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 8, get_jsdialog_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 7, get_jsdialog_handler_native_ptr);
                     m_GetJsDialogHandler += value;
                 }
             }
@@ -722,7 +657,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetJsDialogHandler -= value;
                     if(m_GetJsDialogHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 7, IntPtr.Zero);
                     }
                 }
             }
@@ -758,7 +693,7 @@ namespace Chromium {
                     if(m_GetKeyboardHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 9, get_keyboard_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 8, get_keyboard_handler_native_ptr);
                     m_GetKeyboardHandler += value;
                 }
             }
@@ -766,7 +701,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetKeyboardHandler -= value;
                     if(m_GetKeyboardHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
             }
@@ -802,7 +737,7 @@ namespace Chromium {
                     if(m_GetLifeSpanHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 10, get_life_span_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 9, get_life_span_handler_native_ptr);
                     m_GetLifeSpanHandler += value;
                 }
             }
@@ -810,7 +745,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLifeSpanHandler -= value;
                     if(m_GetLifeSpanHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 9, IntPtr.Zero);
                     }
                 }
             }
@@ -846,7 +781,7 @@ namespace Chromium {
                     if(m_GetLoadHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 11, get_load_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 10, get_load_handler_native_ptr);
                     m_GetLoadHandler += value;
                 }
             }
@@ -854,7 +789,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLoadHandler -= value;
                     if(m_GetLoadHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
             }
@@ -890,7 +825,7 @@ namespace Chromium {
                     if(m_GetRenderHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 12, get_render_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 11, get_render_handler_native_ptr);
                     m_GetRenderHandler += value;
                 }
             }
@@ -898,7 +833,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetRenderHandler -= value;
                     if(m_GetRenderHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 12, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 11, IntPtr.Zero);
                     }
                 }
             }
@@ -934,7 +869,7 @@ namespace Chromium {
                     if(m_GetRequestHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.Client.cfx_client_set_callback(NativePtr, 13, get_request_handler_native_ptr);
+                    CfxApi.Client.cfx_client_set_callback(NativePtr, 12, get_request_handler_native_ptr);
                     m_GetRequestHandler += value;
                 }
             }
@@ -942,7 +877,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetRequestHandler -= value;
                     if(m_GetRequestHandler == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 13, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 12, IntPtr.Zero);
                     }
                 }
             }
@@ -978,7 +913,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnProcessMessageReceived == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 14, on_process_message_received_native_ptr);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 13, on_process_message_received_native_ptr);
                     }
                     m_OnProcessMessageReceived += value;
                 }
@@ -987,7 +922,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnProcessMessageReceived -= value;
                     if(m_OnProcessMessageReceived == null) {
-                        CfxApi.Client.cfx_client_set_callback(NativePtr, 14, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_set_callback(NativePtr, 13, IntPtr.Zero);
                     }
                 }
             }
@@ -1024,37 +959,33 @@ namespace Chromium {
                 m_GetFocusHandler = null;
                 CfxApi.Client.cfx_client_set_callback(NativePtr, 6, IntPtr.Zero);
             }
-            if(m_GetGeolocationHandler != null) {
-                m_GetGeolocationHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 7, IntPtr.Zero);
-            }
             if(m_GetJsDialogHandler != null) {
                 m_GetJsDialogHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 7, IntPtr.Zero);
             }
             if(m_GetKeyboardHandler != null) {
                 m_GetKeyboardHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 8, IntPtr.Zero);
             }
             if(m_GetLifeSpanHandler != null) {
                 m_GetLifeSpanHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 9, IntPtr.Zero);
             }
             if(m_GetLoadHandler != null) {
                 m_GetLoadHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 10, IntPtr.Zero);
             }
             if(m_GetRenderHandler != null) {
                 m_GetRenderHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 12, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 11, IntPtr.Zero);
             }
             if(m_GetRequestHandler != null) {
                 m_GetRequestHandler = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 13, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 12, IntPtr.Zero);
             }
             if(m_OnProcessMessageReceived != null) {
                 m_OnProcessMessageReceived = null;
-                CfxApi.Client.cfx_client_set_callback(NativePtr, 14, IntPtr.Zero);
+                CfxApi.Client.cfx_client_set_callback(NativePtr, 13, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -1326,46 +1257,6 @@ namespace Chromium {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(CfxFocusHandler returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
-            }
-        }
-
-        /// <summary>
-        /// Return the handler for geolocation permissions requests. If no handler is
-        /// provided geolocation access will be denied by default.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxGetGeolocationHandlerEventHandler(object sender, CfxGetGeolocationHandlerEventArgs e);
-
-        /// <summary>
-        /// Return the handler for geolocation permissions requests. If no handler is
-        /// provided geolocation access will be denied by default.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-        /// </remarks>
-        public class CfxGetGeolocationHandlerEventArgs : CfxEventArgs {
-
-
-            internal CfxGeolocationHandler m_returnValue;
-            private bool returnValueSet;
-
-            internal CfxGetGeolocationHandlerEventArgs() {}
-
-            /// <summary>
-            /// Set the return value for the <see cref="CfxClient.GetGeolocationHandler"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(CfxGeolocationHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");

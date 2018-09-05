@@ -41,7 +41,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs();
+            var e = new CfxOnFileDialogDismissedEventArgs();
             e.m_selected_accept_filter = selected_accept_filter;
             e.m_file_paths = file_paths;
             self.m_OnFileDialogDismissed?.Invoke(self, e);
@@ -61,7 +61,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public event CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler OnFileDialogDismissed {
+        public event CfxOnFileDialogDismissedEventHandler OnFileDialogDismissed {
             add {
                 lock(eventLock) {
                     if(m_OnFileDialogDismissed == null) {
@@ -80,7 +80,7 @@ namespace Chromium {
             }
         }
 
-        private CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler m_OnFileDialogDismissed;
+        private CfxOnFileDialogDismissedEventHandler m_OnFileDialogDismissed;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnFileDialogDismissed != null) {
@@ -105,7 +105,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public delegate void CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler(object sender, CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs e);
+        public delegate void CfxOnFileDialogDismissedEventHandler(object sender, CfxOnFileDialogDismissedEventArgs e);
 
         /// <summary>
         /// Called asynchronously after the file dialog is dismissed.
@@ -118,12 +118,12 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public class CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs : CfxEventArgs {
+        public class CfxOnFileDialogDismissedEventArgs : CfxEventArgs {
 
             internal int m_selected_accept_filter;
             internal IntPtr m_file_paths;
 
-            internal CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs() {}
+            internal CfxOnFileDialogDismissedEventArgs() {}
 
             /// <summary>
             /// Get the SelectedAcceptFilter parameter for the <see cref="CfxRunFileDialogCallback.OnFileDialogDismissed"/> callback.

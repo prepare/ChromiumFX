@@ -28,6 +28,7 @@ typedef struct _cfx_render_handler_t {
     void (CEF_CALLBACK *update_drag_cursor)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_drag_operations_mask_t operation);
     void (CEF_CALLBACK *on_scroll_offset_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, double x, double y);
     void (CEF_CALLBACK *on_ime_composition_range_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds, int character_bounds_structsize);
+    void (CEF_CALLBACK *on_text_selection_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, char16 *selected_text_str, int selected_text_length, const cef_range_t* selected_range);
 } cfx_render_handler_t;
 
 void CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_ref_counted_t* base) {
@@ -182,6 +183,14 @@ void CEF_CALLBACK cfx_render_handler_on_ime_composition_range_changed(cef_render
     if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
+// on_text_selection_changed
+
+void CEF_CALLBACK cfx_render_handler_on_text_selection_changed(cef_render_handler_t* self, cef_browser_t* browser, const cef_string_t* selected_text, const cef_range_t* selected_range) {
+    int browser_release;
+    ((cfx_render_handler_t*)self)->on_text_selection_changed(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, selected_text ? selected_text->str : 0, selected_text ? (int)selected_text->length : 0, selected_range);
+    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
+}
+
 static void cfx_render_handler_set_callback(cef_render_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
@@ -235,6 +244,10 @@ static void cfx_render_handler_set_callback(cef_render_handler_t* self, int inde
     case 12:
         ((cfx_render_handler_t*)self)->on_ime_composition_range_changed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds, int character_bounds_structsize))callback;
         self->on_ime_composition_range_changed = callback ? cfx_render_handler_on_ime_composition_range_changed : 0;
+        break;
+    case 13:
+        ((cfx_render_handler_t*)self)->on_text_selection_changed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, char16 *selected_text_str, int selected_text_length, const cef_range_t* selected_range))callback;
+        self->on_text_selection_changed = callback ? cfx_render_handler_on_text_selection_changed : 0;
         break;
     }
 }

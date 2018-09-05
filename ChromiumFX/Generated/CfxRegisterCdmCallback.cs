@@ -42,7 +42,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventArgs();
+            var e = new CfxOnCdmRegistrationCompleteEventArgs();
             e.m_result = result;
             e.m_error_message_str = error_message_str;
             e.m_error_message_length = error_message_length;
@@ -62,7 +62,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public event CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventHandler OnCdmRegistrationComplete {
+        public event CfxOnCdmRegistrationCompleteEventHandler OnCdmRegistrationComplete {
             add {
                 lock(eventLock) {
                     if(m_OnCdmRegistrationComplete == null) {
@@ -81,7 +81,7 @@ namespace Chromium {
             }
         }
 
-        private CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventHandler m_OnCdmRegistrationComplete;
+        private CfxOnCdmRegistrationCompleteEventHandler m_OnCdmRegistrationComplete;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnCdmRegistrationComplete != null) {
@@ -105,7 +105,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public delegate void CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventHandler(object sender, CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventArgs e);
+        public delegate void CfxOnCdmRegistrationCompleteEventHandler(object sender, CfxOnCdmRegistrationCompleteEventArgs e);
 
         /// <summary>
         /// Method that will be called when CDM registration is complete. |Result| will
@@ -117,14 +117,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public class CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventArgs : CfxEventArgs {
+        public class CfxOnCdmRegistrationCompleteEventArgs : CfxEventArgs {
 
             internal int m_result;
             internal IntPtr m_error_message_str;
             internal int m_error_message_length;
             internal string m_error_message;
 
-            internal CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventArgs() {}
+            internal CfxOnCdmRegistrationCompleteEventArgs() {}
 
             /// <summary>
             /// Get the Result parameter for the <see cref="CfxRegisterCdmCallback.OnCdmRegistrationComplete"/> callback.

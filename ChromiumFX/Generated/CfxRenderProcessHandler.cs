@@ -31,7 +31,6 @@ namespace Chromium {
             on_browser_created_native = on_browser_created;
             on_browser_destroyed_native = on_browser_destroyed;
             get_load_handler_native = get_load_handler;
-            on_before_navigation_native = on_before_navigation;
             on_context_created_native = on_context_created;
             on_context_released_native = on_context_released;
             on_uncaught_exception_native = on_uncaught_exception;
@@ -43,7 +42,6 @@ namespace Chromium {
             on_browser_created_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_browser_created_native);
             on_browser_destroyed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_browser_destroyed_native);
             get_load_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_load_handler_native);
-            on_before_navigation_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_navigation_native);
             on_context_created_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_created_native);
             on_context_released_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_released_native);
             on_uncaught_exception_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_uncaught_exception_native);
@@ -140,35 +138,6 @@ namespace Chromium {
             self.m_GetLoadHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxLoadHandler.Unwrap(e.m_returnValue);
-        }
-
-        // on_before_navigation
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect);
-        private static on_before_navigation_delegate on_before_navigation_native;
-        private static IntPtr on_before_navigation_native_ptr;
-
-        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect) {
-            var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.CallbacksDisabled) {
-                __retval = default(int);
-                browser_release = 1;
-                frame_release = 1;
-                request_release = 1;
-                return;
-            }
-            var e = new CfxOnBeforeNavigationEventArgs();
-            e.m_browser = browser;
-            e.m_frame = frame;
-            e.m_request = request;
-            e.m_navigation_type = navigation_type;
-            e.m_is_redirect = is_redirect;
-            self.m_OnBeforeNavigation?.Invoke(self, e);
-            e.m_isInvalid = true;
-            browser_release = e.m_browser_wrapped == null? 1 : 0;
-            frame_release = e.m_frame_wrapped == null? 1 : 0;
-            request_release = e.m_request_wrapped == null? 1 : 0;
-            __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_context_created
@@ -466,36 +435,6 @@ namespace Chromium {
         private CfxGetLoadHandlerEventHandler m_GetLoadHandler;
 
         /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxOnBeforeNavigationEventHandler OnBeforeNavigation {
-            add {
-                lock(eventLock) {
-                    if(m_OnBeforeNavigation == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, on_before_navigation_native_ptr);
-                    }
-                    m_OnBeforeNavigation += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_OnBeforeNavigation -= value;
-                    if(m_OnBeforeNavigation == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxOnBeforeNavigationEventHandler m_OnBeforeNavigation;
-
-        /// <summary>
         /// Called immediately after the V8 context for a frame has been created. To
         /// retrieve the JavaScript 'window' object use the
         /// CfxV8Context.GetGlobal() function. V8 handles can only be accessed
@@ -511,7 +450,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnContextCreated == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, on_context_created_native_ptr);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, on_context_created_native_ptr);
                     }
                     m_OnContextCreated += value;
                 }
@@ -520,7 +459,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnContextCreated -= value;
                     if(m_OnContextCreated == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, IntPtr.Zero);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -540,7 +479,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnContextReleased == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, on_context_released_native_ptr);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, on_context_released_native_ptr);
                     }
                     m_OnContextReleased += value;
                 }
@@ -549,7 +488,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnContextReleased -= value;
                     if(m_OnContextReleased == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, IntPtr.Zero);
                     }
                 }
             }
@@ -570,7 +509,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnUncaughtException == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, on_uncaught_exception_native_ptr);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, on_uncaught_exception_native_ptr);
                     }
                     m_OnUncaughtException += value;
                 }
@@ -579,7 +518,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnUncaughtException -= value;
                     if(m_OnUncaughtException == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, IntPtr.Zero);
                     }
                 }
             }
@@ -603,7 +542,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnFocusedNodeChanged == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, on_focused_node_changed_native_ptr);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, on_focused_node_changed_native_ptr);
                     }
                     m_OnFocusedNodeChanged += value;
                 }
@@ -612,7 +551,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnFocusedNodeChanged -= value;
                     if(m_OnFocusedNodeChanged == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
             }
@@ -633,7 +572,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnProcessMessageReceived == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 10, on_process_message_received_native_ptr);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, on_process_message_received_native_ptr);
                     }
                     m_OnProcessMessageReceived += value;
                 }
@@ -642,7 +581,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnProcessMessageReceived -= value;
                     if(m_OnProcessMessageReceived == null) {
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, IntPtr.Zero);
                     }
                 }
             }
@@ -671,29 +610,25 @@ namespace Chromium {
                 m_GetLoadHandler = null;
                 CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 4, IntPtr.Zero);
             }
-            if(m_OnBeforeNavigation != null) {
-                m_OnBeforeNavigation = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, IntPtr.Zero);
-            }
             if(m_OnContextCreated != null) {
                 m_OnContextCreated = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, IntPtr.Zero);
+                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 5, IntPtr.Zero);
             }
             if(m_OnContextReleased != null) {
                 m_OnContextReleased = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, IntPtr.Zero);
+                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 6, IntPtr.Zero);
             }
             if(m_OnUncaughtException != null) {
                 m_OnUncaughtException = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 7, IntPtr.Zero);
             }
             if(m_OnFocusedNodeChanged != null) {
                 m_OnFocusedNodeChanged = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 8, IntPtr.Zero);
             }
             if(m_OnProcessMessageReceived != null) {
                 m_OnProcessMessageReceived = null;
-                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.RenderProcessHandler.cfx_render_process_handler_set_callback(NativePtr, 9, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -830,108 +765,6 @@ namespace Chromium {
             }
         }
 
-
-        /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxOnBeforeNavigationEventHandler(object sender, CfxOnBeforeNavigationEventArgs e);
-
-        /// <summary>
-        /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |Request| object
-        /// cannot be modified in this callback.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxOnBeforeNavigationEventArgs : CfxEventArgs {
-
-            internal IntPtr m_browser;
-            internal CfxBrowser m_browser_wrapped;
-            internal IntPtr m_frame;
-            internal CfxFrame m_frame_wrapped;
-            internal IntPtr m_request;
-            internal CfxRequest m_request_wrapped;
-            internal int m_navigation_type;
-            internal int m_is_redirect;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
-
-            internal CfxOnBeforeNavigationEventArgs() {}
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// </summary>
-            public CfxBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// </summary>
-            public CfxFrame Frame {
-                get {
-                    CheckAccess();
-                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                    return m_frame_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Request parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// </summary>
-            public CfxRequest Request {
-                get {
-                    CheckAccess();
-                    if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
-                    return m_request_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the NavigationType parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// </summary>
-            public CfxNavigationType NavigationType {
-                get {
-                    CheckAccess();
-                    return (CfxNavigationType)m_navigation_type;
-                }
-            }
-            /// <summary>
-            /// Get the IsRedirect parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// </summary>
-            public bool IsRedirect {
-                get {
-                    CheckAccess();
-                    return 0 != m_is_redirect;
-                }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
-            }
-        }
 
         /// <summary>
         /// Called immediately after the V8 context for a frame has been created. To

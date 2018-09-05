@@ -38,6 +38,7 @@ namespace Chromium {
             update_drag_cursor_native = update_drag_cursor;
             on_scroll_offset_changed_native = on_scroll_offset_changed;
             on_ime_composition_range_changed_native = on_ime_composition_range_changed;
+            on_text_selection_changed_native = on_text_selection_changed;
 
             get_accessibility_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_accessibility_handler_native);
             get_root_screen_rect_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_root_screen_rect_native);
@@ -52,6 +53,7 @@ namespace Chromium {
             update_drag_cursor_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(update_drag_cursor_native);
             on_scroll_offset_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_scroll_offset_changed_native);
             on_ime_composition_range_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_ime_composition_range_changed_native);
+            on_text_selection_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_text_selection_changed_native);
         }
 
         // get_accessibility_handler
@@ -352,6 +354,28 @@ namespace Chromium {
                     e.m_character_bounds_managed[i].Dispose();
                 }
             }
+        }
+
+        // on_text_selection_changed
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_text_selection_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_text_str, int selected_text_length, IntPtr selected_range);
+        private static on_text_selection_changed_delegate on_text_selection_changed_native;
+        private static IntPtr on_text_selection_changed_native_ptr;
+
+        internal static void on_text_selection_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_text_str, int selected_text_length, IntPtr selected_range) {
+            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                browser_release = 1;
+                return;
+            }
+            var e = new CfxOnTextSelectionChangedEventArgs();
+            e.m_browser = browser;
+            e.m_selected_text_str = selected_text_str;
+            e.m_selected_text_length = selected_text_length;
+            e.m_selected_range = selected_range;
+            self.m_OnTextSelectionChanged?.Invoke(self, e);
+            e.m_isInvalid = true;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         public CfxRenderHandler() : base(CfxApi.RenderHandler.cfx_render_handler_ctor) {}
@@ -771,6 +795,36 @@ namespace Chromium {
 
         private CfxOnImeCompositionRangeChangedEventHandler m_OnImeCompositionRangeChanged;
 
+        /// <summary>
+        /// Called when text selection has changed for the specified |Browser|.
+        /// |SelectedText| is the currently selected text and |SelectedRange| is the
+        /// character range.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnTextSelectionChangedEventHandler OnTextSelectionChanged {
+            add {
+                lock(eventLock) {
+                    if(m_OnTextSelectionChanged == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, on_text_selection_changed_native_ptr);
+                    }
+                    m_OnTextSelectionChanged += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnTextSelectionChanged -= value;
+                    if(m_OnTextSelectionChanged == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnTextSelectionChangedEventHandler m_OnTextSelectionChanged;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetAccessibilityHandler != null) {
                 m_GetAccessibilityHandler = null;
@@ -823,6 +877,10 @@ namespace Chromium {
             if(m_OnImeCompositionRangeChanged != null) {
                 m_OnImeCompositionRangeChanged = null;
                 CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
+            }
+            if(m_OnTextSelectionChanged != null) {
+                m_OnTextSelectionChanged = null;
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -1777,6 +1835,74 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, SelectedRange={{{1}}}, CharacterBounds={{{2}}}", Browser, SelectedRange, CharacterBounds);
+            }
+        }
+
+        /// <summary>
+        /// Called when text selection has changed for the specified |Browser|.
+        /// |SelectedText| is the currently selected text and |SelectedRange| is the
+        /// character range.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnTextSelectionChangedEventHandler(object sender, CfxOnTextSelectionChangedEventArgs e);
+
+        /// <summary>
+        /// Called when text selection has changed for the specified |Browser|.
+        /// |SelectedText| is the currently selected text and |SelectedRange| is the
+        /// character range.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnTextSelectionChangedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_selected_text_str;
+            internal int m_selected_text_length;
+            internal string m_selected_text;
+            internal IntPtr m_selected_range;
+            internal CfxRange m_selected_range_wrapped;
+
+            internal CfxOnTextSelectionChangedEventArgs() {}
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnTextSelectionChanged"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the SelectedText parameter for the <see cref="CfxRenderHandler.OnTextSelectionChanged"/> callback.
+            /// </summary>
+            public string SelectedText {
+                get {
+                    CheckAccess();
+                    m_selected_text = StringFunctions.PtrToStringUni(m_selected_text_str, m_selected_text_length);
+                    return m_selected_text;
+                }
+            }
+            /// <summary>
+            /// Get the SelectedRange parameter for the <see cref="CfxRenderHandler.OnTextSelectionChanged"/> callback.
+            /// </summary>
+            public CfxRange SelectedRange {
+                get {
+                    CheckAccess();
+                    if(m_selected_range_wrapped == null) m_selected_range_wrapped = CfxRange.Wrap(m_selected_range);
+                    return m_selected_range_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, SelectedText={{{1}}}, SelectedRange={{{2}}}", Browser, SelectedText, SelectedRange);
             }
         }
 

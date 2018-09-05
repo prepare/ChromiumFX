@@ -20,7 +20,6 @@ typedef struct _cfx_render_process_handler_t {
     void (CEF_CALLBACK *on_browser_created)(gc_handle_t self, cef_browser_t* browser, int *browser_release);
     void (CEF_CALLBACK *on_browser_destroyed)(gc_handle_t self, cef_browser_t* browser, int *browser_release);
     void (CEF_CALLBACK *get_load_handler)(gc_handle_t self, cef_load_handler_t** __retval);
-    void (CEF_CALLBACK *on_before_navigation)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_request_t* request, int *request_release, cef_navigation_type_t navigation_type, int is_redirect);
     void (CEF_CALLBACK *on_context_created)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release);
     void (CEF_CALLBACK *on_context_released)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release);
     void (CEF_CALLBACK *on_uncaught_exception)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release, cef_v8exception_t* exception, int *exception_release, cef_v8stack_trace_t* stackTrace, int *stackTrace_release);
@@ -99,20 +98,6 @@ cef_load_handler_t* CEF_CALLBACK cfx_render_process_handler_get_load_handler(cef
     if(__retval) {
         ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
-    return __retval;
-}
-
-// on_before_navigation
-
-int CEF_CALLBACK cfx_render_process_handler_on_before_navigation(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_navigation_type_t navigation_type, int is_redirect) {
-    int __retval;
-    int browser_release;
-    int frame_release;
-    int request_release;
-    ((cfx_render_process_handler_t*)self)->on_before_navigation(((cfx_render_process_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, request, &request_release, navigation_type, is_redirect);
-    if(browser_release && browser) browser->base.release((cef_base_ref_counted_t*)browser);
-    if(frame_release && frame) frame->base.release((cef_base_ref_counted_t*)frame);
-    if(request_release && request) request->base.release((cef_base_ref_counted_t*)request);
     return __retval;
 }
 
@@ -203,26 +188,22 @@ static void cfx_render_process_handler_set_callback(cef_render_process_handler_t
         self->get_load_handler = callback ? cfx_render_process_handler_get_load_handler : 0;
         break;
     case 5:
-        ((cfx_render_process_handler_t*)self)->on_before_navigation = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_request_t* request, int *request_release, cef_navigation_type_t navigation_type, int is_redirect))callback;
-        self->on_before_navigation = callback ? cfx_render_process_handler_on_before_navigation : 0;
-        break;
-    case 6:
         ((cfx_render_process_handler_t*)self)->on_context_created = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release))callback;
         self->on_context_created = callback ? cfx_render_process_handler_on_context_created : 0;
         break;
-    case 7:
+    case 6:
         ((cfx_render_process_handler_t*)self)->on_context_released = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release))callback;
         self->on_context_released = callback ? cfx_render_process_handler_on_context_released : 0;
         break;
-    case 8:
+    case 7:
         ((cfx_render_process_handler_t*)self)->on_uncaught_exception = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_v8context_t* context, int *context_release, cef_v8exception_t* exception, int *exception_release, cef_v8stack_trace_t* stackTrace, int *stackTrace_release))callback;
         self->on_uncaught_exception = callback ? cfx_render_process_handler_on_uncaught_exception : 0;
         break;
-    case 9:
+    case 8:
         ((cfx_render_process_handler_t*)self)->on_focused_node_changed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_domnode_t* node, int *node_release))callback;
         self->on_focused_node_changed = callback ? cfx_render_process_handler_on_focused_node_changed : 0;
         break;
-    case 10:
+    case 9:
         ((cfx_render_process_handler_t*)self)->on_process_message_received = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, cef_process_id_t source_process, cef_process_message_t* message, int *message_release))callback;
         self->on_process_message_received = callback ? cfx_render_process_handler_on_process_message_received : 0;
         break;

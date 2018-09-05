@@ -24,27 +24,6 @@ namespace Chromium {
         public CfxSettings() : base(CfxApi.Settings.cfx_settings_ctor, CfxApi.Settings.cfx_settings_dtor) {}
 
         /// <summary>
-        /// Set to true (1) to use a single process for the browser and renderer. This
-        /// run mode is not officially supported by Chromium and is less stable than
-        /// the multi-process default. Also configurable using the "single-process"
-        /// command-line switch.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public bool SingleProcess {
-            get {
-                int value;
-                CfxApi.Settings.cfx_settings_get_single_process(nativePtrUnchecked, out value);
-                return 0 != value;
-            }
-            set {
-                CfxApi.Settings.cfx_settings_set_single_process(nativePtrUnchecked, value ? 1 : 0);
-            }
-        }
-
-        /// <summary>
         /// Set to true (1) to disable the sandbox for sub-processes. See
         /// cef_sandbox_win.h for requirements to enable the sandbox on Windows. Also
         /// configurable using the "no-sandbox" command-line switch.

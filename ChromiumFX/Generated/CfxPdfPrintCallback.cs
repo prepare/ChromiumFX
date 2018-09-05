@@ -41,7 +41,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs();
+            var e = new CfxOnPdfPrintFinishedEventArgs();
             e.m_path_str = path_str;
             e.m_path_length = path_length;
             e.m_ok = ok;
@@ -60,7 +60,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public event CfxPdfPrintCallbackOnPdfPrintFinishedEventHandler OnPdfPrintFinished {
+        public event CfxOnPdfPrintFinishedEventHandler OnPdfPrintFinished {
             add {
                 lock(eventLock) {
                     if(m_OnPdfPrintFinished == null) {
@@ -79,7 +79,7 @@ namespace Chromium {
             }
         }
 
-        private CfxPdfPrintCallbackOnPdfPrintFinishedEventHandler m_OnPdfPrintFinished;
+        private CfxOnPdfPrintFinishedEventHandler m_OnPdfPrintFinished;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPdfPrintFinished != null) {
@@ -102,7 +102,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public delegate void CfxPdfPrintCallbackOnPdfPrintFinishedEventHandler(object sender, CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs e);
+        public delegate void CfxOnPdfPrintFinishedEventHandler(object sender, CfxOnPdfPrintFinishedEventArgs e);
 
         /// <summary>
         /// Method that will be executed when the PDF printing has completed. |Path| is
@@ -113,14 +113,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public class CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs : CfxEventArgs {
+        public class CfxOnPdfPrintFinishedEventArgs : CfxEventArgs {
 
             internal IntPtr m_path_str;
             internal int m_path_length;
             internal string m_path;
             internal int m_ok;
 
-            internal CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs() {}
+            internal CfxOnPdfPrintFinishedEventArgs() {}
 
             /// <summary>
             /// Get the Path parameter for the <see cref="CfxPdfPrintCallback.OnPdfPrintFinished"/> callback.

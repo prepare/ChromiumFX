@@ -42,7 +42,7 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxEndTracingCallbackOnEndTracingCompleteEventArgs();
+            var e = new CfxOnEndTracingCompleteEventArgs();
             e.m_tracing_file_str = tracing_file_str;
             e.m_tracing_file_length = tracing_file_length;
             self.m_OnEndTracingComplete?.Invoke(self, e);
@@ -60,7 +60,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
-        public event CfxEndTracingCallbackOnEndTracingCompleteEventHandler OnEndTracingComplete {
+        public event CfxOnEndTracingCompleteEventHandler OnEndTracingComplete {
             add {
                 lock(eventLock) {
                     if(m_OnEndTracingComplete == null) {
@@ -79,7 +79,7 @@ namespace Chromium {
             }
         }
 
-        private CfxEndTracingCallbackOnEndTracingCompleteEventHandler m_OnEndTracingComplete;
+        private CfxOnEndTracingCompleteEventHandler m_OnEndTracingComplete;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnEndTracingComplete != null) {
@@ -102,7 +102,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
-        public delegate void CfxEndTracingCallbackOnEndTracingCompleteEventHandler(object sender, CfxEndTracingCallbackOnEndTracingCompleteEventArgs e);
+        public delegate void CfxOnEndTracingCompleteEventHandler(object sender, CfxOnEndTracingCompleteEventArgs e);
 
         /// <summary>
         /// Called after all processes have sent their trace data. |TracingFile| is
@@ -113,13 +113,13 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
-        public class CfxEndTracingCallbackOnEndTracingCompleteEventArgs : CfxEventArgs {
+        public class CfxOnEndTracingCompleteEventArgs : CfxEventArgs {
 
             internal IntPtr m_tracing_file_str;
             internal int m_tracing_file_length;
             internal string m_tracing_file;
 
-            internal CfxEndTracingCallbackOnEndTracingCompleteEventArgs() {}
+            internal CfxOnEndTracingCompleteEventArgs() {}
 
             /// <summary>
             /// Get the TracingFile parameter for the <see cref="CfxEndTracingCallback.OnEndTracingComplete"/> callback.

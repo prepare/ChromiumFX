@@ -206,6 +206,32 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Create a new CfrV8Value object of type ArrayBuffer which wraps the
+        /// provided |buffer| of size |length| bytes. The ArrayBuffer is externalized,
+        /// meaning that it does not own |buffer|. The caller is responsible for freeing
+        /// |buffer| when requested via a call to CfrV8ArrayBufferReleaseCallback::
+        /// ReleaseBuffer. This function should only be called from within the scope of a
+        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
+        /// or in combination with calling enter() and exit() on a stored CfrV8Context
+        /// reference.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static CfrV8Value CreateArrayBuffer(RemotePtr buffer, ulong length, CfrV8ArrayBufferReleaseCallback releaseCallback) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
+            var call = new CfxV8ValueCreateArrayBufferRemoteCall();
+            if(buffer.connection != connection) throw new ArgumentException("Render process connection mismatch.", "buffer");
+            call.buffer = buffer.ptr;
+            call.length = length;
+            if(!CfrObject.CheckConnection(releaseCallback, connection)) throw new ArgumentException("Render process connection mismatch.", "releaseCallback");
+            call.releaseCallback = CfrObject.Unwrap(releaseCallback).ptr;
+            call.RequestExecution(connection);
+            return CfrV8Value.Wrap(new RemotePtr(connection, call.__retval));
+        }
+
+        /// <summary>
         /// Create a new CfrV8Value object of type function. This function should only
         /// be called from within the scope of a CfrRenderProcessHandler,
         /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
@@ -411,6 +437,23 @@ namespace Chromium.Remote {
             get {
                 var connection = RemotePtr.connection;
                 var call = new CfxV8ValueIsArrayRemoteCall();
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(connection);
+                return call.__retval;
+            }
+        }
+
+        /// <summary>
+        /// True if the value type is an ArrayBuffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public bool IsArrayBuffer {
+            get {
+                var connection = RemotePtr.connection;
+                var call = new CfxV8ValueIsArrayBufferRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(connection);
                 return call.__retval;
@@ -639,6 +682,24 @@ namespace Chromium.Remote {
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(connection);
                 return call.__retval;
+            }
+        }
+
+        /// <summary>
+        /// Returns the ReleaseCallback object associated with the ArrayBuffer or NULL
+        /// if the ArrayBuffer was not created with CreateArrayBuffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public CfrV8ArrayBufferReleaseCallback ArrayBufferReleaseCallback {
+            get {
+                var connection = RemotePtr.connection;
+                var call = new CfxV8ValueGetArrayBufferReleaseCallbackRemoteCall();
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(connection);
+                return CfrV8ArrayBufferReleaseCallback.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -971,6 +1032,25 @@ namespace Chromium.Remote {
             var call = new CfxV8ValueAdjustExternallyAllocatedMemoryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.changeInBytes = changeInBytes;
+            call.RequestExecution(connection);
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Prevent the ArrayBuffer from using it's memory block by setting the length
+        /// to zero. This operation cannot be undone. If the ArrayBuffer was created
+        /// with CreateArrayBuffer then
+        /// CfrV8ArrayBufferReleaseCallback.ReleaseBuffer will be called to
+        /// release the underlying buffer.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public bool NeuterArrayBuffer() {
+            var connection = RemotePtr.connection;
+            var call = new CfxV8ValueNeuterArrayBufferRemoteCall();
+            call.@this = RemotePtr.ptr;
             call.RequestExecution(connection);
             return call.__retval;
         }

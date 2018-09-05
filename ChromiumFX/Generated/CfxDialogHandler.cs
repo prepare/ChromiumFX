@@ -44,7 +44,7 @@ namespace Chromium {
                 callback_release = 1;
                 return;
             }
-            var e = new CfxDialogHandlerOnFileDialogEventArgs();
+            var e = new CfxOnFileDialogEventArgs();
             e.m_browser = browser;
             e.m_mode = mode;
             e.m_title_str = title_str;
@@ -82,7 +82,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
         /// </remarks>
-        public event CfxDialogHandlerOnFileDialogEventHandler OnFileDialog {
+        public event CfxOnFileDialogEventHandler OnFileDialog {
             add {
                 lock(eventLock) {
                     if(m_OnFileDialog == null) {
@@ -101,7 +101,7 @@ namespace Chromium {
             }
         }
 
-        private CfxDialogHandlerOnFileDialogEventHandler m_OnFileDialog;
+        private CfxOnFileDialogEventHandler m_OnFileDialog;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnFileDialog != null) {
@@ -134,7 +134,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
         /// </remarks>
-        public delegate void CfxDialogHandlerOnFileDialogEventHandler(object sender, CfxDialogHandlerOnFileDialogEventArgs e);
+        public delegate void CfxOnFileDialogEventHandler(object sender, CfxOnFileDialogEventArgs e);
 
         /// <summary>
         /// Called to run a file chooser dialog. |Mode| represents the type of dialog
@@ -155,7 +155,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
         /// </remarks>
-        public class CfxDialogHandlerOnFileDialogEventArgs : CfxEventArgs {
+        public class CfxOnFileDialogEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
@@ -174,7 +174,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxDialogHandlerOnFileDialogEventArgs() {}
+            internal CfxOnFileDialogEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
