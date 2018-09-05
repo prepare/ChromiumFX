@@ -177,12 +177,14 @@ public class CSharp {
         name = name.Replace("Highdpi", "HighDpi");
         name = name.Replace("prompt", "Prompt");
         name = name.Replace("Hideread", "HideRead");
-        
+        name = name.Replace("array", "Array");
+
         name = name.Replace("ConText", "Context");
         name = name.Replace("DisAllowed", "Disallowed");
         name = name.Replace("ubMenu", "ubmenu");
         name = name.Replace("Uring", "uring");
         name = name.Replace("SecUrity", "Security");
+
         return name;
     }
 
