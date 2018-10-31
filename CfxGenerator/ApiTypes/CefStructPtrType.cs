@@ -134,6 +134,13 @@ public class CefStructPtrType : ApiType {
         b.AppendLine("internal {0} m_{1}_wrapped;", PublicSymbol, var);
     }
 
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
+        base.EmitPublicPostCallStatements(b, var);
+        if(GeneratorConfig.UseStrongHandleFor(Struct.Name)) {
+            b.AppendLine($"GC.KeepAlive({var});");
+        }
+    }
+
     public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
         b.AppendLine("internal {0} m_{1}_wrapped;", RemoteSymbol, var);
     }
@@ -145,6 +152,18 @@ public class CefStructPtrType : ApiType {
             b.AppendLine("if(!CfrObject.CheckConnection({0}, connection)) throw new ArgumentException(\"Render process connection mismatch.\", \"{1}\");", CSharp.Escape(var), var);
             b.AppendLine("call.{0} = CfrObject.Unwrap({0}).ptr;", CSharp.Escape(var));
         }
+    }
+
+    public override void EmitRemotePostCallStatements(CodeBuilder b, string var) {
+        base.EmitRemotePostCallStatements(b, var);
+        if(GeneratorConfig.UseStrongHandleFor(Struct.Name)) {
+            b.AppendLine($"GC.KeepAlive({var});");
+        }
+    }
+
+    public override void EmitRemoteProcedurePostCallStatements(CodeBuilder b, string var) {
+        // overridden in order to disable default behaviour of calling EmitPublicPostCallStatements
+        //base.EmitRemoteProcedurePostCallStatements(b, var);
     }
 
     public override string PInvokeSymbol {

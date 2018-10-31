@@ -336,6 +336,7 @@ namespace Chromium.Remote {
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
             call.RequestExecution(connection);
+            GC.KeepAlive(task);
             return call.__retval;
         }
 
@@ -354,6 +355,7 @@ namespace Chromium.Remote {
             if(!CfrObject.CheckConnection(task, connection)) throw new ArgumentException("Render process connection mismatch.", "task");
             call.task = CfrObject.Unwrap(task).ptr;
             call.RequestExecution(connection);
+            GC.KeepAlive(task);
             return call.__retval;
         }
 

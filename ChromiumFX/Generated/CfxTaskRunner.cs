@@ -108,7 +108,9 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostTask(CfxTask task) {
-            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+            var __retval = CfxApi.TaskRunner.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+            GC.KeepAlive(task);
+            return 0 != __retval;
         }
 
         /// <summary>
@@ -122,7 +124,9 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostDelayedTask(CfxTask task, long delayMs) {
-            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+            var __retval = CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+            GC.KeepAlive(task);
+            return 0 != __retval;
         }
     }
 }
