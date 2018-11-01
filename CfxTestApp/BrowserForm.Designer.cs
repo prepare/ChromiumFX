@@ -56,12 +56,13 @@ namespace CfxTestApplication {
             this.setBrowserInvisibleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testGCOfChromiumWebBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asyncUseOfV8ValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendBigStringToJSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.sendBigStringToJSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cfrTaskStressTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -220,7 +221,8 @@ namespace CfxTestApplication {
             this.setBrowserInvisibleToolStripMenuItem,
             this.testGCOfChromiumWebBrowserToolStripMenuItem,
             this.asyncUseOfV8ValuesToolStripMenuItem,
-            this.sendBigStringToJSToolStripMenuItem});
+            this.sendBigStringToJSToolStripMenuItem,
+            this.cfrTaskStressTestToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -312,6 +314,13 @@ namespace CfxTestApplication {
             this.asyncUseOfV8ValuesToolStripMenuItem.Text = "Async use of v8 values.";
             this.asyncUseOfV8ValuesToolStripMenuItem.Click += new System.EventHandler(this.asyncUseOfV8ValuesToolStripMenuItem_Click);
             // 
+            // sendBigStringToJSToolStripMenuItem
+            // 
+            this.sendBigStringToJSToolStripMenuItem.Name = "sendBigStringToJSToolStripMenuItem";
+            this.sendBigStringToJSToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.sendBigStringToJSToolStripMenuItem.Text = "Send big string to JS";
+            this.sendBigStringToJSToolStripMenuItem.Click += new System.EventHandler(this.sendBigStringToJSToolStripMenuItem_Click);
+            // 
             // printButton
             // 
             this.printButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -376,12 +385,12 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
-            // sendBigStringToJSToolStripMenuItem
+            // cfrTaskStressTestToolStripMenuItem
             // 
-            this.sendBigStringToJSToolStripMenuItem.Name = "sendBigStringToJSToolStripMenuItem";
-            this.sendBigStringToJSToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.sendBigStringToJSToolStripMenuItem.Text = "Send big string to JS";
-            this.sendBigStringToJSToolStripMenuItem.Click += new System.EventHandler(this.sendBigStringToJSToolStripMenuItem_Click);
+            this.cfrTaskStressTestToolStripMenuItem.Name = "cfrTaskStressTestToolStripMenuItem";
+            this.cfrTaskStressTestToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.cfrTaskStressTestToolStripMenuItem.Text = "CfrTask stress test";
+            this.cfrTaskStressTestToolStripMenuItem.Click += new System.EventHandler(this.cfrTaskStressTestToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
@@ -441,5 +450,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripMenuItem testGCOfChromiumWebBrowserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asyncUseOfV8ValuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendBigStringToJSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cfrTaskStressTestToolStripMenuItem;
     }
 }

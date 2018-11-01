@@ -20,6 +20,9 @@ using System.Text;
 namespace CfxTestApplication {
     public partial class BrowserForm : Form {
 
+
+        CfrBrowser remoteBrowser;
+
         public BrowserForm() {
             InitializeComponent();
 
@@ -209,7 +212,10 @@ namespace CfxTestApplication {
             WebBrowser.GlobalObject.AddFunction("SubmitAsyncTestFunction").Execute += JS_SubmitAsyncTestFunction;
             WebBrowser.GlobalObject.AddFunction("bigStringFunction").Execute += JS_bigStringFunction;
 
-            
+            WebBrowser.RemoteBrowserCreated += (s, e) => {
+                remoteBrowser = e.Browser;
+            };
+
         }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
@@ -649,6 +655,48 @@ namespace CfxTestApplication {
                     return;
             }
             WebBrowser.ExecuteJavascript("var bigString = bigStringFunction(); testlog('big string received: ' + bigString.substring(0, 20) + '(...) (' + bigString.length + ' chars)'); bigStringFunction(bigString);");
+        }
+
+
+        private void cfrTaskStressTestToolStripMenuItem_Click(object sender, EventArgs e) {
+            var t = new Thread(CfrTaskStressTest);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        void CfrTaskStressTest() {
+
+            if(remoteBrowser == null) return;
+
+            var ctx = remoteBrowser.CreateRemoteCallContext();
+            ctx.Enter();
+            try {
+
+                int taskExecutionCounter = 0;
+
+                for(int i = 0; i < 10000; ++i) {
+                    var task = new CfrTask();
+                    task.Execute += (s, e1) => {
+                        ++taskExecutionCounter;
+                        if(taskExecutionCounter % 1000 == 0) {
+                            LogWriteLine($"CfrTask stress test: {taskExecutionCounter}/10000 tasks executed.");
+                        }
+                    };
+                    if(i % 2 == 0) {
+                        CfrRuntime.PostTask(CfxThreadId.Renderer, task);
+                    } else {
+                        var tr = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
+                        tr.PostTask(task);
+                    }
+                    if(i % 1000 == 0) {
+                        LogWriteLine($"CfrTask stress test: {i}/10000 tasks posted.");
+                    }
+                }
+            } catch {
+                LogWriteLine($"CfrTask stress test: Exception cought, aborting.");
+            } finally {
+                ctx.Exit();
+            }
         }
     }
 }
