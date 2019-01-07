@@ -20,6 +20,9 @@ namespace Chromium.Remote {
         internal CfrBaseRefCounted(RemotePtr remotePtr) : base(remotePtr) { }
 
         internal override void OnDispose(RemotePtr remotePtr) {
+            if (remotePtr.connection.connectionLostException != null){
+                return;
+            }
             var call = new CfxApiReleaseRemoteCall();
             call.nativePtr = remotePtr.ptr;
             try {
