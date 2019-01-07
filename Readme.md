@@ -53,6 +53,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.3578.1 ###
+- Fix Issue #196 (CfrTime.ToUniversalTime must be static).
+
 ### Version 3.3578.0 ###
 - Update to CEF 3.3578.1860 with API changes.
 
