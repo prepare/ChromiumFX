@@ -163,6 +163,45 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Set to true (1) to enable shared textures for windowless rendering. Only
+        /// valid if windowless_rendering_enabled above is also set to true. Currently
+        /// only supported on Windows (D3D11).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
+        public bool SharedTextureEnabled {
+            get {
+                int value;
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_shared_texture_enabled(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_shared_texture_enabled(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
+        /// Set to true (1) to enable the ability to issue BeginFrame requests from the
+        /// client application by calling CfxBrowserHost.SendExternalBeginFrame.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
+        public bool ExternalBeginFrameEnabled {
+            get {
+                int value;
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_external_begin_frame_enabled(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_external_begin_frame_enabled(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
         /// Handle for the new browser window. Only used with windowed rendering.
         /// </summary>
         /// <remarks>

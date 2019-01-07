@@ -98,7 +98,7 @@ namespace Chromium {
         /// Set to true (1) to have the browser process message loop run in a separate
         /// thread. If false (0) than the CfxDoMessageLoopWork() function must be
         /// called from your application message loop. This option is only supported on
-        /// Windows.
+        /// Windows and Linux.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

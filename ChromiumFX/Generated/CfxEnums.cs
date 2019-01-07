@@ -1350,7 +1350,11 @@ namespace Chromium {
         /// <summary>
         /// Segmentation fault.
         /// </summary>
-        ProcessCrashed
+        ProcessCrashed,
+        /// <summary>
+        /// Out of memory. Some platforms may use TS_PROCESS_CRASHED instead.
+        /// </summary>
+        ProcessOOM
     }
     /// <summary>
     /// Text style types. Should be kepy in sync with gfx::TextStyle.

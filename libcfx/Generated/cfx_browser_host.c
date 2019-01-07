@@ -191,6 +191,11 @@ static void cfx_browser_host_invalidate(cef_browser_host_t* self, cef_paint_elem
     self->invalidate(self, type);
 }
 
+// send_external_begin_frame
+static void cfx_browser_host_send_external_begin_frame(cef_browser_host_t* self) {
+    self->send_external_begin_frame(self);
+}
+
 // send_key_event
 static void cfx_browser_host_send_key_event(cef_browser_host_t* self, const cef_key_event_t* event) {
     self->send_key_event(self, event);

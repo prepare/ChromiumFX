@@ -157,6 +157,7 @@ namespace Chromium {
             cfx_browser_host_was_hidden,
             cfx_browser_host_notify_screen_info_changed,
             cfx_browser_host_invalidate,
+            cfx_browser_host_send_external_begin_frame,
             cfx_browser_host_send_key_event,
             cfx_browser_host_send_mouse_click_event,
             cfx_browser_host_send_mouse_move_event,
@@ -1276,6 +1277,10 @@ namespace Chromium {
             cfx_window_info_linux_get_parent_window,
             cfx_window_info_linux_set_windowless_rendering_enabled,
             cfx_window_info_linux_get_windowless_rendering_enabled,
+            cfx_window_info_linux_set_shared_texture_enabled,
+            cfx_window_info_linux_get_shared_texture_enabled,
+            cfx_window_info_linux_set_external_begin_frame_enabled,
+            cfx_window_info_linux_get_external_begin_frame_enabled,
             cfx_window_info_linux_set_window,
             cfx_window_info_linux_get_window,
             cfx_window_info_windows_ctor,
@@ -1300,6 +1305,10 @@ namespace Chromium {
             cfx_window_info_windows_get_menu,
             cfx_window_info_windows_set_windowless_rendering_enabled,
             cfx_window_info_windows_get_windowless_rendering_enabled,
+            cfx_window_info_windows_set_shared_texture_enabled,
+            cfx_window_info_windows_get_shared_texture_enabled,
+            cfx_window_info_windows_set_external_begin_frame_enabled,
+            cfx_window_info_windows_get_external_begin_frame_enabled,
             cfx_window_info_windows_set_window,
             cfx_window_info_windows_get_window,
             cfx_write_handler_ctor,
@@ -1602,6 +1611,7 @@ namespace Chromium {
             CfxApi.BrowserHost.cfx_browser_host_was_hidden = (CfxApi.BrowserHost.cfx_browser_host_was_hidden_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_was_hidden, typeof(CfxApi.BrowserHost.cfx_browser_host_was_hidden_delegate));
             CfxApi.BrowserHost.cfx_browser_host_notify_screen_info_changed = (CfxApi.BrowserHost.cfx_browser_host_notify_screen_info_changed_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_notify_screen_info_changed, typeof(CfxApi.BrowserHost.cfx_browser_host_notify_screen_info_changed_delegate));
             CfxApi.BrowserHost.cfx_browser_host_invalidate = (CfxApi.BrowserHost.cfx_browser_host_invalidate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_invalidate, typeof(CfxApi.BrowserHost.cfx_browser_host_invalidate_delegate));
+            CfxApi.BrowserHost.cfx_browser_host_send_external_begin_frame = (CfxApi.BrowserHost.cfx_browser_host_send_external_begin_frame_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_external_begin_frame, typeof(CfxApi.BrowserHost.cfx_browser_host_send_external_begin_frame_delegate));
             CfxApi.BrowserHost.cfx_browser_host_send_key_event = (CfxApi.BrowserHost.cfx_browser_host_send_key_event_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_key_event, typeof(CfxApi.BrowserHost.cfx_browser_host_send_key_event_delegate));
             CfxApi.BrowserHost.cfx_browser_host_send_mouse_click_event = (CfxApi.BrowserHost.cfx_browser_host_send_mouse_click_event_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_mouse_click_event, typeof(CfxApi.BrowserHost.cfx_browser_host_send_mouse_click_event_delegate));
             CfxApi.BrowserHost.cfx_browser_host_send_mouse_move_event = (CfxApi.BrowserHost.cfx_browser_host_send_mouse_move_event_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_mouse_move_event, typeof(CfxApi.BrowserHost.cfx_browser_host_send_mouse_move_event_delegate));
@@ -3240,6 +3250,10 @@ namespace Chromium {
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_parent_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_windowless_rendering_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_windowless_rendering_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled_delegate));
+            CfxApi.WindowInfoLinux.cfx_window_info_linux_set_shared_texture_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_shared_texture_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_shared_texture_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_shared_texture_enabled_delegate));
+            CfxApi.WindowInfoLinux.cfx_window_info_linux_get_shared_texture_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_shared_texture_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_shared_texture_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_shared_texture_enabled_delegate));
+            CfxApi.WindowInfoLinux.cfx_window_info_linux_set_external_begin_frame_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_external_begin_frame_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_external_begin_frame_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_external_begin_frame_enabled_delegate));
+            CfxApi.WindowInfoLinux.cfx_window_info_linux_get_external_begin_frame_enabled = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_external_begin_frame_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_external_begin_frame_enabled, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_external_begin_frame_enabled_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_set_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window_delegate));
             CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window = (CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_linux_get_window, typeof(CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window_delegate));
         }
@@ -3268,6 +3282,10 @@ namespace Chromium {
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_menu, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_windowless_rendering_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_windowless_rendering_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled_delegate));
+            CfxApi.WindowInfoWindows.cfx_window_info_windows_set_shared_texture_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_shared_texture_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_shared_texture_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_shared_texture_enabled_delegate));
+            CfxApi.WindowInfoWindows.cfx_window_info_windows_get_shared_texture_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_shared_texture_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_shared_texture_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_shared_texture_enabled_delegate));
+            CfxApi.WindowInfoWindows.cfx_window_info_windows_set_external_begin_frame_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_external_begin_frame_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_external_begin_frame_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_external_begin_frame_enabled_delegate));
+            CfxApi.WindowInfoWindows.cfx_window_info_windows_get_external_begin_frame_enabled = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_external_begin_frame_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_external_begin_frame_enabled, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_external_begin_frame_enabled_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window = (CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_set_window, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window_delegate));
             CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window = (CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_window_info_windows_get_window, typeof(CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window_delegate));
         }

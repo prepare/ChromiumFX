@@ -101,6 +101,22 @@ static void cfx_window_info_windows_get_windowless_rendering_enabled(cef_window_
     *windowless_rendering_enabled = self->windowless_rendering_enabled;
 }
 
+// cef_window_info_t->shared_texture_enabled
+static void cfx_window_info_windows_set_shared_texture_enabled(cef_window_info_t *self, int shared_texture_enabled) {
+    self->shared_texture_enabled = shared_texture_enabled;
+}
+static void cfx_window_info_windows_get_shared_texture_enabled(cef_window_info_t *self, int* shared_texture_enabled) {
+    *shared_texture_enabled = self->shared_texture_enabled;
+}
+
+// cef_window_info_t->external_begin_frame_enabled
+static void cfx_window_info_windows_set_external_begin_frame_enabled(cef_window_info_t *self, int external_begin_frame_enabled) {
+    self->external_begin_frame_enabled = external_begin_frame_enabled;
+}
+static void cfx_window_info_windows_get_external_begin_frame_enabled(cef_window_info_t *self, int* external_begin_frame_enabled) {
+    *external_begin_frame_enabled = self->external_begin_frame_enabled;
+}
+
 // cef_window_info_t->window
 static void cfx_window_info_windows_set_window(cef_window_info_t *self, cef_window_handle_t window) {
     self->window = window;
@@ -132,6 +148,10 @@ static void cfx_window_info_windows_get_window(cef_window_info_t *self, cef_wind
 #define cfx_window_info_windows_get_menu 0
 #define cfx_window_info_windows_set_windowless_rendering_enabled 0
 #define cfx_window_info_windows_get_windowless_rendering_enabled 0
+#define cfx_window_info_windows_set_shared_texture_enabled 0
+#define cfx_window_info_windows_get_shared_texture_enabled 0
+#define cfx_window_info_windows_set_external_begin_frame_enabled 0
+#define cfx_window_info_windows_get_external_begin_frame_enabled 0
 #define cfx_window_info_windows_set_window 0
 #define cfx_window_info_windows_get_window 0
 #endif //ifdef CFX_WINDOWS

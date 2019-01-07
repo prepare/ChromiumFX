@@ -594,6 +594,18 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Issue a BeginFrame request to Chromium.  Only valid when
+        /// CfxWindowInfo.ExternalBeginFrameEnabled is set to true (1).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void SendExternalBeginFrame() {
+            CfxApi.BrowserHost.cfx_browser_host_send_external_begin_frame(NativePtr);
+        }
+
+        /// <summary>
         /// Send a key event to the browser.
         /// </summary>
         /// <remarks>

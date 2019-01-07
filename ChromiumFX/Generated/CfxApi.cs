@@ -816,6 +816,11 @@ namespace Chromium {
             public delegate void cfx_browser_host_invalidate_delegate(IntPtr self, int type);
             public static cfx_browser_host_invalidate_delegate cfx_browser_host_invalidate;
 
+            // static void cfx_browser_host_send_external_begin_frame(cef_browser_host_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_browser_host_send_external_begin_frame_delegate(IntPtr self);
+            public static cfx_browser_host_send_external_begin_frame_delegate cfx_browser_host_send_external_begin_frame;
+
             // static void cfx_browser_host_send_key_event(cef_browser_host_t* self, const cef_key_event_t* event)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_browser_host_send_key_event_delegate(IntPtr self, IntPtr @event);
@@ -6705,6 +6710,24 @@ namespace Chromium {
             public delegate void cfx_window_info_linux_get_windowless_rendering_enabled_delegate(IntPtr self, out int windowless_rendering_enabled);
             public static cfx_window_info_linux_get_windowless_rendering_enabled_delegate cfx_window_info_linux_get_windowless_rendering_enabled;
 
+            // static void cfx_window_info_linux_set_shared_texture_enabled(cef_window_info_t *self, int shared_texture_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_linux_set_shared_texture_enabled_delegate(IntPtr self, int shared_texture_enabled);
+            public static cfx_window_info_linux_set_shared_texture_enabled_delegate cfx_window_info_linux_set_shared_texture_enabled;
+            // static void cfx_window_info_linux_get_shared_texture_enabled(cef_window_info_t *self, int* shared_texture_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_linux_get_shared_texture_enabled_delegate(IntPtr self, out int shared_texture_enabled);
+            public static cfx_window_info_linux_get_shared_texture_enabled_delegate cfx_window_info_linux_get_shared_texture_enabled;
+
+            // static void cfx_window_info_linux_set_external_begin_frame_enabled(cef_window_info_t *self, int external_begin_frame_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_linux_set_external_begin_frame_enabled_delegate(IntPtr self, int external_begin_frame_enabled);
+            public static cfx_window_info_linux_set_external_begin_frame_enabled_delegate cfx_window_info_linux_set_external_begin_frame_enabled;
+            // static void cfx_window_info_linux_get_external_begin_frame_enabled(cef_window_info_t *self, int* external_begin_frame_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_linux_get_external_begin_frame_enabled_delegate(IntPtr self, out int external_begin_frame_enabled);
+            public static cfx_window_info_linux_get_external_begin_frame_enabled_delegate cfx_window_info_linux_get_external_begin_frame_enabled;
+
             // static void cfx_window_info_linux_set_window(cef_window_info_t *self, cef_window_handle_t window)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_window_info_linux_set_window_delegate(IntPtr self, IntPtr window);
@@ -6816,6 +6839,24 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_window_info_windows_get_windowless_rendering_enabled_delegate(IntPtr self, out int windowless_rendering_enabled);
             public static cfx_window_info_windows_get_windowless_rendering_enabled_delegate cfx_window_info_windows_get_windowless_rendering_enabled;
+
+            // static void cfx_window_info_windows_set_shared_texture_enabled(cef_window_info_t *self, int shared_texture_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_windows_set_shared_texture_enabled_delegate(IntPtr self, int shared_texture_enabled);
+            public static cfx_window_info_windows_set_shared_texture_enabled_delegate cfx_window_info_windows_set_shared_texture_enabled;
+            // static void cfx_window_info_windows_get_shared_texture_enabled(cef_window_info_t *self, int* shared_texture_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_windows_get_shared_texture_enabled_delegate(IntPtr self, out int shared_texture_enabled);
+            public static cfx_window_info_windows_get_shared_texture_enabled_delegate cfx_window_info_windows_get_shared_texture_enabled;
+
+            // static void cfx_window_info_windows_set_external_begin_frame_enabled(cef_window_info_t *self, int external_begin_frame_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_windows_set_external_begin_frame_enabled_delegate(IntPtr self, int external_begin_frame_enabled);
+            public static cfx_window_info_windows_set_external_begin_frame_enabled_delegate cfx_window_info_windows_set_external_begin_frame_enabled;
+            // static void cfx_window_info_windows_get_external_begin_frame_enabled(cef_window_info_t *self, int* external_begin_frame_enabled)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_window_info_windows_get_external_begin_frame_enabled_delegate(IntPtr self, out int external_begin_frame_enabled);
+            public static cfx_window_info_windows_get_external_begin_frame_enabled_delegate cfx_window_info_windows_get_external_begin_frame_enabled;
 
             // static void cfx_window_info_windows_set_window(cef_window_info_t *self, cef_window_handle_t window)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

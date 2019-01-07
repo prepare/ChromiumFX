@@ -7,7 +7,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1378] =  {
+static void* cfx_function_pointers[1387] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_base64decode,
@@ -153,6 +153,7 @@ static void* cfx_function_pointers[1378] =  {
     (void*)cfx_browser_host_was_hidden,
     (void*)cfx_browser_host_notify_screen_info_changed,
     (void*)cfx_browser_host_invalidate,
+    (void*)cfx_browser_host_send_external_begin_frame,
     (void*)cfx_browser_host_send_key_event,
     (void*)cfx_browser_host_send_mouse_click_event,
     (void*)cfx_browser_host_send_mouse_move_event,
@@ -1272,6 +1273,10 @@ static void* cfx_function_pointers[1378] =  {
     (void*)cfx_window_info_linux_get_parent_window,
     (void*)cfx_window_info_linux_set_windowless_rendering_enabled,
     (void*)cfx_window_info_linux_get_windowless_rendering_enabled,
+    (void*)cfx_window_info_linux_set_shared_texture_enabled,
+    (void*)cfx_window_info_linux_get_shared_texture_enabled,
+    (void*)cfx_window_info_linux_set_external_begin_frame_enabled,
+    (void*)cfx_window_info_linux_get_external_begin_frame_enabled,
     (void*)cfx_window_info_linux_set_window,
     (void*)cfx_window_info_linux_get_window,
     (void*)cfx_window_info_windows_ctor,
@@ -1296,6 +1301,10 @@ static void* cfx_function_pointers[1378] =  {
     (void*)cfx_window_info_windows_get_menu,
     (void*)cfx_window_info_windows_set_windowless_rendering_enabled,
     (void*)cfx_window_info_windows_get_windowless_rendering_enabled,
+    (void*)cfx_window_info_windows_set_shared_texture_enabled,
+    (void*)cfx_window_info_windows_get_shared_texture_enabled,
+    (void*)cfx_window_info_windows_set_external_begin_frame_enabled,
+    (void*)cfx_window_info_windows_get_external_begin_frame_enabled,
     (void*)cfx_window_info_windows_set_window,
     (void*)cfx_window_info_windows_get_window,
     (void*)cfx_write_handler_ctor,

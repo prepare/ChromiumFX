@@ -33,6 +33,7 @@ namespace Chromium {
             on_popup_show_native = on_popup_show;
             on_popup_size_native = on_popup_size;
             on_paint_native = on_paint;
+            on_accelerated_paint_native = on_accelerated_paint;
             on_cursor_change_native = on_cursor_change;
             start_dragging_native = start_dragging;
             update_drag_cursor_native = update_drag_cursor;
@@ -48,6 +49,7 @@ namespace Chromium {
             on_popup_show_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_popup_show_native);
             on_popup_size_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_popup_size_native);
             on_paint_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_paint_native);
+            on_accelerated_paint_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_accelerated_paint_native);
             on_cursor_change_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_cursor_change_native);
             start_dragging_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(start_dragging_native);
             update_drag_cursor_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(update_drag_cursor_native);
@@ -98,14 +100,13 @@ namespace Chromium {
 
         // get_view_rect
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_view_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect);
+        private delegate void get_view_rect_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr rect);
         private static get_view_rect_delegate get_view_rect_native;
         private static IntPtr get_view_rect_native_ptr;
 
-        internal static void get_view_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect) {
+        internal static void get_view_rect(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                __retval = default(int);
                 browser_release = 1;
                 return;
             }
@@ -115,7 +116,6 @@ namespace Chromium {
             self.m_GetViewRect?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
-            __retval = e.m_returnValue ? 1 : 0;
         }
 
         // get_screen_point
@@ -229,6 +229,35 @@ namespace Chromium {
             e.m_width = width;
             e.m_height = height;
             self.m_OnPaint?.Invoke(self, e);
+            e.m_isInvalid = true;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            if(e.m_dirtyRects_managed != null) {
+                for(int i = 0; i < e.m_dirtyRects_managed.Length; ++i) {
+                    e.m_dirtyRects_managed[i].Dispose();
+                }
+            }
+        }
+
+        // on_accelerated_paint
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_accelerated_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr shared_handle);
+        private static on_accelerated_paint_delegate on_accelerated_paint_native;
+        private static IntPtr on_accelerated_paint_native_ptr;
+
+        internal static void on_accelerated_paint(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr shared_handle) {
+            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                browser_release = 1;
+                return;
+            }
+            var e = new CfxOnAcceleratedPaintEventArgs();
+            e.m_browser = browser;
+            e.m_type = type;
+            e.m_dirtyRects = dirtyRects;
+            e.m_dirtyRects_structsize = dirtyRects_structsize;
+            e.m_dirtyRectsCount = dirtyRectsCount;
+            e.m_shared_handle = shared_handle;
+            self.m_OnAcceleratedPaint?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
             if(e.m_dirtyRects_managed != null) {
@@ -427,7 +456,8 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
-        /// true (1) if the rectangle was provided.
+        /// true (1) if the rectangle was provided. If this function returns false (0)
+        /// the rectangle from GetViewRect will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -456,7 +486,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the view rectangle which is relative to screen
-        /// coordinates. Return true (1) if the rectangle was provided.
+        /// coordinates. This function must always provide a non-NULL rectangle.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -612,7 +642,8 @@ namespace Chromium {
         /// contains the pixel data for the whole image. |DirtyRects| contains the set
         /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
         /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
-        /// upper-left origin.
+        /// upper-left origin. This function is only called when
+        /// CfxWindowInfo.SharedTextureEnabled is set to false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -640,6 +671,40 @@ namespace Chromium {
         private CfxOnPaintEventHandler m_OnPaint;
 
         /// <summary>
+        /// Called when an element has been rendered to the shared texture handle.
+        /// |Type| indicates whether the element is the view or the popup widget.
+        /// |DirtyRects| contains the set of rectangles in pixel coordinates that need
+        /// to be repainted. |SharedHandle| is the handle for a D3D11 Texture2D that
+        /// can be accessed via ID3D11Device using the OpenSharedResource function.
+        /// This function is only called when CfxWindowInfo.SharedTextureEnabled
+        /// is set to true (1), and is currently only supported on Windows.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnAcceleratedPaintEventHandler OnAcceleratedPaint {
+            add {
+                lock(eventLock) {
+                    if(m_OnAcceleratedPaint == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, on_accelerated_paint_native_ptr);
+                    }
+                    m_OnAcceleratedPaint += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnAcceleratedPaint -= value;
+                    if(m_OnAcceleratedPaint == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnAcceleratedPaintEventHandler m_OnAcceleratedPaint;
+
+        /// <summary>
         /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
         /// |CustomCursorInfo| will be populated with the custom cursor information.
         /// </summary>
@@ -651,7 +716,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnCursorChange == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, on_cursor_change_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, on_cursor_change_native_ptr);
                     }
                     m_OnCursorChange += value;
                 }
@@ -660,7 +725,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnCursorChange -= value;
                     if(m_OnCursorChange == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
                     }
                 }
             }
@@ -690,7 +755,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_StartDragging == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, start_dragging_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, start_dragging_native_ptr);
                     }
                     m_StartDragging += value;
                 }
@@ -699,7 +764,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_StartDragging -= value;
                     if(m_StartDragging == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
             }
@@ -720,7 +785,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_UpdateDragCursor == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, update_drag_cursor_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, update_drag_cursor_native_ptr);
                     }
                     m_UpdateDragCursor += value;
                 }
@@ -729,7 +794,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_UpdateDragCursor -= value;
                     if(m_UpdateDragCursor == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
                     }
                 }
             }
@@ -748,7 +813,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnScrollOffsetChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, on_scroll_offset_changed_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, on_scroll_offset_changed_native_ptr);
                     }
                     m_OnScrollOffsetChanged += value;
                 }
@@ -757,7 +822,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnScrollOffsetChanged -= value;
                     if(m_OnScrollOffsetChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
                     }
                 }
             }
@@ -778,7 +843,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnImeCompositionRangeChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, on_ime_composition_range_changed_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, on_ime_composition_range_changed_native_ptr);
                     }
                     m_OnImeCompositionRangeChanged += value;
                 }
@@ -787,7 +852,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnImeCompositionRangeChanged -= value;
                     if(m_OnImeCompositionRangeChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
                     }
                 }
             }
@@ -808,7 +873,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnTextSelectionChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, on_text_selection_changed_native_ptr);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 14, on_text_selection_changed_native_ptr);
                     }
                     m_OnTextSelectionChanged += value;
                 }
@@ -817,7 +882,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnTextSelectionChanged -= value;
                     if(m_OnTextSelectionChanged == null) {
-                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 14, IntPtr.Zero);
                     }
                 }
             }
@@ -858,29 +923,33 @@ namespace Chromium {
                 m_OnPaint = null;
                 CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 7, IntPtr.Zero);
             }
+            if(m_OnAcceleratedPaint != null) {
+                m_OnAcceleratedPaint = null;
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+            }
             if(m_OnCursorChange != null) {
                 m_OnCursorChange = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
             }
             if(m_StartDragging != null) {
                 m_StartDragging = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
             }
             if(m_UpdateDragCursor != null) {
                 m_UpdateDragCursor = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
             }
             if(m_OnScrollOffsetChanged != null) {
                 m_OnScrollOffsetChanged = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
             }
             if(m_OnImeCompositionRangeChanged != null) {
                 m_OnImeCompositionRangeChanged = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 12, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
             }
             if(m_OnTextSelectionChanged != null) {
                 m_OnTextSelectionChanged = null;
-                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 13, IntPtr.Zero);
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 14, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -931,7 +1000,8 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
-        /// true (1) if the rectangle was provided.
+        /// true (1) if the rectangle was provided. If this function returns false (0)
+        /// the rectangle from GetViewRect will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -941,7 +1011,8 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
-        /// true (1) if the rectangle was provided.
+        /// true (1) if the rectangle was provided. If this function returns false (0)
+        /// the rectangle from GetViewRect will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -999,7 +1070,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the view rectangle which is relative to screen
-        /// coordinates. Return true (1) if the rectangle was provided.
+        /// coordinates. This function must always provide a non-NULL rectangle.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1009,7 +1080,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve the view rectangle which is relative to screen
-        /// coordinates. Return true (1) if the rectangle was provided.
+        /// coordinates. This function must always provide a non-NULL rectangle.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1021,9 +1092,6 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_rect;
             internal CfxRect m_rect_wrapped;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
 
             internal CfxGetViewRectEventArgs() {}
 
@@ -1046,18 +1114,6 @@ namespace Chromium {
                     if(m_rect_wrapped == null) m_rect_wrapped = CfxRect.Wrap(m_rect);
                     return m_rect_wrapped;
                 }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfxRenderHandler.GetViewRect"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
             }
 
             public override string ToString() {
@@ -1351,7 +1407,8 @@ namespace Chromium {
         /// contains the pixel data for the whole image. |DirtyRects| contains the set
         /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
         /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
-        /// upper-left origin.
+        /// upper-left origin. This function is only called when
+        /// CfxWindowInfo.SharedTextureEnabled is set to false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1367,7 +1424,8 @@ namespace Chromium {
         /// contains the pixel data for the whole image. |DirtyRects| contains the set
         /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
         /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
-        /// upper-left origin.
+        /// upper-left origin. This function is only called when
+        /// CfxWindowInfo.SharedTextureEnabled is set to false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1455,6 +1513,99 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, Type={{{1}}}, DirtyRects={{{2}}}, Buffer={{{3}}}, Width={{{4}}}, Height={{{5}}}", Browser, Type, DirtyRects, Buffer, Width, Height);
+            }
+        }
+
+        /// <summary>
+        /// Called when an element has been rendered to the shared texture handle.
+        /// |Type| indicates whether the element is the view or the popup widget.
+        /// |DirtyRects| contains the set of rectangles in pixel coordinates that need
+        /// to be repainted. |SharedHandle| is the handle for a D3D11 Texture2D that
+        /// can be accessed via ID3D11Device using the OpenSharedResource function.
+        /// This function is only called when CfxWindowInfo.SharedTextureEnabled
+        /// is set to true (1), and is currently only supported on Windows.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnAcceleratedPaintEventHandler(object sender, CfxOnAcceleratedPaintEventArgs e);
+
+        /// <summary>
+        /// Called when an element has been rendered to the shared texture handle.
+        /// |Type| indicates whether the element is the view or the popup widget.
+        /// |DirtyRects| contains the set of rectangles in pixel coordinates that need
+        /// to be repainted. |SharedHandle| is the handle for a D3D11 Texture2D that
+        /// can be accessed via ID3D11Device using the OpenSharedResource function.
+        /// This function is only called when CfxWindowInfo.SharedTextureEnabled
+        /// is set to true (1), and is currently only supported on Windows.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnAcceleratedPaintEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal int m_type;
+            internal IntPtr m_dirtyRects;
+            internal int m_dirtyRects_structsize;
+            internal UIntPtr m_dirtyRectsCount;
+            internal CfxRect[] m_dirtyRects_managed;
+            internal IntPtr m_shared_handle;
+
+            internal CfxOnAcceleratedPaintEventArgs() {}
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnAcceleratedPaint"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Type parameter for the <see cref="CfxRenderHandler.OnAcceleratedPaint"/> callback.
+            /// </summary>
+            public CfxPaintElementType Type {
+                get {
+                    CheckAccess();
+                    return (CfxPaintElementType)m_type;
+                }
+            }
+            /// <summary>
+            /// Get the DirtyRects parameter for the <see cref="CfxRenderHandler.OnAcceleratedPaint"/> callback.
+            /// Do not keep a reference to the elements of this array outside of this function.
+            /// </summary>
+            public CfxRect[] DirtyRects {
+                get {
+                    CheckAccess();
+                    if(m_dirtyRects_managed == null) {
+                        m_dirtyRects_managed = new CfxRect[(ulong)m_dirtyRectsCount];
+                        var currentPtr = m_dirtyRects;
+                        for(ulong i = 0; i < (ulong)m_dirtyRectsCount; ++i) {
+                            m_dirtyRects_managed[i] = CfxRect.Wrap(currentPtr);
+                            currentPtr += m_dirtyRects_structsize;
+                        }
+                    }
+                    return m_dirtyRects_managed;
+                }
+            }
+            /// <summary>
+            /// Get the SharedHandle parameter for the <see cref="CfxRenderHandler.OnAcceleratedPaint"/> callback.
+            /// </summary>
+            public IntPtr SharedHandle {
+                get {
+                    CheckAccess();
+                    return m_shared_handle;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Type={{{1}}}, DirtyRects={{{2}}}, SharedHandle={{{3}}}", Browser, Type, DirtyRects, SharedHandle);
             }
         }
 
