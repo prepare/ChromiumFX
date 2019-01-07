@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=f2f3acb1df9815e4ac9bf34010ce260a2496ae5a$
+// $hash=13ef0e12e6fdc3a0be38656c71b913a4eaaab61b$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_RENDER_HANDLER_CAPI_H_
@@ -68,7 +68,8 @@ typedef struct _cef_render_handler_t {
 
   ///
   // Called to retrieve the root window rectangle in screen coordinates. Return
-  // true (1) if the rectangle was provided.
+  // true (1) if the rectangle was provided. If this function returns false (0)
+  // the rectangle from GetViewRect will be used.
   ///
   int(CEF_CALLBACK* get_root_screen_rect)(struct _cef_render_handler_t* self,
                                           struct _cef_browser_t* browser,
@@ -76,11 +77,11 @@ typedef struct _cef_render_handler_t {
 
   ///
   // Called to retrieve the view rectangle which is relative to screen
-  // coordinates. Return true (1) if the rectangle was provided.
+  // coordinates. This function must always provide a non-NULL rectangle.
   ///
-  int(CEF_CALLBACK* get_view_rect)(struct _cef_render_handler_t* self,
-                                   struct _cef_browser_t* browser,
-                                   cef_rect_t* rect);
+  void(CEF_CALLBACK* get_view_rect)(struct _cef_render_handler_t* self,
+                                    struct _cef_browser_t* browser,
+                                    cef_rect_t* rect);
 
   ///
   // Called to retrieve the translation from view coordinates to actual screen
@@ -130,7 +131,8 @@ typedef struct _cef_render_handler_t {
   // contains the pixel data for the whole image. |dirtyRects| contains the set
   // of rectangles in pixel coordinates that need to be repainted. |buffer| will
   // be |width|*|height|*4 bytes in size and represents a BGRA image with an
-  // upper-left origin.
+  // upper-left origin. This function is only called when
+  // cef_window_tInfo::shared_texture_enabled is set to false (0).
   ///
   void(CEF_CALLBACK* on_paint)(struct _cef_render_handler_t* self,
                                struct _cef_browser_t* browser,
@@ -140,6 +142,22 @@ typedef struct _cef_render_handler_t {
                                const void* buffer,
                                int width,
                                int height);
+
+  ///
+  // Called when an element has been rendered to the shared texture handle.
+  // |type| indicates whether the element is the view or the popup widget.
+  // |dirtyRects| contains the set of rectangles in pixel coordinates that need
+  // to be repainted. |shared_handle| is the handle for a D3D11 Texture2D that
+  // can be accessed via ID3D11Device using the OpenSharedResource function.
+  // This function is only called when cef_window_tInfo::shared_texture_enabled
+  // is set to true (1), and is currently only supported on Windows.
+  ///
+  void(CEF_CALLBACK* on_accelerated_paint)(struct _cef_render_handler_t* self,
+                                           struct _cef_browser_t* browser,
+                                           cef_paint_element_type_t type,
+                                           size_t dirtyRectsCount,
+                                           cef_rect_t const* dirtyRects,
+                                           void* shared_handle);
 
   ///
   // Called when the browser's cursor has changed. If |type| is CT_CUSTOM then
