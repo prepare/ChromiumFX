@@ -185,6 +185,7 @@ public class CSharp {
         name = name.Replace("Uring", "uring");
         name = name.Replace("SecUrity", "Security");
 
+        name = name.Replace("ProcessOom", "ProcessOOM");
         return name;
     }
 
